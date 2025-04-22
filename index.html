@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HealthVision</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Navbar Styling */
+    .nav-container {
+      background-color: #ffffff;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+      padding: 1rem 0;
+      position: absolute;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .navbar.container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: auto;
+      padding: 0 1rem;
+    }
+
+    .logo a {
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-decoration: none;
+      color: #222;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 1.5rem;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+    }
+
+    .language-select {
+      margin-right: 1rem;
+      padding: 4px 6px;
+    }
+
+    .theme-toggle {
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      margin-right: 1rem;
+      cursor: pointer;
+    }
+
+    .hamburger {
+      display: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        background: white;
+        position: absolute;
+        top: 60px;
+        right: 1rem;
+        padding: 1rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      }
+
+      .nav-links.show {
+        display: flex;
+      }
+
+      .hamburger {
+        display: block;
+      }
+    }
+
+    /* Fade Up Animation */
+    @keyframes fadeUp {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .feature-card {
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards;
+      animation-play-state: paused;
+      padding: 1.5rem;
+      background-color: #f9f9f9;
+      border-radius: 12px;
+      border: 2px solid transparent;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
+      cursor: pointer;
+    }
+
+    .feature-card:nth-child(1) { animation-delay: 0.1s; }
+    .feature-card:nth-child(2) { animation-delay: 0.2s; }
+    .feature-card:nth-child(3) { animation-delay: 0.3s; }
+    .feature-card:nth-child(4) { animation-delay: 0.4s; }
+    .feature-card:nth-child(5) { animation-delay: 0.5s; }
+
+    .feature-card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+      border: 2px solid #dcdcdc;
+    }
+
+    .feature-card.selected {
+      transform: scale(1.05);
+      background-color: #ffffff;
+      border: 2px solid #4CAF50;
+      box-shadow: 0 12px 28px rgba(76, 175, 80, 0.3);
+    }
+  </style>
+  <script defer>
+    document.addEventListener('DOMContentLoaded', () => {
+      const toggle = document.querySelector('.theme-toggle');
+      toggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark');
+      });
+
+      const hamburger = document.getElementById('hamburger');
+      const navLinks = document.getElementById('navLinks');
+      hamburger.addEventListener('click', () => {
+        navLinks.classList.toggle('show');
+      });
+
+      const featureCards = document.querySelectorAll('.feature-card');
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.animationPlayState = 'running';
+          }
+        });
+      }, { threshold: 0.1 });
+
+      featureCards.forEach(card => {
+        observer.observe(card);
+
+        card.addEventListener('click', () => {
+          featureCards.forEach(c => c.classList.remove('selected'));
+          card.classList.add('selected');
+        });
+      });
+    });
+  </script>
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="nav-container">
+    <nav class="navbar container">
+      <div class="logo">
+        <a href="#"><strong>HealthVision</strong></a>
+      </div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#features">Features</a></li>
+      </ul>
+
+      <div style="display: flex; align-items: center;">
+        <select class="language-select">
+          <option>EN</option>
+          <option>ES</option>
+          <option>FR</option>
+        </select>
+        <button class="theme-toggle" title="Toggle Theme">🌓</button>
+        <div class="hamburger" id="hamburger">☰</div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <h1>Your Health Companion</h1>
+      <p>Advanced medical assistance at your fingertips</p>
+      <a href="#features" class="cta-button">Get Started</a>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="about" id="about">
+    <div class="container">
+      <h2>About HealthVision</h2>
+      <p>HealthVision is a revolutionary healthcare application designed to make medical diagnosis and healthcare access easier than ever before. Our cutting-edge AI technology helps you identify potential health issues quickly and connects you with the right medical professionals.</p>
+      <p>Whether you're experiencing symptoms or have noticed something unusual, HealthVision provides preliminary insights and guidance to help you take the next steps in your healthcare journey.</p>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features" id="features">
+    <div class="container">
+      <h2>Key Features</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <h3>Symptom Checker</h3>
+          <p>Describe what you're feeling and get insights instantly.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Image Diagnosis</h3>
+          <p>Upload a photo of the affected area for a preliminary analysis.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Nearby Hospitals</h3>
+          <p>Find hospitals near you based on your symptoms.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Appointment Booking</h3>
+          <p>Book appointments directly with trusted medical professionals.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Report Summarizing</h3>
+          <p>Get your medical reports summarized.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
