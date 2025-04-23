@@ -109,13 +109,16 @@
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
       transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
       cursor: pointer;
+      height: 250px;
     }
 
     .feature-card:nth-child(1) { animation-delay: 0.1s; }
-    .feature-card:nth-child(2) { animation-delay: 0.2s; }
-    .feature-card:nth-child(3) { animation-delay: 0.3s; }
-    .feature-card:nth-child(4) { animation-delay: 0.4s; }
-    .feature-card:nth-child(5) { animation-delay: 0.5s; }
+    .feature-card:nth-child(2) { animation-delay: 0.3s; }
+    .feature-card:nth-child(3) { animation-delay: 0.5s; }
+    .feature-card:nth-child(4) { animation-delay: 0.7s; }
+    .feature-card:nth-child(5) { animation-delay: 0.9s; }
+    .feature-card:nth-child(6) { animation-delay: 1.1s; }
+
 
     .feature-card:hover {
       transform: scale(1.03);
@@ -212,28 +215,32 @@
     <div class="container">
       <h2>Key Features</h2>
       <div class="feature-grid">
-        <div class="feature-card">
+        <a href="symptom-checker.html" class="feature-card">
           <h3>Symptom Checker</h3>
           <p>Describe what you're feeling and get insights instantly.</p>
-        </div>
-        <div class="feature-card">
+        </a>
+        <a href="image-diagnosis.html" class="feature-card">
           <h3>Image Diagnosis</h3>
           <p>Upload a photo of the affected area for a preliminary analysis.</p>
-        </div>
-        <div class="feature-card">
+        </a>
+        <a href="nearby-hospitals.html" class="feature-card">
           <h3>Nearby Hospitals</h3>
           <p>Find hospitals near you based on your symptoms.</p>
-        </div>
-        <div class="feature-card">
+        </a>
+        <a href="appointment-booking.html" class="feature-card">
           <h3>Appointment Booking</h3>
           <p>Book appointments directly with trusted medical professionals.</p>
-        </div>
-        <div class="feature-card">
+        </a>
+        <a href="report-summarizing.html" class="feature-card">
           <h3>Report Summarizing</h3>
           <p>Get your medical reports summarized.</p>
-        </div>
+        </a>
+        <a href="consultancy.html" class="feature-card">
+          <h3>Contact a Doctor</h3>
+          <p>Get in Instant contact with a Doctor via Text , Voice Call or Video Call.</p>
+        </a>
       </div>
     </div>
   </section>
-</body>
+  </body>
 </html>
