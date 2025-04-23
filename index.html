@@ -6,130 +6,6 @@
   <title>HealthVision</title>
   <link rel="stylesheet" href="styles.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    /* Navbar Styling */
-    .nav-container {
-      background-color: #ffffff;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-      padding: 1rem 0;
-      position: absolute;
-      top: 0;
-      z-index: 1000;
-    }
-
-    .navbar.container {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      max-width: 1200px;
-      margin: auto;
-      padding: 0 1rem;
-    }
-
-    .logo a {
-      font-size: 1.5rem;
-      font-weight: 700;
-      text-decoration: none;
-      color: #222;
-    }
-
-    .nav-links {
-      display: flex;
-      list-style: none;
-      gap: 1.5rem;
-    }
-
-    .nav-links a {
-      text-decoration: none;
-      color: #333;
-      font-weight: 500;
-    }
-
-    .language-select {
-      margin-right: 1rem;
-      padding: 4px 6px;
-    }
-
-    .theme-toggle {
-      background: none;
-      border: none;
-      font-size: 1.2rem;
-      margin-right: 1rem;
-      cursor: pointer;
-    }
-
-    .hamburger {
-      display: none;
-      font-size: 1.5rem;
-      cursor: pointer;
-    }
-
-    @media (max-width: 768px) {
-      .nav-links {
-        display: none;
-        flex-direction: column;
-        background: white;
-        position: absolute;
-        top: 60px;
-        right: 1rem;
-        padding: 1rem;
-        border-radius: 8px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      }
-
-      .nav-links.show {
-        display: flex;
-      }
-
-      .hamburger {
-        display: block;
-      }
-    }
-
-    /* Fade Up Animation */
-    @keyframes fadeUp {
-      0% {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .feature-card {
-      opacity: 0;
-      animation: fadeUp 0.8s ease forwards;
-      animation-play-state: paused;
-      padding: 1.5rem;
-      background-color: #f9f9f9;
-      border-radius: 12px;
-      border: 2px solid transparent;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-      transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
-      cursor: pointer;
-    }
-
-    .feature-card:nth-child(1) { animation-delay: 0.1s; }
-    .feature-card:nth-child(2) { animation-delay: 0.2s; }
-    .feature-card:nth-child(3) { animation-delay: 0.3s; }
-    .feature-card:nth-child(4) { animation-delay: 0.4s; }
-    .feature-card:nth-child(5) { animation-delay: 0.5s; }
-
-    .feature-card:hover {
-      transform: scale(1.03);
-      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
-      border: 2px solid #dcdcdc;
-    }
-
-    .feature-card.selected {
-      transform: scale(1.05);
-      background-color: #ffffff;
-      border: 2px solid #4CAF50;
-      box-shadow: 0 12px 28px rgba(76, 175, 80, 0.3);
-    }
-  </style>
   <script defer>
     document.addEventListener('DOMContentLoaded', () => {
       const toggle = document.querySelector('.theme-toggle');
@@ -207,33 +83,38 @@
     </div>
   </section>
 
-  <!-- Features Section -->
-  <section class="features" id="features">
-    <div class="container">
-      <h2>Key Features</h2>
-      <div class="feature-grid">
-        <div class="feature-card">
-          <h3>Symptom Checker</h3>
-          <p>Describe what you're feeling and get insights instantly.</p>
-        </div>
-        <div class="feature-card">
-          <h3>Image Diagnosis</h3>
-          <p>Upload a photo of the affected area for a preliminary analysis.</p>
-        </div>
-        <div class="feature-card">
-          <h3>Nearby Hospitals</h3>
-          <p>Find hospitals near you based on your symptoms.</p>
-        </div>
-        <div class="feature-card">
-          <h3>Appointment Booking</h3>
-          <p>Book appointments directly with trusted medical professionals.</p>
-        </div>
-        <div class="feature-card">
-          <h3>Report Summarizing</h3>
-          <p>Get your medical reports summarized.</p>
-        </div>
-      </div>
+<!-- Features Section -->
+<section class="features" id="features">
+  <div class="container">
+    <h2>Key Features</h2>
+    <div class="feature-grid">
+      <a href="symptom-checker.html" class="feature-card">
+        <h3>Symptom Checker</h3>
+        <p>Describe what you're feeling and get insights instantly.</p>
+      </a>
+      <a href="image-diagnosis.html" class="feature-card">
+        <h3>Image Diagnosis</h3>
+        <p>Upload a photo of the affected area for a preliminary analysis.</p>
+      </a>
+      <a href="nearby-hospitals.html" class="feature-card">
+        <h3>Nearby Hospitals</h3>
+        <p>Find hospitals near you based on your symptoms.</p>
+      </a>
+      <a href="appointment-booking.html" class="feature-card">
+        <h3>Appointment Booking</h3>
+        <p>Book appointments directly with trusted medical professionals.</p>
+      </a>
+      <a href="report-summarizing.html" class="feature-card">
+        <h3>Report Summarizing</h3>
+        <p>Get your medical reports summarized.</p>
+      </a>
+      <a href="consultancy.html" class="feature-card">
+        <h3>Contact a Doctor</h3>
+        <p>Get in Instant contact with a Doctor via Text , Voice Call or Video Call.</p>
+      </a>
     </div>
-  </section>
+  </div>
+</section>
+
 </body>
 </html>
