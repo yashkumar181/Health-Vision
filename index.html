@@ -172,6 +172,7 @@
     }
 
     .nav-links {
+      color: #f5f5f5;
       display: flex;
       list-style: none;
       gap: 1.5rem;
@@ -214,12 +215,54 @@
     }
 
     .theme-toggle {
+
       background: none;
       border: none;
       font-size: 1.2rem;
       cursor: pointer;
       color: var(--text-primary);
     }
+    .theme-toggle-circle {
+  width: 40px;
+  height: 40px;
+  background-color: var(--bg-toggle, #0d1117e6);
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+  font-size: 22px;
+}
+
+.icon-wrapper {
+  width: 150%;
+  height: 100%;
+  display: flex;
+  transition: transform 0.4s ease;
+}
+
+.emoji-icon {
+  flex: 1;
+  text-align: center;
+  line-height: 50px;
+}
+
+/* Light mode: show moon */
+body.light-mode .icon-wrapper {
+  transform: translateX(0%);
+}
+
+/* Dark mode: show sun */
+body:not(.light-mode) .icon-wrapper {
+  transform: translateX(-50%);
+}
+
+
 
     .hamburger {
       display: none;
@@ -227,6 +270,48 @@
       cursor: pointer;
       color: var(--text-primary);
     }
+    .language-wrapper {
+  position: relative;
+}
+
+.language-toggle-btn {
+  font-size: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.language-dropdown {
+  
+  position: absolute;
+  top: 110%;
+  right: 0;
+  background-color: #2cdb75;
+  border: 1px solid #22e473;
+  border-radius: 8px;
+  list-style: none;
+  padding: 8px 0;
+  margin: 0;
+  width: 150px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  z-index: 999;
+}
+
+.language-dropdown li {
+  color: #0d1117;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.language-dropdown li:hover {
+  background-color: #f0f0f0;
+}
+
+.hidden {
+  display: none;
+}
+
+
 
     /* Hero Section */
     .hero {
@@ -482,6 +567,7 @@
     }
 
     .footer-about p {
+      color: #f5f7fa;
       margin-bottom: 1.5rem;
     }
 
@@ -507,6 +593,7 @@
     }
 
     .footer-links h3 {
+      color:#f5f7fa;
       margin-bottom: 1.5rem;
       font-size: 1.2rem;
       position: relative;
@@ -514,6 +601,7 @@
     }
 
     .footer-links h3::after {
+      
       content: '';
       position: absolute;
       bottom: 0;
@@ -524,6 +612,7 @@
     }
 
     .footer-links ul {
+      color: #f5f7fa;
       list-style: none;
     }
 
@@ -667,6 +756,7 @@
         text-align: center;
       }
     }
+    
   </style>
 </head>
 <body>
@@ -686,18 +776,29 @@
       </ul>
       
       <div class="nav-actions">
-        <select class="language-select">
-          <option value="en">English</option>
-          <option value="hi">हिन्दी</option>
-          <option value="es">Español</option>
-          <option value="fr">Français</option>
-        </select>
         
-        <button class="theme-toggle" id="themeToggle" title="Toggle Theme">
-          <i class="fas fa-moon"></i>
+        <div class="nav-actions">
+          <div class="language-wrapper">
+            <button id="languageToggle" class="language-toggle-btn" title="Change Language">🌐</button>
+            <ul id="languageDropdown" class="language-dropdown hidden">
+              <li data-lang="en">English</li>
+              <li data-lang="hi">हिन्दी</li>
+              <li data-lang="es">Español</li>
+              <li data-lang="fr">Français</li>
+            </ul>
+          </div>
+        </div>
+        
+
+        <a href="login.html" class="btn btn-outline">Login/Register</a>
+
+        <button class="theme-toggle-circle" id="themeToggle" title="Toggle Theme">
+          <div class="icon-wrapper">
+            <span class="emoji-icon" id="sunEmoji">🌞</span>
+            <span class="emoji-icon" id="moonEmoji">🌙</span>
+          </div>
         </button>
         
-        <a href="login.html" class="btn btn-outline">Login/Register</a>
         
         <div class="hamburger" id="hamburger">
           <i class="fas fa-bars"></i>
@@ -896,7 +997,7 @@
       document.body.setAttribute('data-theme', currentTheme);
       
       if (currentTheme === 'dark') {
-        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        themeToggle.innerHTML = '<i class="emoji-icon">🌞</i>';
       }
       
       themeToggle.addEventListener('click', function() {
@@ -906,8 +1007,31 @@
         document.body.setAttribute('data-theme', newTheme);
         localStorage.setItem('theme', newTheme);
         
-        themeToggle.innerHTML = newTheme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        themeToggle.innerHTML = newTheme === 'dark' ? '<i class="emoji-icon">🌞</i>' : '<i class="emoji-icon">🌙</i>';
       });
+      const toggleBtn = document.getElementById("languageToggle");
+  const dropdown = document.getElementById("languageDropdown");
+
+  toggleBtn.addEventListener("click", () => {
+    dropdown.classList.toggle("hidden");
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!toggleBtn.contains(e.target) && !dropdown.contains(e.target)) {
+      dropdown.classList.add("hidden");
+    }
+  });
+
+  // Optional: Handle selection
+  dropdown.addEventListener("click", (e) => {
+    if (e.target.tagName === "LI") {
+      const selectedLang = e.target.getAttribute("data-lang");
+      console.log("Selected language:", selectedLang);
+      // You can now use selectedLang as needed
+      dropdown.classList.add("hidden");
+    }
+  });
+      
       
       // Mobile Navigation
       const hamburger = document.getElementById('hamburger');
