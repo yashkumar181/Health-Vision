@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Image Diagnosis | HealthVision</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
+  <style>
+    /* Reuse the same CSS variables and base styles from your main page */
+    :root {
+      --primary-color: #4caf50;
+      --primary-dark: #388e3c;
+      --primary-light: #81c784;
+      --secondary-color: #2196f3;
+      --accent-color: #ff9800;
+      --text-primary: white;
+      --text-secondary: white;
+      --bg-light: #f5f7fa;
+      --bg-dark: #1a202c;
+      --card-bg: #ffffff;
+      --nav-bg: rgba(26, 32, 44, 0.9);
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+
+    [data-theme="dark"] {
+      --primary-color: #81c784;
+      --primary-dark: #4caf50;
+      --primary-light: #388e3c;
+      --secondary-color: #64b5f6;
+      --accent-color: #ffb74d;
+      --text-primary: #f5f5f5;
+      --text-secondary: #b0bec5;
+      --bg-light: #121212;
+      --bg-dark: #0d1117;
+      --card-bg: #1e1e1e;
+      --nav-bg: rgba(13, 17, 23, 0.9);
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-primary);
+      line-height: 1.6;
+      transition: var(--transition);
+    }
+
+    body[data-theme="dark"] {
+      background-color: var(--bg-dark);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* Navigation - Same as main page */
+    .nav-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background-color: var(--nav-bg);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      padding: 1rem 0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      transition: var(--transition);
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo a {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .logo i {
+      font-size: 1.8rem;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 1.5rem;
+    }
+
+    .nav-links a {
+      color: var(--text-primary);
+      font-weight: 500;
+      position: relative;
+      padding: 0.5rem 0;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: var(--primary-color);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .language-select {
+      padding: 0.5rem;
+      border-radius: 6px;
+      border: 1px solid var(--text-secondary);
+      background-color: var(--card-bg);
+      color: var(--text-primary);
+    }
+
+    .theme-toggle {
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: var(--text-primary);
+    }
+
+    .hamburger {
+      display: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--text-primary);
+    }
+
+    /* Image Diagnosis Specific Styles */
+    .image-diagnosis {
+      padding: 6rem 0 3rem;
+      min-height: calc(100vh - 80px);
+    }
+
+    .diagnosis-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .diagnosis-header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--primary-color);
+    }
+
+    .diagnosis-header p {
+      color: var(--text-secondary);
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .diagnosis-container {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .upload-section {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .upload-instructions {
+      margin-bottom: 1.5rem;
+      color: var(--text-secondary);
+    }
+
+    .upload-box {
+      border: 2px dashed var(--primary-light);
+      border-radius: 8px;
+      padding: 2rem;
+      cursor: pointer;
+      transition: var(--transition);
+      margin-bottom: 1.5rem;
+    }
+
+    .upload-box:hover {
+      border-color: var(--primary-color);
+      background-color: rgba(76, 175, 80, 0.05);
+    }
+
+    .upload-icon {
+      font-size: 3rem;
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+    }
+
+    .upload-text {
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+
+    .upload-subtext {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    #fileInput {
+      display: none;
+    }
+
+    .image-preview {
+      display: none;
+      margin-top: 2rem;
+      text-align: center;
+    }
+
+    .preview-image {
+      max-width: 100%;
+      max-height: 300px;
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .selected-file {
+      margin-top: 1rem;
+      font-weight: 500;
+      color: var(--primary-color);
+    }
+
+    .analyze-btn {
+      display: none;
+      width: 100%;
+      padding: 1rem;
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      margin-top: 1.5rem;
+    }
+
+    .analyze-btn:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+
+    .results-section {
+      display: none;
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(76, 175, 80, 0.3);
+    }
+
+    .results-header {
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .results-header h2 {
+      color: var(--primary-color);
+      margin-bottom: 0.5rem;
+    }
+
+    .results-header p {
+      color: var(--text-secondary);
+    }
+
+    .loading {
+      display: none;
+      text-align: center;
+      padding: 1rem;
+    }
+
+    .loading-spinner {
+      border: 4px solid rgba(76, 175, 80, 0.3);
+      border-top: 4px solid var(--primary-color);
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 1rem;
+    }
+
+    .diagnosis-results {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .diagnosis-card {
+      background-color: rgba(76, 175, 80, 0.1);
+      border-radius: 8px;
+      padding: 1.5rem;
+      border-left: 4px solid var(--primary-color);
+      transition: var(--transition);
+    }
+
+    .diagnosis-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow);
+    }
+
+    .diagnosis-name {
+      color: var(--primary-color);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .diagnosis-name i {
+      font-size: 1.2rem;
+    }
+
+    .diagnosis-probability {
+      display: inline-block;
+      background-color: var(--primary-dark);
+      color: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .diagnosis-description {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+
+    .actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .action-btn {
+      flex: 1;
+      padding: 0.75rem;
+      border-radius: 8px;
+      font-weight: 600;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+      border: none;
+    }
+
+    .doctor-btn {
+      background-color: var(--secondary-color);
+      color: white;
+    }
+
+    .doctor-btn:hover {
+      background-color: #1976d2;
+    }
+
+    .hospital-btn {
+      background-color: var(--accent-color);
+      color: white;
+    }
+
+    .hospital-btn:hover {
+      background-color: #f57c00;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Footer - Same as main page */
+    .footer {
+      background-color: var(--nav-bg);
+      color: var(--text-primary);
+      padding: 3rem 0 1.5rem;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+      display: inline-block;
+    }
+
+    .footer-about p {
+      margin-bottom: 1.5rem;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .social-links a {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .social-links a:hover {
+      background-color: var(--primary-color);
+      transform: translateY(-3px);
+    }
+
+    .footer-links h3 {
+      margin-bottom: 1.5rem;
+      font-size: 1.2rem;
+      position: relative;
+      padding-bottom: 0.5rem;
+    }
+
+    .footer-links h3::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 40px;
+      height: 2px;
+      background-color: var(--primary-color);
+    }
+
+    .footer-links ul {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-links a {
+      color: var(--text-secondary);
+      transition: var(--transition);
+    }
+
+    .footer-links a:hover {
+      color: var(--primary-color);
+      padding-left: 5px;
+    }
+
+    .footer-contact p {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      color: var(--text-secondary);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .nav-links {
+        position: fixed;
+        top: 80px;
+        left: 0;
+        right: 0;
+        background-color: var(--nav-bg);
+        flex-direction: column;
+        align-items: center;
+        padding: 2rem 0;
+        gap: 1.5rem;
+        clip-path: circle(0px at 90% -10%);
+        transition: clip-path 0.5s ease;
+      }
+      
+      .nav-links.active {
+        clip-path: circle(150% at 90% -10%);
+      }
+      
+      .hamburger {
+        display: block;
+      }
+      
+      .diagnosis-header h1 {
+        font-size: 2rem;
+      }
+      
+      .diagnosis-results {
+        grid-template-columns: 1fr;
+      }
+      
+      .actions {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation - Same as main page -->
+  <header class="nav-container">
+    <nav class="navbar container">
+      <div class="logo">
+        <a href="index.html"><i class="fas fa-heartbeat"></i> HealthVision</a>
+      </div>
+      
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#about">About Us</a></li>
+        <li><a href="index.html#features">Features</a></li>
+        <li><a href="index.html#how-it-works">How It Works</a></li>
+      </ul>
+      
+      <div class="nav-actions">
+        <select class="language-select">
+          <option value="en">English</option>
+          <option value="hi">हिन्दी</option>
+          <option value="es">Español</option>
+          <option value="fr">Français</option>
+        </select>
+        
+        <button class="theme-toggle" id="themeToggle" title="Toggle Theme">
+          <i class="fas fa-moon"></i>
+        </button>
+        
+        <a href="login.html" class="btn btn-outline">Login/Register</a>
+        
+        <div class="hamburger" id="hamburger">
+          <i class="fas fa-bars"></i>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Image Diagnosis Main Content -->
+  <main class="image-diagnosis">
+    <div class="container">
+      <div class="diagnosis-header">
+        <h1><i class="fas fa-camera"></i> Image Diagnosis</h1>
+        <p>Upload clear images of affected areas for AI-powered analysis. Our system will examine your images and provide potential diagnoses.</p>
+      </div>
+      
+      <div class="diagnosis-container">
+        <div class="upload-section">
+          <p class="upload-instructions">Please upload a clear, close-up image of the affected area for better analysis.</p>
+          
+          <div class="upload-box" id="uploadBox">
+            <div class="upload-icon">
+              <i class="fas fa-cloud-upload-alt"></i>
+            </div>
+            <p class="upload-text">Choose an image</p>
+            <p class="upload-subtext">JPG, PNG, or WEBP (Max 5MB)</p>
+            <input type="file" id="fileInput" accept="image/*">
+          </div>
+          
+          <div class="image-preview" id="imagePreview">
+            <img class="preview-image" id="previewImage" src="#" alt="Preview">
+            <p class="selected-file" id="selectedFileName"></p>
+          </div>
+          
+          <button class="analyze-btn" id="analyzeBtn">Analyze Image</button>
+        </div>
+        
+        <div class="loading" id="loadingIndicator">
+          <div class="loading-spinner"></div>
+          <p>Analyzing your image...</p>
+        </div>
+        
+        <div class="results-section" id="resultsSection">
+          <div class="results-header">
+            <h2>Analysis Results</h2>
+            <p>Possible Diagnoses</p>
+          </div>
+          
+          <div class="diagnosis-results">
+            <div class="diagnosis-card">
+              <h3 class="diagnosis-name"><i class="fas fa-disease"></i> Cellulitis</h3>
+              <span class="diagnosis-probability">85% match</span>
+              <p class="diagnosis-description">A common bacterial skin infection that causes redness, swelling, and pain in the affected area.</p>
+            </div>
+            
+            <div class="diagnosis-card">
+              <h3 class="diagnosis-name"><i class="fas fa-allergies"></i> Erysipelas</h3>
+              <span class="diagnosis-probability">72% match</span>
+              <p class="diagnosis-description">A superficial form of cellulitis that typically affects the upper dermis and superficial lymphatic vessels.</p>
+            </div>
+            
+            <div class="diagnosis-card">
+              <h3 class="diagnosis-name"><i class="fas fa-biohazard"></i> Necrotizing Fasciitis</h3>
+              <span class="diagnosis-probability">65% match</span>
+              <p class="diagnosis-description">A rare but serious bacterial infection that spreads quickly and can cause tissue death.</p>
+            </div>
+          </div>
+          
+          <div class="actions">
+            <button class="action-btn doctor-btn">
+              <i class="fas fa-user-md"></i> Consult a Specialist
+            </button>
+            <button class="action-btn hospital-btn">
+              <i class="fas fa-hospital"></i> Find Nearby Hospitals
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer - Same as main page -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-about">
+          <a href="#" class="footer-logo"><i class="fas fa-heartbeat"></i> HealthVision</a>
+          <p>Empowering individuals with AI-driven healthcare insights and connections to medical professionals worldwide.</p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+        
+        <div class="footer-links">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#features">Features</a></li>
+            <li><a href="index.html#how-it-works">How It Works</a></li>
+            <li><a href="index.html#about">About Us</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-links">
+          <h3>Features</h3>
+          <ul>
+            <li><a href="symptom-checker.html">Symptom Checker</a></li>
+            <li><a href="image-diagnosis.html">Image Diagnosis</a></li>
+            <li><a href="nearby-hospitals.html">Hospital Finder</a></li>
+            <li><a href="report-summarizing.html">Report Summarizer</a></li>
+            <li><a href="consultancy.html">Doctor Consultations</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-contact">
+          <h3>Contact Us</h3>
+          <p><i class="fas fa-envelope"></i> support@healthvision.com</p>
+          <p><i class="fas fa-phone"></i> +1 (800) 123-4567</p>
+          <p><i class="fas fa-map-marker-alt"></i> 123 Medical Drive, Health City, HC 12345</p>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; 2025 HealthVision. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Theme Toggle (Same as main page)
+      const themeToggle = document.getElementById('themeToggle');
+      const currentTheme = localStorage.getItem('theme') || 'light';
+      
+      document.body.setAttribute('data-theme', currentTheme);
+      
+      if (currentTheme === 'dark') {
+        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+      }
+      
+      themeToggle.addEventListener('click', function() {
+        const currentTheme = document.body.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        
+        document.body.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        
+        themeToggle.innerHTML = newTheme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+      });
+      
+      // Mobile Navigation (Same as main page)
+      const hamburger = document.getElementById('hamburger');
+      const navLinks = document.getElementById('navLinks');
+      
+      hamburger.addEventListener('click', function() {
+        navLinks.classList.toggle('active');
+        hamburger.classList.toggle('active');
+      });
+      
+      // Image Diagnosis Functionality
+      const uploadBox = document.getElementById('uploadBox');
+      const fileInput = document.getElementById('fileInput');
+      const previewImage = document.getElementById('previewImage');
+      const imagePreview = document.getElementById('imagePreview');
+      const selectedFileName = document.getElementById('selectedFileName');
+      const analyzeBtn = document.getElementById('analyzeBtn');
+      const loadingIndicator = document.getElementById('loadingIndicator');
+      const resultsSection = document.getElementById('resultsSection');
+      
+      // Handle file selection
+      uploadBox.addEventListener('click', function() {
+        fileInput.click();
+      });
+      
+      fileInput.addEventListener('change', function() {
+        if (fileInput.files && fileInput.files[0]) {
+          const file = fileInput.files[0];
+          
+          // Check file size (max 5MB)
+          if (file.size > 5 * 1024 * 1024) {
+            alert('File size exceeds 5MB limit. Please choose a smaller file.');
+            return;
+          }
+          
+          // Check file type
+          const validTypes = ['image/jpeg', 'image/png', 'image/webp'];
+          if (!validTypes.includes(file.type)) {
+            alert('Please upload a valid image file (JPG, PNG, or WEBP).');
+            return;
+          }
+          
+          const reader = new FileReader();
+          
+          reader.onload = function(e) {
+            previewImage.src = e.target.result;
+            selectedFileName.textContent = file.name;
+            imagePreview.style.display = 'block';
+            analyzeBtn.style.display = 'block';
+          }
+          
+          reader.readAsDataURL(file);
+        }
+      });
+      
+      // Handle analyze button click
+      analyzeBtn.addEventListener('click', function() {
+        if (!fileInput.files || !fileInput.files[0]) {
+          alert('Please select an image first.');
+          return;
+        }
+        
+        // Show loading indicator
+        loadingIndicator.style.display = 'block';
+        resultsSection.style.display = 'none';
+        
+        // Simulate API call with timeout
+        setTimeout(function() {
+          loadingIndicator.style.display = 'none';
+          resultsSection.style.display = 'block';
+          
+          // Here you would normally process the API response
+          // For now we're showing sample data
+          
+          // Scroll to results
+          resultsSection.scrollIntoView({ behavior: 'smooth' });
+        }, 2000);
+      });
+      
+      // This function would be called when you get your API response
+      function displayResults(data) {
+        // You would process the API response here and update the DOM
+        // Example:
+        /*
+        const resultsContainer = document.querySelector('.diagnosis-results');
+        resultsContainer.innerHTML = '';
+        
+        data.diagnoses.forEach(diagnosis => {
+          const card = document.createElement('div');
+          card.className = 'diagnosis-card';
+          card.innerHTML = `
+            <h3 class="diagnosis-name"><i class="fas fa-disease"></i> ${diagnosis.name}</h3>
+            <span class="diagnosis-probability">${diagnosis.probability}% match</span>
+            <p class="diagnosis-description">${diagnosis.description}</p>
+          `;
+          resultsContainer.appendChild(card);
+        });
+        */
+      }
+    });
+  </script>
+</body>
+</html>

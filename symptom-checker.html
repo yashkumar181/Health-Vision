@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Symptom Checker | HealthVision</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
+  <style>
+    /* Reuse the same CSS variables and base styles from your main page */
+    :root {
+      --primary-color: #4caf50;
+      --primary-dark: #388e3c;
+      --primary-light: #81c784;
+      --secondary-color: #2196f3;
+      --accent-color: #ff9800;
+      --text-primary: white;
+      --text-secondary: white;
+      --bg-light: #f5f7fa;
+      --bg-dark: #1a202c;
+      --card-bg: #ffffff;
+      --nav-bg: rgba(26, 32, 44, 0.9);
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+
+    [data-theme="dark"] {
+      --primary-color: #81c784;
+      --primary-dark: #4caf50;
+      --primary-light: #388e3c;
+      --secondary-color: #64b5f6;
+      --accent-color: #ffb74d;
+      --text-primary: #f5f5f5;
+      --text-secondary: #b0bec5;
+      --bg-light: #121212;
+      --bg-dark: #0d1117;
+      --card-bg: #1e1e1e;
+      --nav-bg: rgba(13, 17, 23, 0.9);
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-primary);
+      line-height: 1.6;
+      transition: var(--transition);
+    }
+
+    body[data-theme="dark"] {
+      background-color: var(--bg-dark);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* Navigation - Same as main page */
+    .nav-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background-color: var(--nav-bg);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      padding: 1rem 0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      transition: var(--transition);
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo a {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .logo i {
+      font-size: 1.8rem;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 1.5rem;
+    }
+
+    .nav-links a {
+      color: var(--text-primary);
+      font-weight: 500;
+      position: relative;
+      padding: 0.5rem 0;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: var(--primary-color);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .language-select {
+      padding: 0.5rem;
+      border-radius: 6px;
+      border: 1px solid var(--text-secondary);
+      background-color: var(--card-bg);
+      color: var(--text-primary);
+    }
+
+    .theme-toggle {
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: var(--text-primary);
+    }
+
+    .hamburger {
+      display: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--text-primary);
+    }
+
+    /* Symptom Checker Specific Styles */
+    .symptom-checker {
+      padding: 6rem 0 3rem;
+      min-height: calc(100vh - 80px);
+    }
+
+    .checker-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .checker-header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--primary-color);
+    }
+
+    .checker-header p {
+      color: var(--text-secondary);
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .checker-container {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .input-section {
+      margin-bottom: 2rem;
+    }
+
+    .symptom-input {
+      width: 100%;
+      min-height: 150px;
+      padding: 1rem;
+      border-radius: 8px;
+      border: 2px solid var(--primary-light);
+      background-color: var(--card-bg);
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      resize: vertical;
+      transition: var(--transition);
+    }
+
+    .symptom-input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.3);
+    }
+
+    .analyze-btn {
+      display: block;
+      width: 100%;
+      padding: 1rem;
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .analyze-btn:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+
+    .results-section {
+      display: none;
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(76, 175, 80, 0.3);
+    }
+
+    .results-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .results-header h2 {
+      color: var(--primary-color);
+    }
+
+    .loading {
+      display: none;
+      text-align: center;
+      padding: 1rem;
+    }
+
+    .loading-spinner {
+      border: 4px solid rgba(76, 175, 80, 0.3);
+      border-top: 4px solid var(--primary-color);
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 1rem;
+    }
+
+    .result-item {
+      background-color: rgba(76, 175, 80, 0.1);
+      border-left: 4px solid var(--primary-color);
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .result-item h3 {
+      color: var(--primary-color);
+      margin-bottom: 0.5rem;
+    }
+
+    .result-item p {
+      color: var(--text-secondary);
+    }
+
+    .probability {
+      display: inline-block;
+      background-color: var(--primary-dark);
+      color: white;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+    }
+
+    .actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .action-btn {
+      flex: 1;
+      padding: 0.75rem;
+      border-radius: 8px;
+      font-weight: 600;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+      border: none;
+    }
+
+    .doctor-btn {
+      background-color: var(--secondary-color);
+      color: white;
+    }
+
+    .doctor-btn:hover {
+      background-color: #1976d2;
+    }
+
+    .hospital-btn {
+      background-color: var(--accent-color);
+      color: white;
+    }
+
+    .hospital-btn:hover {
+      background-color: #f57c00;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .nav-links {
+        position: fixed;
+        top: 80px;
+        left: 0;
+        right: 0;
+        background-color: var(--nav-bg);
+        flex-direction: column;
+        align-items: center;
+        padding: 2rem 0;
+        gap: 1.5rem;
+        clip-path: circle(0px at 90% -10%);
+        transition: clip-path 0.5s ease;
+      }
+      
+      .nav-links.active {
+        clip-path: circle(150% at 90% -10%);
+      }
+      
+      .hamburger {
+        display: block;
+      }
+      
+      .checker-header h1 {
+        font-size: 2rem;
+      }
+      
+      .actions {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation - Same as main page -->
+  <header class="nav-container">
+    <nav class="navbar container">
+      <div class="logo">
+        <a href="index.html"><i class="fas fa-heartbeat"></i> HealthVision</a>
+      </div>
+      
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#about">About Us</a></li>
+        <li><a href="index.html#features">Features</a></li>
+        <li><a href="index.html#how-it-works">How It Works</a></li>
+      </ul>
+      
+      <div class="nav-actions">
+        <select class="language-select">
+          <option value="en">English</option>
+          <option value="hi">हिन्दी</option>
+          <option value="es">Español</option>
+          <option value="fr">Français</option>
+        </select>
+        
+        <button class="theme-toggle" id="themeToggle" title="Toggle Theme">
+          <i class="fas fa-moon"></i>
+        </button>
+        
+        <a href="login.html" class="btn btn-outline">Login/Register</a>
+        
+        <div class="hamburger" id="hamburger">
+          <i class="fas fa-bars"></i>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Symptom Checker Main Content -->
+  <main class="symptom-checker">
+    <div class="container">
+      <div class="checker-header">
+        <h1><i class="fas fa-stethoscope"></i> Symptom Checker</h1>
+        <p>Describe your symptoms in detail to receive AI-powered health insights. Our system will analyze your input and provide potential condition matches with probability scores.</p>
+      </div>
+      
+      <div class="checker-container">
+        <div class="input-section">
+          <textarea class="symptom-input" placeholder="Describe your symptoms here... Be as detailed as possible. Example: 'I've had a persistent headache for 3 days, accompanied by nausea and sensitivity to light. The pain is throbbing and concentrated on the right side of my head.'"></textarea>
+          <button class="analyze-btn" id="analyzeBtn">Analyze Symptoms</button>
+        </div>
+        
+        <div class="loading" id="loadingIndicator">
+          <div class="loading-spinner"></div>
+          <p>Analyzing your symptoms...</p>
+        </div>
+        
+        <div class="results-section" id="resultsSection">
+          <div class="results-header">
+            <h2>Analysis Results</h2>
+            <span class="probability">Accuracy: 92%</span>
+          </div>
+          
+          <div class="result-item">
+            <h3>Migraine</h3>
+            <p>A neurological condition that can cause severe throbbing pain, usually on one side of the head. Often accompanied by nausea, vomiting, and extreme sensitivity to light and sound.</p>
+            <span class="probability">85% match</span>
+          </div>
+          
+          <div class="result-item">
+            <h3>Tension Headache</h3>
+            <p>Mild to moderate pain that's often described as feeling like a tight band around the head. Can be caused by stress, poor posture, or eye strain.</p>
+            <span class="probability">72% match</span>
+          </div>
+          
+          <div class="result-item">
+            <h3>Sinus Headache</h3>
+            <p>Deep, constant pain in the cheekbones, forehead, or bridge of the nose that usually intensifies with sudden head movement.</p>
+            <span class="probability">65% match</span>
+          </div>
+          
+          <div class="actions">
+            <button class="action-btn doctor-btn">
+              <i class="fas fa-user-md"></i> Talk to a Doctor
+            </button>
+            <button class="action-btn hospital-btn">
+              <i class="fas fa-hospital"></i> Find Nearby Hospitals
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Theme Toggle (Same as main page)
+      const themeToggle = document.getElementById('themeToggle');
+      const currentTheme = localStorage.getItem('theme') || 'light';
+      
+      document.body.setAttribute('data-theme', currentTheme);
+      
+      if (currentTheme === 'dark') {
+        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+      }
+      
+      themeToggle.addEventListener('click', function() {
+        const currentTheme = document.body.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        
+        document.body.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        
+        themeToggle.innerHTML = newTheme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+      });
+      
+      // Mobile Navigation (Same as main page)
+      const hamburger = document.getElementById('hamburger');
+      const navLinks = document.getElementById('navLinks');
+      
+      hamburger.addEventListener('click', function() {
+        navLinks.classList.toggle('active');
+        hamburger.classList.toggle('active');
+      });
+      
+      // Symptom Checker Functionality
+      const analyzeBtn = document.getElementById('analyzeBtn');
+      const loadingIndicator = document.getElementById('loadingIndicator');
+      const resultsSection = document.getElementById('resultsSection');
+      const symptomInput = document.querySelector('.symptom-input');
+      
+      analyzeBtn.addEventListener('click', function() {
+        const symptoms = symptomInput.value.trim();
+        
+        if (symptoms.length < 10) {
+          alert('Please describe your symptoms in more detail (at least 10 characters)');
+          return;
+        }
+        
+        // Show loading indicator
+        loadingIndicator.style.display = 'block';
+        resultsSection.style.display = 'none';
+        
+        // Simulate API call with timeout
+        setTimeout(function() {
+          loadingIndicator.style.display = 'none';
+          resultsSection.style.display = 'block';
+          
+          // Here you would normally process the API response
+          // For now we're showing sample data
+          
+          // Scroll to results
+          resultsSection.scrollIntoView({ behavior: 'smooth' });
+        }, 2000);
+      });
+      
+      // This function would be called when you get your API response
+      function displayResults(data) {
+        // You would process the API response here and update the DOM
+        // Example:
+        /*
+        const resultsContainer = document.querySelector('.results-section');
+        resultsContainer.innerHTML = '';
+        
+        data.conditions.forEach(condition => {
+          const item = document.createElement('div');
+          item.className = 'result-item';
+          item.innerHTML = `
+            <h3>${condition.name}</h3>
+            <p>${condition.description}</p>
+            <span class="probability">${condition.probability}% match</span>
+          `;
+          resultsContainer.appendChild(item);
+        });
+        */
+      }
+    });
+  </script>
+</body>
+</html>
