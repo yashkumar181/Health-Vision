@@ -17,12 +17,12 @@
       --primary-light: #81c784;
       --secondary-color: #2196f3;
       --accent-color: #ff9800;
-      --text-primary: rgb(0, 0, 0);
-      --text-secondary: rgb(0, 0, 0);
-      --bg-light: #f5f7fa;
+      --text-primary: white;
+      --text-secondary: white;
+      --bg-light: #e7eef9;
       --bg-dark: #1a202c;
       --card-bg: #ffffff;
-      --nav-bg: rgba(214, 255, 216, 0.9);
+      --nav-bg: rgba(26, 32, 44, 0.9);
       --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       --transition: all 0.3s ease;
     }
@@ -141,7 +141,7 @@
       border-radius: 6px;
       border: 1px solid var(--text-secondary);
       background-color: var(--card-bg);
-      color: var(--text-primary);
+      color: darkgray;
     }
 
     .theme-toggle {
@@ -177,7 +177,7 @@
     }
 
     .diagnosis-header p {
-      color: var(--text-secondary);
+      color: darkgray;
       max-width: 700px;
       margin: 0 auto;
     }
@@ -198,7 +198,7 @@
 
     .upload-instructions {
       margin-bottom: 1.5rem;
-      color: var(--text-secondary);
+      color: darkgrey;
     }
 
     .upload-box {
@@ -222,12 +222,13 @@
     }
 
     .upload-text {
+      color:darkgray;
       font-weight: 500;
       margin-bottom: 0.5rem;
     }
 
     .upload-subtext {
-      color: var(--text-secondary);
+      color: darkgray;
       font-size: 0.9rem;
     }
 
@@ -562,8 +563,8 @@
       
       <div class="nav-actions">
         <select class="language-select">
-          <option value="en">English</option>
-          <option value="hi">हिन्दी</option>
+          <option value="en"><strong>English</strong></option>
+          <option value="hi"><strong>हिन्दी</strong></option>
         </select>
         
         <button class="theme-toggle" id="themeToggle" title="Toggle Theme">
