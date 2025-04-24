@@ -15,12 +15,12 @@
       --primary-light: #81c784;
       --secondary-color: #2196f3;
       --accent-color: #ff9800;
-      --text-primary: white;
-      --text-secondary: white;
+      --text-primary: rgb(0, 0, 0);
+      --text-secondary: rgb(0, 0, 0);
       --bg-light: #f5f7fa;
       --bg-dark: #1a202c;
       --card-bg: #ffffff;
-      --nav-bg: rgba(26, 32, 44, 0.9);
+      --nav-bg: rgba(214, 255, 216, 0.9);
       --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       --transition: all 0.3s ease;
     }
@@ -45,6 +45,9 @@
       padding: 0;
       box-sizing: border-box;
     }
+    a {
+      text-decoration: none;
+    } 
 
     body {
       font-family: 'Inter', sans-serif;
@@ -59,7 +62,7 @@
     }
 
     .container {
-      max-width: 1200px;
+      max-width: 1840px;
       margin: 0 auto;
       padding: 0 1.5rem;
     }
@@ -549,16 +552,11 @@
         <select class="language-select">
           <option value="en">English</option>
           <option value="hi">हिन्दी</option>
-          <option value="es">Español</option>
-          <option value="fr">Français</option>
         </select>
         
         <button class="theme-toggle" id="themeToggle" title="Toggle Theme">
           <i class="fas fa-moon"></i>
         </button>
-        
-        <a href="login.html" class="btn btn-outline">Login/Register</a>
-        
         <div class="hamburger" id="hamburger">
           <i class="fas fa-bars"></i>
         </div>
