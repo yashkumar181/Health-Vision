@@ -398,6 +398,50 @@
       100% { transform: rotate(360deg); }
     }
 
+    @keyframes fadeInUp {
+  
+      from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  }
+
+  /* Spinner Animation */
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 5px solid #ccc;
+  border-top: 5px solid #4CAF50;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Result card animation */
+.diagnosis-card {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeSlideIn 0.5s ease forwards;
+}
+
+@keyframes fadeSlideIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+
     /* Footer - Same as main page */
     .footer {
       background-color: var(--nav-bg);
@@ -572,11 +616,11 @@
         <h1><i class="fas fa-camera"></i> Image Diagnosis</h1>
         <p>Upload clear images of affected areas for AI-powered analysis. Our system will examine your images and provide potential diagnoses.</p>
       </div>
-      
+  
       <div class="diagnosis-container">
         <div class="upload-section">
           <p class="upload-instructions">Please upload a clear, close-up image of the affected area for better analysis.</p>
-          
+  
           <div class="upload-box" id="uploadBox">
             <div class="upload-icon">
               <i class="fas fa-cloud-upload-alt"></i>
@@ -585,46 +629,30 @@
             <p class="upload-subtext">JPG, PNG, or WEBP (Max 5MB)</p>
             <input type="file" id="fileInput" accept="image/*">
           </div>
-          
+  
           <div class="image-preview" id="imagePreview">
-            <img class="preview-image" id="previewImage" src="#" alt="Preview">
+            <img class="preview-image" id="previewImage" src="#" alt="Preview" style="display: none;">
             <p class="selected-file" id="selectedFileName"></p>
           </div>
-          
+  
           <button class="analyze-btn" id="analyzeBtn">Analyze Image</button>
         </div>
-        
-        <div class="loading" id="loadingIndicator">
+  
+        <div class="loading" id="loadingIndicator" style="display: none;">
           <div class="loading-spinner"></div>
           <p>Analyzing your image...</p>
         </div>
-        
-        <div class="results-section" id="resultsSection">
+  
+        <div class="results-section" id="resultsSection" style="display: none;">
           <div class="results-header">
             <h2>Analysis Results</h2>
             <p>Possible Diagnoses</p>
           </div>
-          
-          <div class="diagnosis-results">
-            <div class="diagnosis-card">
-              <h3 class="diagnosis-name"><i class="fas fa-disease"></i> Cellulitis</h3>
-              <span class="diagnosis-probability">85% match</span>
-              <p class="diagnosis-description">A common bacterial skin infection that causes redness, swelling, and pain in the affected area.</p>
-            </div>
-            
-            <div class="diagnosis-card">
-              <h3 class="diagnosis-name"><i class="fas fa-allergies"></i> Erysipelas</h3>
-              <span class="diagnosis-probability">72% match</span>
-              <p class="diagnosis-description">A superficial form of cellulitis that typically affects the upper dermis and superficial lymphatic vessels.</p>
-            </div>
-            
-            <div class="diagnosis-card">
-              <h3 class="diagnosis-name"><i class="fas fa-biohazard"></i> Necrotizing Fasciitis</h3>
-              <span class="diagnosis-probability">65% match</span>
-              <p class="diagnosis-description">A rare but serious bacterial infection that spreads quickly and can cause tissue death.</p>
-            </div>
+  
+          <div class="diagnosis-results" id="diagnosisResults">
+            <!-- Result cards will be dynamically injected here via JS -->
           </div>
-          
+  
           <div class="actions">
             <button class="action-btn doctor-btn">
               <i class="fas fa-user-md"></i> Consult a Specialist
@@ -637,7 +665,7 @@
       </div>
     </div>
   </main>
-
+  
   <!-- Footer - Same as main page -->
   <footer class="footer">
     <div class="container">
@@ -678,125 +706,118 @@
   </footer>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Theme Toggle (Same as main page)
-      const themeToggle = document.getElementById('themeToggle');
-      const currentTheme = localStorage.getItem('theme') || 'light';
-      
-      document.body.setAttribute('data-theme', currentTheme);
-      
-      if (currentTheme === 'dark') {
+    document.addEventListener("DOMContentLoaded", function () {
+      // Theme Toggle
+      const themeToggle = document.getElementById("themeToggle");
+      const currentTheme = localStorage.getItem("theme") || "light";
+      document.body.setAttribute("data-theme", currentTheme);
+      if (currentTheme === "dark") {
         themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
       }
-      
-      themeToggle.addEventListener('click', function() {
-        const currentTheme = document.body.getAttribute('data-theme');
-        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-        
-        document.body.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
-        
-        themeToggle.innerHTML = newTheme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+      themeToggle.addEventListener("click", function () {
+        const newTheme = document.body.getAttribute("data-theme") === "light" ? "dark" : "light";
+        document.body.setAttribute("data-theme", newTheme);
+        localStorage.setItem("theme", newTheme);
+        themeToggle.innerHTML = newTheme === "dark" ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
       });
-      
-      // Mobile Navigation (Same as main page)
-      const hamburger = document.getElementById('hamburger');
-      const navLinks = document.getElementById('navLinks');
-      
-      hamburger.addEventListener('click', function() {
-        navLinks.classList.toggle('active');
-        hamburger.classList.toggle('active');
+  
+      // Mobile Navigation
+      const hamburger = document.getElementById("hamburger");
+      const navLinks = document.getElementById("navLinks");
+      hamburger.addEventListener("click", function () {
+        navLinks.classList.toggle("active");
+        hamburger.classList.toggle("active");
       });
-      
-      // Image Diagnosis Functionality
-      const uploadBox = document.getElementById('uploadBox');
-      const fileInput = document.getElementById('fileInput');
-      const previewImage = document.getElementById('previewImage');
-      const imagePreview = document.getElementById('imagePreview');
-      const selectedFileName = document.getElementById('selectedFileName');
-      const analyzeBtn = document.getElementById('analyzeBtn');
-      const loadingIndicator = document.getElementById('loadingIndicator');
-      const resultsSection = document.getElementById('resultsSection');
-      
-      // Handle file selection
-      uploadBox.addEventListener('click', function() {
-        fileInput.click();
-      });
-      
-      fileInput.addEventListener('change', function() {
-        if (fileInput.files && fileInput.files[0]) {
-          const file = fileInput.files[0];
-          
-          // Check file size (max 5MB)
-          if (file.size > 5 * 1024 * 1024) {
-            alert('File size exceeds 5MB limit. Please choose a smaller file.');
-            return;
-          }
-          
-          // Check file type
-          const validTypes = ['image/jpeg', 'image/png', 'image/webp'];
-          if (!validTypes.includes(file.type)) {
-            alert('Please upload a valid image file (JPG, PNG, or WEBP).');
-            return;
-          }
-          
-          const reader = new FileReader();
-          
-          reader.onload = function(e) {
-            previewImage.src = e.target.result;
-            selectedFileName.textContent = file.name;
-            imagePreview.style.display = 'block';
-            analyzeBtn.style.display = 'block';
-          }
-          
-          reader.readAsDataURL(file);
-        }
-      });
-      
-      // Handle analyze button click
-      analyzeBtn.addEventListener('click', function() {
-        if (!fileInput.files || !fileInput.files[0]) {
-          alert('Please select an image first.');
+  
+      // Image Diagnosis
+      const uploadBox = document.getElementById("uploadBox");
+      const fileInput = document.getElementById("fileInput");
+      const previewImage = document.getElementById("previewImage");
+      const imagePreview = document.getElementById("imagePreview");
+      const selectedFileName = document.getElementById("selectedFileName");
+      const analyzeBtn = document.getElementById("analyzeBtn");
+      const loadingIndicator = document.getElementById("loadingIndicator");
+      const resultsSection = document.getElementById("resultsSection");
+      const diagnosisResults = document.querySelector(".diagnosis-results");
+  
+      let selectedFile = null;
+  
+      uploadBox.addEventListener("click", () => fileInput.click());
+  
+      fileInput.addEventListener("change", function () {
+        const file = this.files[0];
+        if (!file) return;
+  
+        const validTypes = ["image/jpeg", "image/png", "image/webp"];
+        if (!validTypes.includes(file.type)) {
+          alert("Please upload a valid image file (JPG, PNG, or WEBP).");
           return;
         }
-        
-        // Show loading indicator
-        loadingIndicator.style.display = 'block';
-        resultsSection.style.display = 'none';
-        
-        // Simulate API call with timeout
-        setTimeout(function() {
-          loadingIndicator.style.display = 'none';
-          resultsSection.style.display = 'block';
-          
-          // Here you would normally process the API response
-          // For now we're showing sample data
-          
-          // Scroll to results
-          resultsSection.scrollIntoView({ behavior: 'smooth' });
-        }, 2000);
+        if (file.size > 5 * 1024 * 1024) {
+          alert("File size exceeds 5MB limit. Please choose a smaller file.");
+          return;
+        }
+  
+        selectedFile = file;
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          previewImage.src = e.target.result;
+          selectedFileName.textContent = file.name;
+          imagePreview.style.display = "block";
+          analyzeBtn.style.display = "block";
+        };
+        reader.readAsDataURL(file);
       });
-      
-      // This function would be called when you get your API response
-      function displayResults(data) {
-        // You would process the API response here and update the DOM
-        // Example:
-        /*
-        const resultsContainer = document.querySelector('.diagnosis-results');
-        resultsContainer.innerHTML = '';
-        
-        data.diagnoses.forEach(diagnosis => {
-          const card = document.createElement('div');
-          card.className = 'diagnosis-card';
-          card.innerHTML = `
-            <h3 class="diagnosis-name"><i class="fas fa-disease"></i> ${diagnosis.name}</h3>
-            <span class="diagnosis-probability">${diagnosis.probability}% match</span>
-            <p class="diagnosis-description">${diagnosis.description}</p>
-          `;
-          resultsContainer.appendChild(card);
-        });
-        */
-      }
+  
+      analyzeBtn.addEventListener("click", async () => {
+        if (!selectedFile) {
+          alert("Please select an image first.");
+          return;
+        }
+  
+        diagnosisResults.innerHTML = "";
+        resultsSection.style.display = "none";
+        loadingIndicator.style.display = "block";
+  
+        const reader = new FileReader();
+        reader.onloadend = async () => {
+          const base64Image = reader.result.split(",")[1];
+  
+          try {
+            const response = await fetch("https://disease-analyse.onrender.com/analyze", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ base64_image: base64Image }),
+            });
+  
+            const result = await response.json();
+            const diagnosisText = result.diagnoses || "No diagnosis received.";
+  
+            loadingIndicator.style.display = "none";
+            resultsSection.style.display = "block";
+  
+            const card = document.createElement("div");
+            card.classList.add("diagnosis-card");
+            card.style.opacity = "0";
+            card.style.transform = "translateY(10px)";
+            card.style.animation = `fadeInUp 0.4s ease forwards`;
+  
+            card.innerHTML = `
+              <h3 class="diagnosis-name"><i class="fas fa-notes-medical"></i> Diagnosis Results</h3>
+              <p class="diagnosis-description">${diagnosisText.replace(/\n/g, "<br>")}</p>
+            `;
+            diagnosisResults.appendChild(card);
+  
+            resultsSection.scrollIntoView({ behavior: "smooth" });
+          } catch (error) {
+            loadingIndicator.style.display = "none";
+            alert("Error analyzing the image. Please try again.");
+          }
+        };
+        reader.readAsDataURL(selectedFile);
+      });
     });
   </script>
 </body>
