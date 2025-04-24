@@ -8,7 +8,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   
   <style>
-
     
     /* Reuse the same CSS variables and base styles from your main page */
     :root {
@@ -327,6 +326,16 @@
       transition: var(--transition);
     }
 
+    .diagnosis-card {
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .diagnosis-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
     .diagnosis-card:hover {
       transform: translateY(-5px);
       box-shadow: var(--shadow);
@@ -398,50 +407,6 @@
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
-
-    @keyframes fadeInUp {
-  
-      from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  }
-
-  /* Spinner Animation */
-.loading-spinner {
-  width: 40px;
-  height: 40px;
-  border: 5px solid #ccc;
-  border-top: 5px solid #4CAF50;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin: auto;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-/* Result card animation */
-.diagnosis-card {
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeSlideIn 0.5s ease forwards;
-}
-
-@keyframes fadeSlideIn {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-
 
     /* Footer - Same as main page */
     .footer {
@@ -611,63 +576,60 @@
   </header>
 
   <!-- Image Diagnosis Main Content -->
-  
-<main class="image-diagnosis">
-  <div class="container">
-    <div class="diagnosis-header">
-      <h1><i class="fas fa-camera"></i> Image Diagnosis</h1>
-      <p>Upload clear images of affected areas for AI-powered analysis. Our system will examine your images and provide potential diagnoses.</p>
-    </div>
-
-    <div class="diagnosis-container">
-      <div class="upload-section">
-        <p class="upload-instructions">Please upload a clear, close-up image of the affected area for better analysis.</p>
-
-        <div class="upload-box" id="uploadBox">
-          <div class="upload-icon">
-            <i class="fas fa-cloud-upload-alt"></i>
+  <main class="image-diagnosis">
+    <div class="container">
+      <div class="diagnosis-header">
+        <h1><i class="fas fa-camera"></i> Image Diagnosis</h1>
+        <p>Upload clear images of affected areas for AI-powered analysis. Our system will examine your images and provide potential diagnoses.</p>
+      </div>
+      
+      <div class="diagnosis-container">
+        <div class="upload-section">
+          <p class="upload-instructions">Please upload a clear, close-up image of the affected area for better analysis.</p>
+          
+          <div class="upload-box" id="uploadBox">
+            <div class="upload-icon">
+              <i class="fas fa-cloud-upload-alt"></i>
+            </div>
+            <p class="upload-text">Choose an image</p>
+            <p class="upload-subtext">JPG, PNG, or WEBP (Max 5MB)</p>
+            <input type="file" id="fileInput" accept="image/*">
           </div>
-          <p class="upload-text">Choose an image</p>
-          <p class="upload-subtext">JPG, PNG, or WEBP (Max 5MB)</p>
-          <input type="file" id="fileInput" accept="image/*" style="display: none;">
+          
+          <div class="image-preview" id="imagePreview">
+            <img class="preview-image" id="previewImage" src="#" alt="Preview">
+            <p class="selected-file" id="selectedFileName"></p>
+          </div>
+          
+          <button class="analyze-btn" id="analyzeBtn">Analyze Image</button>
         </div>
-
-        <div class="image-preview" id="imagePreview" style="display: none;">
-          <img class="preview-image" id="previewImage" alt="Preview">
-          <p class="selected-file" id="selectedFileName"></p>
+        
+        <div class="loading" id="loadingIndicator">
+          <div class="loading-spinner"></div>
+          <p>Analyzing your image...</p>
         </div>
-
-        <button class="analyze-btn" id="analyzeBtn" style="display: none;">Analyze Image</button>
-      </div>
-
-      <div class="loading" id="loadingIndicator" style="display: none;">
-        <div class="loading-spinner"></div>
-        <p>Analyzing your image...</p>
-      </div>
-
-      <div class="results-section" id="resultsSection" style="display: none;">
-        <div class="results-header">
-          <h2>Analysis Results</h2>
-          <p>Possible Diagnoses</p>
-        </div>
-
-        <div class="diagnosis-results" id="diagnosisResults">
-          <!-- Result cards will be injected here -->
-        </div>
-
-        <div class="actions">
-          <button class="action-btn doctor-btn">
-            <i class="fas fa-user-md"></i> Consult a Specialist
-          </button>
-          <button class="action-btn hospital-btn">
-            <i class="fas fa-hospital"></i> Find Nearby Hospitals
-          </button>
-        </div>
+        
+        <div class="results-section" id="resultsSection" style="display: none;">
+            <div class="results-header">
+              <h2>Analysis Results</h2>
+              <p>Possible Diagnoses</p>
+            </div>
+            <div class="diagnosis-results" id="diagnosisResults">
+              <!-- Dynamic content will be inserted here -->
+            </div>
+            <div class="actions">
+              <button class="action-btn doctor-btn">
+                <i class="fas fa-user-md"></i> Consult a Specialist
+              </button>
+              <button class="action-btn hospital-btn">
+                <i class="fas fa-hospital"></i> Find Nearby Hospitals
+              </button>
+            </div>
+          </div>
       </div>
     </div>
-  </div>
-</main>
-  
+  </main>
+
   <!-- Footer - Same as main page -->
   <footer class="footer">
     <div class="container">
@@ -707,100 +669,160 @@
     </div>
   </footer>
 
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const uploadBox = document.getElementById("uploadBox");
-    const fileInput = document.getElementById("fileInput");
-    const previewImage = document.getElementById("previewImage");
-    const imagePreview = document.getElementById("imagePreview");
-    const selectedFileName = document.getElementById("selectedFileName");
-    const analyzeBtn = document.getElementById("analyzeBtn");
-    const loadingIndicator = document.getElementById("loadingIndicator");
-    const resultsSection = document.getElementById("resultsSection");
-    const diagnosisResults = document.getElementById("diagnosisResults");
-
-    let selectedFile = null;
-
-    uploadBox.addEventListener("click", () => fileInput.click());
-
-    fileInput.addEventListener("change", function () {
-      const file = this.files[0];
-      if (!file) return;
-
-      const validTypes = ["image/jpeg", "image/png", "image/webp"];
-      if (!validTypes.includes(file.type)) {
-        alert("Please upload a valid image file (JPG, PNG, or WEBP).");
-        return;
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Theme Toggle
+      const themeToggle = document.getElementById('themeToggle');
+      const currentTheme = localStorage.getItem('theme') || 'light';
+      
+      document.body.setAttribute('data-theme', currentTheme);
+      
+      if (currentTheme === 'dark') {
+        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
       }
-      if (file.size > 5 * 1024 * 1024) {
-        alert("File size exceeds 5MB limit.");
-        return;
-      }
-
-      selectedFile = file;
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        previewImage.src = e.target.result;
-        previewImage.style.display = "block";
-        selectedFileName.textContent = file.name;
-        imagePreview.style.display = "block";
-        analyzeBtn.style.display = "block";
-      };
-      reader.readAsDataURL(file);
-    });
-
-    analyzeBtn.addEventListener("click", async () => {
-      if (!selectedFile) {
-        alert("Please select an image first.");
-        return;
-      }
-
-      diagnosisResults.innerHTML = "";
-      resultsSection.style.display = "none";
-      loadingIndicator.style.display = "block";
-
-      const reader = new FileReader();
-      reader.onloadend = async () => {
-        const base64Image = reader.result.split(",")[1];
-
+      
+      themeToggle.addEventListener('click', function() {
+        const currentTheme = document.body.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        
+        document.body.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        
+        themeToggle.innerHTML = newTheme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+      });
+      
+      // Mobile Navigation
+      const hamburger = document.getElementById('hamburger');
+      const navLinks = document.getElementById('navLinks');
+      
+      hamburger.addEventListener('click', function() {
+        navLinks.classList.toggle('active');
+        hamburger.classList.toggle('active');
+      });
+      
+      // Image Diagnosis Functionality
+      const uploadBox = document.getElementById('uploadBox');
+      const fileInput = document.getElementById('fileInput');
+      const previewImage = document.getElementById('previewImage');
+      const imagePreview = document.getElementById('imagePreview');
+      const selectedFileName = document.getElementById('selectedFileName');
+      const analyzeBtn = document.getElementById('analyzeBtn');
+      const loadingIndicator = document.getElementById('loadingIndicator');
+      const resultsSection = document.getElementById('resultsSection');
+      
+      // File Upload Handling
+      uploadBox.addEventListener('click', function() {
+        fileInput.click();
+      });
+      
+      fileInput.addEventListener('change', function() {
+        if (fileInput.files && fileInput.files[0]) {
+          const file = fileInput.files[0];
+          
+          if (file.size > 5 * 1024 * 1024) {
+            alert('File size exceeds 5MB limit. Please choose a smaller file.');
+            return;
+          }
+          
+          const validTypes = ['image/jpeg', 'image/png', 'image/webp'];
+          if (!validTypes.includes(file.type)) {
+            alert('Please upload a valid image file (JPG, PNG, or WEBP).');
+            return;
+          }
+          
+          const reader = new FileReader();
+          
+          reader.onload = function(e) {
+            previewImage.src = e.target.result;
+            selectedFileName.textContent = file.name;
+            imagePreview.style.display = 'block';
+            analyzeBtn.style.display = 'block';
+          }
+          
+          reader.readAsDataURL(file);
+        }
+      });
+      
+      // Analyze Button Click Handler
+      analyzeBtn.addEventListener('click', async function() {
+        if (!fileInput.files || !fileInput.files[0]) {
+          alert('Please select an image first.');
+          return;
+        }
+        
+        loadingIndicator.style.display = 'block';
+        resultsSection.style.display = 'none';
+        
         try {
-          const response = await fetch("https://disease-analyse.onrender.com/analyze", {
-            method: "POST",
+          const file = fileInput.files[0];
+          const base64Image = await convertFileToBase64(file);
+          
+          const response = await fetch('https://disease-analyse.onrender.com/analyze', {
+            method: 'POST',
             headers: {
-              "Content-Type": "application/json",
+              'Content-Type': 'application/json',
             },
             body: JSON.stringify({ base64_image: base64Image }),
           });
-
-          const result = await response.json();
-          const diagnoses = Array.isArray(result.diagnoses) ? result.diagnoses : [result.diagnoses];
-
-          loadingIndicator.style.display = "none";
-          resultsSection.style.display = "block";
-
-          if (diagnoses.length === 0) {
-            diagnosisResults.innerHTML = "<p>No diagnoses found.</p>";
-          } else {
-            diagnoses.forEach((diagnosis, index) => {
-              const card = document.createElement("div");
-              card.classList.add("diagnosis-card");
-              card.innerHTML = `
-                <h3 class="diagnosis-name"><i class="fas fa-notes-medical"></i> Diagnosis ${index + 1}</h3>
-                <p class="diagnosis-description">${diagnosis.replace(/\n/g, "<br>")}</p>
-              `;
-              diagnosisResults.appendChild(card);
-            });
+          
+          if (!response.ok) {
+            throw new Error(`API error: ${response.status}`);
           }
-
-          resultsSection.scrollIntoView({ behavior: "smooth" });
+          
+          const data = await response.json();
+          const diagnoses = parseDiagnoses(data.diagnoses);
+          displayResults(diagnoses);
+          
+          resultsSection.style.display = 'block';
+          resultsSection.scrollIntoView({ behavior: 'smooth' });
         } catch (error) {
-          loadingIndicator.style.display = "none";
-          alert("Error analyzing the image. Please try again.");
+          console.error('Error:', error);
+          alert('Error analyzing image. Please try again.');
+        } finally {
+          loadingIndicator.style.display = 'none';
         }
-      };
-      reader.readAsDataURL(selectedFile);
+      });
+      
+      // Helper Functions
+      function convertFileToBase64(file) {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = () => resolve(reader.result.split(',')[1]);
+          reader.onerror = error => reject(error);
+        });
+      }
+      
+      function parseDiagnoses(diagnosisText) {
+        // Clean and extract disease names from API response
+        return diagnosisText.split('\n')
+          .map(line => line.replace(/^\d+\.\s*/, '').replace(/-/g, ' ').trim())
+          .filter(line => line.length > 0 && !line.toLowerCase().includes('note'))
+          .slice(0, 3);
+      }
+      
+      function displayResults(diagnoses) {
+        const resultsContainer = document.getElementById('diagnosisResults');
+        resultsContainer.innerHTML = '';
+        
+        diagnoses.forEach(disease => {
+          const card = document.createElement('div');
+          card.className = 'diagnosis-card';
+          card.innerHTML = `
+            <h3 class="diagnosis-name"><i class="fas fa-disease"></i> ${disease}</h3>
+            <p class="diagnosis-description">Click to learn more about this condition</p>
+          `;
+          
+          // Add Wikipedia redirect functionality
+          card.addEventListener('click', () => {
+            const formattedDisease = disease.replace(/ /g, '_');
+            window.open(`https://en.wikipedia.org/wiki/${formattedDisease}`, '_blank');
+          });
+          
+          resultsContainer.appendChild(card);
+        });
+      }
     });
-  });
 </script>
 </body>
 </html>
