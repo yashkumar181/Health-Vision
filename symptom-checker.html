@@ -135,13 +135,54 @@
       gap: 1rem;
     }
 
-    .language-select {
-      padding: 0.5rem;
-      border-radius: 6px;
-      border: 1px solid var(--text-secondary);
-      background-color: rgba(26, 32, 44, 0.9);
-      color: rgb(255, 255, 255);
-    }
+    .hidden {
+  display: none;
+}
+
+.language-toggle-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.25rem; /* Makes the globe bigger */
+  color: inherit; /* Uses current text color (for dark/light theme) */
+  padding: 0.5rem;
+  display: flex;
+  align-items:end;
+  justify-content: center;
+}
+.language-toggle-btn:focus {
+  outline: none;
+}
+
+.language-dropdown {
+  position: absolute;
+  right: 0;
+  background: rgb(246, 245, 245);
+  border: 1px solid #f5f5f5;
+  list-style: none;
+  padding: 5px 0;
+  margin: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+.language-dropdown li {
+  color: black;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+.language-dropdown li:hover {
+  background-color: #0e0c0cb7;
+}
+.language-wrapper {
+  position: relative;
+}
+.hidden {
+  display: none;
+}
+
+.language-dropdown li:hover {
+  background-color: #b0acacb7;
+}
 
     .theme-toggle {
       background: none;
@@ -368,6 +409,7 @@
       width: 40px;
       height: 40px;
       border-radius: 50%;
+      color: black;
       background-color: rgba(255, 252, 252, 0.1);
       display: flex;
       align-items: center;
@@ -482,15 +524,20 @@
       </ul>
       
       <div class="nav-actions">
-        <select class="language-select" id="languageSelect">
-          <option value="en">English</option>
-          <option value="hi">हिन्दी</option>
-        </select>
+      <div class="nav-actions">
+        <div class="language-wrapper">
+          <button id="languageToggle" class="language-toggle-btn" title="Change Language">🌐</button>
+          <ul id="languageDropdown" class="language-dropdown hidden">
+            <li data-lang="en">English</li>
+            <li data-lang="hi">हिन्दी</li>
+          </ul>
+        </div>
+      </div>
         
         <button class="theme-toggle" id="themeToggle" title="Toggle Theme">
           <i class="fas fa-moon"></i>
         </button>
-        
+        </div>
         <div class="hamburger" id="hamburger">
           <i class="fas fa-bars"></i>
         </div>
@@ -632,7 +679,6 @@
         
         themeToggle.innerHTML = newTheme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
       });
-      
       // Mobile Navigation (Same as main page)
       const hamburger = document.getElementById('hamburger');
       const navLinks = document.getElementById('navLinks');
@@ -642,38 +688,54 @@
         hamburger.classList.toggle('active');
       });
       
-      // Language Switching Functionality
-      const languageSelect = document.getElementById('languageSelect');
-      const currentLanguage = localStorage.getItem('language') || 'en';
-      
-      // Set initial language
-      languageSelect.value = currentLanguage;
-      changeLanguage(currentLanguage);
-      
-      // Handle language change
-      languageSelect.addEventListener('change', function() {
-        const selectedLanguage = this.value;
-        localStorage.setItem('language', selectedLanguage);
-        changeLanguage(selectedLanguage);
-      });
-      
-      function changeLanguage(lang) {
-        // Update all elements with data attributes
-        const elements = document.querySelectorAll('[data-en], [data-hi]');
-        
-        elements.forEach(el => {
-          if (el.hasAttribute(`data-${lang}`)) {
-            if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-              const placeholder = el.getAttribute(`placeholder-${lang}`);
-              if (placeholder) {
-                el.setAttribute('placeholder', placeholder);
-              }
-            } else {
-              el.textContent = el.getAttribute(`data-${lang}`);
-            }
-          }
-        });
+      // Language Toggle Dropdown Logic
+const languageToggle = document.getElementById('languageToggle');
+const languageDropdown = document.getElementById('languageDropdown');
+const languageItems = languageDropdown.querySelectorAll('li');
+
+// Show/hide dropdown on globe button click
+languageToggle.addEventListener('click', function () {
+  languageDropdown.classList.toggle('hidden');
+});
+
+// Handle language selection
+languageItems.forEach(item => {
+  item.addEventListener('click', () => {
+    const selectedLang = item.getAttribute('data-lang');
+    localStorage.setItem('language', selectedLang);
+    changeLanguage(selectedLang);
+    languageDropdown.classList.add('hidden'); // hide dropdown after selection
+  });
+});
+
+// Language switching logic
+function changeLanguage(lang) {
+  const elements = document.querySelectorAll('[data-en], [data-hi]');
+  elements.forEach(el => {
+    if (el.hasAttribute(`data-${lang}`)) {
+      if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+        const placeholder = el.getAttribute(`placeholder-${lang}`);
+        if (placeholder) {
+          el.setAttribute('placeholder', placeholder);
+        }
+      } else {
+        el.textContent = el.getAttribute(`data-${lang}`);
       }
+    }
+  });
+}
+
+// Set initial language on page load
+const savedLang = localStorage.getItem('language') || 'en';
+changeLanguage(savedLang);
+
+// Optional: Close dropdown if clicked outside
+document.addEventListener('click', function (e) {
+  if (!languageToggle.contains(e.target) && !languageDropdown.contains(e.target)) {
+    languageDropdown.classList.add('hidden');
+  }
+});
+
       
       // Symptom Checker Functionality
       const analyzeBtn = document.getElementById('analyzeBtn');
