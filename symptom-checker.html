@@ -557,7 +557,7 @@
       <div class="checker-container">
         <div class="input-section">
           <textarea class="symptom-input" 
-                    placeholder-en="Describe your symptoms here... Be as detailed as possible. Example: 'I've had a persistent headache for 3 days, accompanied by nausea and sensitivity to light. The pain is throbbing and concentrated on the right side of my head.'"
+                    placeholder-en="Describe your symptoms here..."
                     placeholder-hi="अपनी तकलीफ लिखें, जैसे: बुखार, सिर दर्द, उल्टी'"></textarea>
           <button class="analyze-btn" id="analyzeBtn" data-en="Analyze Symptoms" data-hi="लक्षणों का विश्लेषण करें">Analyze Symptoms</button>
         </div>
@@ -672,22 +672,6 @@ languageItems.forEach(item => {
   });
 });
 
-// Language switching logic
-function changeLanguage(lang) {
-  const elements = document.querySelectorAll('[data-en], [data-hi]');
-  elements.forEach(el => {
-    if (el.hasAttribute(`data-${lang}`)) {
-      if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-        const placeholder = el.getAttribute(`placeholder-${lang}`);
-        if (placeholder) {
-          el.setAttribute('placeholder', placeholder);
-        }
-      } else {
-        el.textContent = el.getAttribute(`data-${lang}`);
-      }
-    }
-  });
-}
 
 // Set initial language on page load
 const savedLang = localStorage.getItem('language') || 'en';
