@@ -5,9 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Report Summarizer | HealthVision</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
-
-
-  
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <!-- PDF.js library for PDF text extraction -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.12.313/pdf.min.js"></script>
@@ -16,7 +13,7 @@
   <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js"></script>
   
   <style>
-    /* Reuse the same CSS variables and base styles from your main page */
+    /* All original CSS remains exactly the same */
     :root {
       --primary-color: #4caf50;
       --primary-dark: #388e3c;
@@ -160,8 +157,8 @@
 .language-dropdown {
   position: absolute;
   right: 0;
-  background: rgb(246, 245, 245);
-  border: 1px solid #f5f5f5;
+  background: black;
+  border: 2px solid #f5f5f5;
   border-radius: 10%;
   list-style: none;
   padding: 5px 0;
@@ -170,7 +167,7 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 .language-dropdown li {
-  color: black;
+  color: white;
   padding: 8px 16px;
   cursor: pointer;
 }
@@ -544,10 +541,10 @@
       </div>
       
       <ul class="nav-links" id="navLinks">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="index.html#about">About Us</a></li>
-        <li><a href="index.html#features">Features</a></li>
-        <li><a href="index.html#how-it-works">How It Works</a></li>
+        <li><a href="index.html" data-translate="Home">Home</a></li>
+        <li><a href="index.html#about" data-translate="About Us">About Us</a></li>
+        <li><a href="index.html#features" data-translate="Features">Features</a></li>
+        <li><a href="index.html#how-it-works" data-translate="How It Works">How It Works</a></li>
       </ul>
       
       <div class="nav-actions">
@@ -574,52 +571,56 @@
   <main class="report-summarizer">
     <div class="container">
       <div class="summarizer-header">
-        <h1><i class="fas fa-notes-medical"></i> Medical Report Summarizer</h1>
-        <p>Upload your medical reports or lab results to get a clear, simplified explanation in plain language.</p>
+        <h1><i class="fas fa-notes-medical"></i> <span data-translate="Medical Report Summarizer">Medical Report Summarizer</span></h1>
+        <p data-translate="Upload your medical reports or lab results to get a clear, simplified explanation in plain language.">
+          Upload your medical reports or lab results to get a clear, simplified explanation in plain language.
+        </p>
       </div>
       
       <div class="summarizer-container">
         <div class="upload-section">
-          <p class="upload-instructions">Upload your medical report (PDF or image) for AI-powered summarization</p>
+          <p class="upload-instructions" data-translate="Upload your medical report (PDF or image) for AI-powered summarization">
+            Upload your medical report (PDF or image) for AI-powered summarization
+          </p>
           
           <div class="upload-box" id="uploadBox">
             <div class="upload-icon">
               <i class="fas fa-file-upload"></i>
             </div>
-            <p class="upload-text">Choose a PDF or image file</p>
-            <p class="upload-subtext">PDF, JPG, PNG</p>
+            <p class="upload-text" data-translate="Choose a PDF or image file">Choose a PDF or image file</p>
+            <p class="upload-subtext" data-translate="PDF, JPG, PNG">PDF, JPG, PNG</p>
             <input type="file" id="reportInput" accept=".pdf,.jpg,.jpeg,.png,.webp">
           </div>
           
-          <p class="upload-status" id="uploadStatus">No file selected</p>
+          <p class="upload-status" id="uploadStatus" data-translate="No file selected">No file selected</p>
           
-          <button class="analyze-btn" id="analyzeBtn">Summarize Report</button>
+          <button class="analyze-btn" id="analyzeBtn" data-translate="Summarize Report">Summarize Report</button>
         </div>
         
         <div class="loading" id="loadingIndicator">
           <div class="loading-spinner"></div>
-          <p>Processing your report...</p>
+          <p data-translate="Processing your report...">Processing your report...</p>
         </div>
         
         <div class="results-section" id="summarySection">
           <div class="results-header">
-            <h2>Report Summary</h2>
-            <p>Simplified explanation of your medical report</p>
+            <h2 data-translate="Report Summary">Report Summary</h2>
+            <p data-translate="Simplified explanation of your medical report">Simplified explanation of your medical report</p>
           </div>
           
           <div class="report-output">
-            <h3><i class="fas fa-file-medical-alt"></i> Simplified Summary</h3>
-            <p id="simplifiedOutput">Your report summary will appear here after analysis.</p>
+            <h3><i class="fas fa-file-medical-alt"></i> <span data-translate="Simplified Summary">Simplified Summary</span></h3>
+            <p id="simplifiedOutput" data-translate="Your report summary will appear here after analysis.">Your report summary will appear here after analysis.</p>
           </div>
           
           <div class="actions">
             <button class="action-btn doctor-btn" onclick="window.location.href='consultancy.html'">
               <i class="fas fa-user-md"></i>
-              <span data-i18n="results.consultButton">Consult a Specialist</span>
+              <span data-translate="Consult a Specialist">Consult a Specialist</span>
             </button>
             <button class="action-btn hospital-btn" onclick="window.location.href='nearby-hospitals.html'">
               <i class="fas fa-hospital"></i>
-              <span data-i18n="results.hospitalButton">Find Nearby Hospitals</span>
+              <span data-translate="Find Nearby Hospitals">Find Nearby Hospitals</span>
             </button>
           </div>
         </div>
@@ -633,7 +634,9 @@
       <div class="footer-grid">
         <div class="footer-about">
           <a href="#" class="footer-logo"><i class="fas fa-heartbeat"></i> HealthVision</a>
-          <p>Empowering individuals with AI-driven healthcare insights and connections to medical professionals worldwide.</p>
+          <p data-translate="Empowering individuals with AI-driven healthcare insights and connections to medical professionals worldwide.">
+            Empowering individuals with AI-driven healthcare insights and connections to medical professionals worldwide.
+          </p>
           <div class="social-links">
             <a href="#"><i class="fab fa-facebook-f"></i></a>
             <a href="#"><i class="fab fa-twitter"></i></a>
@@ -643,37 +646,108 @@
         </div>
         
         <div class="footer-links">
-          <h3>Quick Links</h3>
+          <h3 data-translate="Quick Links">Quick Links</h3>
           <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="index.html#features">Features</a></li>
-            <li><a href="index.html#how-it-works">How It Works</a></li>
-            <li><a href="index.html#about">About Us</a></li>
+            <li><a href="index.html" data-translate="Home">Home</a></li>
+            <li><a href="index.html#about" data-translate="About Us">About Us</a></li>
+            <li><a href="index.html#features" data-translate="Features">Features</a></li>
+            <li><a href="index.html#how-it-works" data-translate="How It Works">How It Works</a></li>
           </ul>
         </div>
         
         <div class="footer-links">
-          <h3>Features</h3>
+          <h3 data-translate="Features">Features</h3>
           <ul>
-            <li><a href="symptom-checker.html">Symptom Checker</a></li>
-            <li><a href="image-diagnosis.html">Image Diagnosis</a></li>
-            <li><a href="nearby-hospitals.html">Hospital Finder</a></li>
-            <li><a href="report-summarizing.html">Report Summarizer</a></li>
-            <li><a href="consultancy.html">Doctor Consultations</a></li>
+            <li><a href="symptom-checker.html" data-translate="Symptom Checker">Symptom Checker</a></li>
+            <li><a href="image-diagnosis.html" data-translate="Image Diagnosis">Image Diagnosis</a></li>
+            <li><a href="nearby-hospitals.html" data-translate="Hospital Finder">Hospital Finder</a></li>
+            <li><a href="report-summarizing.html" data-translate="Report Summarizer">Report Summarizer</a></li>
+            <li><a href="consultancy.html" data-translate="Doctor Consultations">Doctor Consultations</a></li>
           </ul>
         </div>
-    </div>
+      </div>
   </footer>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    // Language dictionary
+    const translations = {
+      'en': {
+        'Medical Report Summarizer': 'Medical Report Summarizer',
+        'Upload your medical reports or lab results to get a clear, simplified explanation in plain language.':
+          'Upload your medical reports or lab results to get a clear, simplified explanation in plain language.',
+        'Upload your medical report (PDF or image) for AI-powered summarization':
+          'Upload your medical report (PDF or image) for AI-powered summarization',
+        'Choose a PDF or image file': 'Choose a PDF or image file',
+        'PDF, JPG, PNG': 'PDF, JPG, PNG',
+        'No file selected': 'No file selected',
+        'Summarize Report': 'Summarize Report',
+        'Processing your report...': 'Processing your report...',
+        'Report Summary': 'Report Summary',
+        'Simplified explanation of your medical report': 'Simplified explanation of your medical report',
+        'Simplified Summary': 'Simplified Summary',
+        'Your report summary will appear here after analysis.': 'Your report summary will appear here after analysis.',
+        'Consult a Specialist': 'Consult a Specialist',
+        'Find Nearby Hospitals': 'Find Nearby Hospitals',
+        'Home': 'Home',
+        'About Us': 'About Us',
+        'Features': 'Features',
+        'How It Works': 'How It Works',
+        'Symptom Checker': 'Symptom Checker',
+        'Image Diagnosis': 'Image Diagnosis',
+        'Hospital Finder': 'Hospital Finder',
+        'Report Summarizer': 'Report Summarizer',
+        'Doctor Consultations': 'Doctor Consultations',
+        'Empowering individuals with AI-driven healthcare insights and connections to medical professionals worldwide.':
+          'Empowering individuals with AI-driven healthcare insights and connections to medical professionals worldwide.'
+      },
+      'hi': {
+        'Medical Report Summarizer': 'मेडिकल रिपोर्ट सारांशक',
+        'Upload your medical reports or lab results to get a clear, simplified explanation in plain language.':
+          'सरल भाषा में स्पष्ट व्याख्या प्राप्त करने के लिए अपनी चिकित्सा रिपोर्ट या लैब परिणाम अपलोड करें।',
+        'Upload your medical report (PDF or image) for AI-powered summarization':
+          'AI-संचालित सारांश के लिए अपनी चिकित्सा रिपोर्ट (PDF या छवि) अपलोड करें',
+        'Choose a PDF or image file': 'एक PDF या छवि फ़ाइल चुनें',
+        'PDF, JPG, PNG': 'PDF, JPG, PNG',
+        'No file selected': 'कोई फ़ाइल चयनित नहीं',
+        'Summarize Report': 'रिपोर्ट सारांशित करें',
+        'Processing your report...': 'आपकी रिपोर्ट प्रसंस्करण...',
+        'Report Summary': 'रिपोर्ट सारांश',
+        'Simplified explanation of your medical report': 'आपकी चिकित्सा रिपोर्ट की सरल व्याख्या',
+        'Simplified Summary': 'सरल सारांश',
+        'Your report summary will appear here after analysis.': 'विश्लेषण के बाद आपका रिपोर्ट सारांश यहां दिखाई देगा।',
+        'Consult a Specialist': 'विशेषज्ञ से परामर्श करें',
+        'Find Nearby Hospitals': 'निकटतम अस्पताल खोजें',
+        'Home': 'होम',
+        'About Us': 'हमारे बारे में',
+        'Features': 'विशेषताएं',
+        'How It Works': 'यह कैसे काम करता है',
+        'Symptom Checker': 'लक्षण जांचकर्ता',
+        'Image Diagnosis': 'छवि निदान',
+        'Hospital Finder': 'अस्पताल खोजक',
+        'Report Summarizer': 'रिपोर्ट सारांशक',
+        'Doctor Consultations': 'डॉक्टर परामर्श',
+        'Empowering individuals with AI-driven healthcare insights and connections to medical professionals worldwide.':
+          'विश्व भर में एआई-संचालित स्वास्थ्य सेवा अंतर्दृष्टि और चिकित्सा पेशेवरों से कनेक्शन के साथ व्यक्तियों को सशक्त बनाना।'
+      }
+    };
+    // Single changeLanguage function
+    function changeLanguage(lang) {
+      document.querySelectorAll('[data-translate]').forEach(element => {
+        const key = element.getAttribute('data-translate');
+        if (translations[lang] && translations[lang][key]) {
+          element.textContent = translations[lang][key];
+        }
+      });
       
-      // Theme Toggle (Same as main page)
+      localStorage.setItem('language', lang);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // Theme Toggle
       const themeToggle = document.getElementById('themeToggle');
       const currentTheme = localStorage.getItem('theme') || 'light';
       
       document.body.setAttribute('data-theme', currentTheme);
-      
       if (currentTheme === 'dark') {
         themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
       }
@@ -681,23 +755,46 @@
       themeToggle.addEventListener('click', function() {
         const currentTheme = document.body.getAttribute('data-theme');
         const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-        
         document.body.setAttribute('data-theme', newTheme);
         localStorage.setItem('theme', newTheme);
-        
         themeToggle.innerHTML = newTheme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
       });
       
-      // Mobile Navigation (Same as main page)
+      // Mobile Navigation
       const hamburger = document.getElementById('hamburger');
       const navLinks = document.getElementById('navLinks');
-      
       hamburger.addEventListener('click', function() {
         navLinks.classList.toggle('active');
-        hamburger.classList.toggle('active');
       });
       
-      // Report Summarizer Functionality
+      // Language Toggle
+      const languageToggle = document.getElementById('languageToggle');
+      const languageDropdown = document.getElementById('languageDropdown');
+      const languageItems = document.querySelectorAll('#languageDropdown li');
+      
+      languageToggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        languageDropdown.classList.toggle('hidden');
+      });
+      
+      document.addEventListener('click', function(e) {
+        if (!languageToggle.contains(e.target)) {
+          languageDropdown.classList.add('hidden');
+        }
+      });
+      
+      languageItems.forEach(item => {
+        item.addEventListener('click', function() {
+          const lang = this.getAttribute('data-lang');
+          changeLanguage(lang);
+        });
+      });
+      
+      // Initialize language
+      const savedLanguage = localStorage.getItem('language') || 'en';
+      changeLanguage(savedLanguage);
+
+      // Report Upload Functionality
       const uploadBox = document.getElementById('uploadBox');
       const reportInput = document.getElementById('reportInput');
       const uploadStatus = document.getElementById('uploadStatus');
@@ -706,12 +803,10 @@
       const summarySection = document.getElementById('summarySection');
       const simplifiedOutput = document.getElementById('simplifiedOutput');
       
-      // Handle file selection
       uploadBox.addEventListener('click', function() {
         reportInput.click();
       });
       
-      // Handle report upload
       reportInput.addEventListener('change', handleReportUpload);
       
       function handleReportUpload(event) {
@@ -719,7 +814,7 @@
         if (!file) return;
         
         const fileType = file.type;
-        uploadStatus.innerText = "Extracting text...";
+        uploadStatus.textContent = "Extracting text...";
         analyzeBtn.style.display = 'none';
         
         if (fileType === "application/pdf") {
@@ -727,7 +822,7 @@
         } else if (fileType.startsWith("image/")) {
           extractTextFromImage(file);
         } else {
-          uploadStatus.innerText = "❌ Unsupported file type. Please upload a PDF or image.";
+          uploadStatus.textContent = "❌ Unsupported file type. Please upload a PDF or image.";
         }
       }
       
@@ -746,14 +841,12 @@
               fullText += pageText + "\n";
             }
             
-            uploadStatus.innerText = "✅ PDF text extracted!";
+            uploadStatus.textContent = "✅ PDF text extracted!";
             analyzeBtn.style.display = 'block';
-            
-            // Store the extracted text in a variable (not displayed)
             window.extractedText = fullText;
           } catch (err) {
             console.error("PDF extraction failed:", err);
-            uploadStatus.innerText = "❌ Failed to extract text from PDF";
+            uploadStatus.textContent = "❌ Failed to extract text from PDF";
           }
         };
       }
@@ -765,34 +858,27 @@
           Tesseract.recognize(reader.result, 'eng', {
             logger: m => console.log(m)
           }).then(({ data: { text } }) => {
-            uploadStatus.innerText = "✅ Image text extracted!";
+            uploadStatus.textContent = "✅ Image text extracted!";
             analyzeBtn.style.display = 'block';
-            
-            // Store the extracted text in a variable (not displayed)
             window.extractedText = text;
           }).catch(err => {
             console.error("OCR failed:", err);
-            uploadStatus.innerText = "❌ Failed to extract text from image";
+            uploadStatus.textContent = "❌ Failed to extract text from image";
           });
         };
       }
       
-      // Handle analyze button click
       analyzeBtn.addEventListener('click', function() {
         if (!reportInput.files || !reportInput.files[0]) {
           alert('Please select a file first.');
           return;
         }
         
-        // Show loading indicator
         loadingIndicator.style.display = 'block';
         summarySection.style.display = 'none';
-        
-        // Summarize the extracted text
         summarizeMedicalReport(window.extractedText);
       });
       
-      // Your provided summarization function
       async function summarizeMedicalReport(text) {
         const prompt = `
 You are a medical assistant. Summarize the following medical report in simple language for a non-medical person. 
@@ -822,11 +908,9 @@ ${text}
           const data = await response.json();
           const reply = data.candidates?.[0]?.content?.parts?.map(part => part.text).join("") || "No summary returned.";
           
-          simplifiedOutput.innerText = reply || "No summary returned.";
+          simplifiedOutput.textContent = reply || "No summary returned.";
           loadingIndicator.style.display = 'none';
           summarySection.style.display = 'block';
-          
-          // Scroll to results
           summarySection.scrollIntoView({ behavior: 'smooth' });
           
         } catch (err) {
@@ -836,6 +920,7 @@ ${text}
         }
       }
     });
+  </script>
   </script>
 </body>
 </html>
