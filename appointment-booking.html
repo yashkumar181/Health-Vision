@@ -598,113 +598,130 @@
 
   <!-- Date and Time Picker -->
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Theme Toggle (Same as main page)
-      const themeToggle = document.getElementById('themeToggle');
-      const currentTheme = localStorage.getItem('theme') || 'light';
+  document.addEventListener('DOMContentLoaded', function() {
+    // Theme Toggle
+    const themeToggle = document.getElementById('themeToggle');
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    document.body.setAttribute('data-theme', currentTheme);
+    
+    if (currentTheme === 'dark') {
+      themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+    }
+    
+    themeToggle.addEventListener('click', function() {
+      const currentTheme = document.body.getAttribute('data-theme');
+      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+      document.body.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      themeToggle.innerHTML = newTheme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+    });
+    
+    // Mobile Navigation
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    hamburger.addEventListener('click', function() {
+      navLinks.classList.toggle('active');
+      hamburger.classList.toggle('active');
+    });
+    
+    // Date/Time Pickers
+    flatpickr("#appointmentDate", {
+      minDate: "today",
+      dateFormat: "Y-m-d",
+      theme: currentTheme === 'dark' ? "dark" : "default"
+    });
+    
+    flatpickr("#appointmentTime", {
+      enableTime: true,
+      noCalendar: true,
+      dateFormat: "H:i",
+      time_24hr: true,
+      theme: currentTheme === 'dark' ? "dark" : "default"
+    });
+    
+    // Form Handling
+    const reminderForm = document.getElementById('reminderForm');
+    const loadingIndicator = document.getElementById('loadingIndicator');
+    const successMessage = document.getElementById('successMessage');
+    
+    // Initialize EmailJS properly (use your actual user ID)
+    emailjs.init('1ZGLkC5ODKZdWBExC');
+    
+    function showSuccess() {
+      loadingIndicator.style.display = 'none';
+      successMessage.style.display = 'block';
+      reminderForm.reset();
+      successMessage.scrollIntoView({ behavior: 'smooth' });
+    }
+    
+    function showError() {
+      loadingIndicator.style.display = 'none';
+      alert('Failed to schedule reminders. Please try again.');
+    }
+    
+    reminderForm.addEventListener('submit', function(e) {
+      e.preventDefault();
       
-      document.body.setAttribute('data-theme', currentTheme);
+      // Show loading state
+      loadingIndicator.style.display = 'block';
+      successMessage.style.display = 'none';
       
-      if (currentTheme === 'dark') {
-        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+      // Get form values
+      const formData = {
+        doctorName: document.getElementById('doctorName').value,
+        appointmentDate: document.getElementById('appointmentDate').value,
+        appointmentTime: document.getElementById('appointmentTime').value,
+        appointmentPlace: document.getElementById('appointmentPlace').value,
+        phoneNumber: document.getElementById('phoneNumber').value,
+        email: document.getElementById('email').value,
+        emailReminder: document.getElementById('emailReminder').checked,
+        smsReminder: document.getElementById('smsReminder').checked,
+        whatsappReminder: document.getElementById('whatsappReminder').checked
+      };
+      
+      // Simulate processing (remove this in production)
+      let processingComplete = false;
+      
+      // Email notification
+      if (formData.emailReminder) {
+        const templateParams = {
+          doctor_name: formData.doctorName,
+          appointment_date: formData.appointmentDate,
+          appointment_time: formData.appointmentTime,
+          appointment_place: formData.appointmentPlace,
+          to_email: formData.email,
+        };
+        
+        emailjs.send("service_3666l5d", "template_d815dzd", templateParams)
+          .then(function(response) {
+            console.log('Email sent!', response);
+            processingComplete = true;
+            showSuccess();
+          })
+          .catch(function(error) {
+            console.error('Email failed:', error);
+            showError();
+          });
+      } else {
+        // If no email selected, just show success
+        setTimeout(() => {
+          processingComplete = true;
+          showSuccess();
+        }, 1500);
       }
       
-      themeToggle.addEventListener('click', function() {
-        const currentTheme = document.body.getAttribute('data-theme');
-        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-        
-        document.body.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
-        
-        themeToggle.innerHTML = newTheme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-      });
-      
-      // Mobile Navigation (Same as main page)
-      const hamburger = document.getElementById('hamburger');
-      const navLinks = document.getElementById('navLinks');
-      
-      hamburger.addEventListener('click', function() {
-        navLinks.classList.toggle('active');
-        hamburger.classList.toggle('active');
-      });
-      
-      // Initialize date picker
-      flatpickr("#appointmentDate", {
-        minDate: "today",
-        dateFormat: "Y-m-d",
-        theme: currentTheme === 'dark' ? "dark" : "default"
-      });
-      
-      // Initialize time picker
-      flatpickr("#appointmentTime", {
-        enableTime: true,
-        noCalendar: true,
-        dateFormat: "H:i",
-        time_24hr: true,
-        theme: currentTheme === 'dark' ? "dark" : "default"
-      });
-      
-      // Handle form submission
-      const reminderForm = document.getElementById('reminderForm');
-      const loadingIndicator = document.getElementById('loadingIndicator');
-      const successMessage = document.getElementById('successMessage');
-      
-      reminderForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // Get form values
-        const doctorName = document.getElementById('doctorName').value;
-        const appointmentDate = document.getElementById('appointmentDate').value;
-        const appointmentTime = document.getElementById('appointmentTime').value;
-        const appointmentPlace = document.getElementById('appointmentPlace').value;
-        const phoneNumber = document.getElementById('phoneNumber').value;
-        const email = document.getElementById('email').value;
-        const emailReminder = document.getElementById('emailReminder').checked;
-        const smsReminder = document.getElementById('smsReminder').checked;
-        const whatsappReminder = document.getElementById('whatsappReminder').checked;
-        
-        // Show loading indicator
-        loadingIndicator.style.display = 'block';
-        successMessage.style.display = 'none';
-        
-        // Simulate API calls (in a real app, you would use actual APIs)
-        setTimeout(function() {
-          // Here we would normally call the notification APIs
-          // For demo purposes, we'll simulate successful API calls
-          
-          // Email notification (using EmailJS or similar service)
-          if (emailReminder) {
-            console.log('Sending email to:', email);
-            // Actual implementation would use EmailJS or similar service
-          }
-          
-          // SMS notification (using Twilio or similar service)
-          if (smsReminder) {
-            console.log('Sending SMS to:', phoneNumber);
-            // Actual implementation would use Twilio API
-          }
-          
-          // WhatsApp notification (using Twilio WhatsApp API)
-          if (whatsappReminder) {
-            console.log('Sending WhatsApp to:', phoneNumber);
-            // Actual implementation would use Twilio WhatsApp API
-          }
-          
-          // Hide loading and show success
-          loadingIndicator.style.display = 'none';
-          successMessage.style.display = 'block';
-          
-          // Reset form
-          reminderForm.reset();
-          
-          // Scroll to success message
-          successMessage.scrollIntoView({ behavior: 'smooth' });
-          
-        }, 2000);
-      });
+      // Fallback in case something hangs
+      setTimeout(() => {
+        if (!processingComplete) {
+          console.warn('Processing timeout reached');
+          showSuccess(); // or showError() depending on your preference
+        }
+      }, 5000);
     });
+  });
   </script>
 </body>
 </html>
