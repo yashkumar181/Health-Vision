@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -34,7 +34,7 @@
             --secondary-color: #64b5f6;
             --accent-color: #ffb74d;
             --text-primary: #f5f5f5;
-            --h1:darkgray;
+            --h1: darkgray;
             --text-secondary: #b0bec5;
             --bg-light: #121212;
             --bg-dark: #0d1117;
@@ -85,7 +85,8 @@
             line-height: 1.2;
             margin-bottom: 1rem;
         }
-        h1{
+
+        h1 {
             font-size: 2.5rem;
         }
 
@@ -221,44 +222,12 @@
             gap: 1rem;
         }
 
-        .theme-toggle-circle {
-            width: 40px;
-            height: 40px;
-            background-color: var(--bg-toggle, #0d1117e6);
-            border-radius: 50%;
+        .theme-toggle {
+            background: none;
             border: none;
+            font-size: 1.2rem;
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background-color 0.3s ease;
-            font-size: 22px;
-        }
-
-        .icon-wrapper {
-            width: 150%;
-            height: 100%;
-            display: flex;
-            transition: transform 0.4s ease;
-        }
-
-        .emoji-icon {
-            flex: 1;
-            text-align: center;
-            line-height: 50px;
-        }
-
-        /* Light mode: show moon */
-        body.light-mode .icon-wrapper {
-            transform: translateX(0%);
-        }
-
-        /* Dark mode: show sun */
-        body:not(.light-mode) .icon-wrapper {
-            transform: translateX(-50%);
+            color: var(--text-primary);
         }
 
         .hamburger {
@@ -508,6 +477,7 @@
             }
         }
 
+
         /* Footer */
         .footer {
             background-color: var(--nav-bg);
@@ -608,6 +578,23 @@
             color: var(--text-secondary);
             font-size: 0.9rem;
         }
+
+        .finder-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .finder-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .summarizer-header p {
+            color: darkgray;
+            max-width: 700px;
+            margin: 0 auto;
+        }
     </style>
 </head>
 
@@ -635,11 +622,8 @@
                     </ul>
                 </div>
 
-                <button class="theme-toggle-circle" id="themeToggle" title="Toggle Theme">
-                    <div class="icon-wrapper">
-                        <span class="emoji-icon" id="sunEmoji">🌞</span>
-                        <span class="emoji-icon" id="moonEmoji">🌙</span>
-                    </div>
+                <button class="theme-toggle" id="themeToggle" title="Toggle Theme">
+                    <i class="fas fa-moon"></i>
                 </button>
 
                 <div class="hamburger" id="hamburger">
@@ -651,9 +635,11 @@
 
     <!-- Hospital Finder Section -->
     <section class="hospital-finder container">
-        <h1>Find Hospitals Nearby</h1>
-        <p>Locate healthcare facilities in your area or search by location</p>
 
+        <div class="finder-header">
+            <h1><i class="fas fa-map-marker-alt"></i> Find Hospitals Nearby</h1>
+            <p>Locate healthcare facilities in your area or search by location</p>
+        </div>
         <div class="search-options">
             <div class="search-option">
                 <h3><i class="fas fa-map-marker-alt"></i> Enter Location Manually</h3>
@@ -755,7 +741,7 @@
             document.body.setAttribute('data-theme', currentTheme);
 
             if (currentTheme === 'dark') {
-                themeToggle.innerHTML = '<i class="emoji-icon">🌞</i>';
+                themeToggle.innerHTML = '<i class="emoji-icon">fas fa-sun</i>';
             }
 
             themeToggle.addEventListener('click', function () {
@@ -765,7 +751,7 @@
                 document.body.setAttribute('data-theme', newTheme);
                 localStorage.setItem('theme', newTheme);
 
-                themeToggle.innerHTML = newTheme === 'dark' ? '<i class="emoji-icon">🌞</i>' : '<i class="emoji-icon">🌙</i>';
+                themeToggle.innerHTML = newTheme === 'dark' ? '<i class="emoji-icon">"fas fa-sun"</i>' : '<i class="emoji-icon">"fas fa-moon"</i>';
             });
 
             // Language Toggle
@@ -923,7 +909,7 @@
                 return R * c; // Distance in km
             }
 
-           
+
 
             // Function to get coordinates from pincode using Nominatim (OpenStreetMap)
             async function getCoordsFromPincode(pincode, country) {
@@ -999,4 +985,5 @@
         });
     </script>
 </body>
+
 </html>
