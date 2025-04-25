@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   
   <style>
+    
     /* Reuse the same CSS variables and base styles from your main page */
     :root {
       --primary-color: #4caf50;
@@ -15,12 +16,12 @@
       --primary-light: #81c784;
       --secondary-color: #2196f3;
       --accent-color: #ff9800;
-      --text-primary: white;
-      --text-secondary: white;
-      --bg-light: #e7eef9;
+      --text-primary: rgb(0, 0, 0);
+      --text-secondary: rgb(0, 0, 0);
+      --bg-light: #f5f7fa;
       --bg-dark: #1a202c;
       --card-bg: #ffffff;
-      --nav-bg: rgba(26, 32, 44, 0.9);
+      --nav-bg: rgba(214, 255, 216, 0.9);
       --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       --transition: all 0.3s ease;
     }
@@ -39,6 +40,7 @@
       --nav-bg: rgba(13, 17, 23, 0.9);
       --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
     }
+
 
     * {
       margin: 0;
@@ -139,7 +141,7 @@
       border-radius: 6px;
       border: 1px solid var(--text-secondary);
       background-color: var(--card-bg);
-      color: darkgray;
+      color: var(--text-primary);
     }
 
     .theme-toggle {
@@ -175,7 +177,7 @@
     }
 
     .diagnosis-header p {
-      color: darkgray;
+      color: var(--text-secondary);
       max-width: 700px;
       margin: 0 auto;
     }
@@ -196,7 +198,7 @@
 
     .upload-instructions {
       margin-bottom: 1.5rem;
-      color: darkgrey;
+      color: var(--text-secondary);
     }
 
     .upload-box {
@@ -220,13 +222,12 @@
     }
 
     .upload-text {
-      color:darkgray;
       font-weight: 500;
       margin-bottom: 0.5rem;
     }
 
     .upload-subtext {
-      color: darkgray;
+      color: var(--text-secondary);
       font-size: 0.9rem;
     }
 
@@ -545,26 +546,24 @@
   </style>
 </head>
 <body>
-  <!-- Navigation - Same as main page -->
   <header class="nav-container">
     <nav class="navbar container">
       <div class="logo">
-        <a href="index.html"><i class="fas fa-heartbeat"></i> HealthVision</a>
+        <a href="index.html"><i class="fas fa-heartbeat"></i> <span data-i18n="nav.logo">HealthVision</span></a>
       </div>
       
       <ul class="nav-links" id="navLinks">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="index.html#about">About Us</a></li>
-        <li><a href="index.html#features">Features</a></li>
-        <li><a href="index.html#how-it-works">How It Works</a></li>
+        <li><a href="index.html"><span data-i18n="nav.home">Home</span></a></li>
+        <li><a href="index.html#about"><span data-i18n="nav.about">About Us</span></a></li>
+        <li><a href="index.html#features"><span data-i18n="nav.features">Features</span></a></li>
+        <li><a href="index.html#how-it-works"><span data-i18n="nav.howItWorks">How It Works</span></a></li>
       </ul>
       
       <div class="nav-actions">
-        <select class="language-select">
-          <option value="en"><strong>English</strong></option>
-          <option value="hi"><strong>हिन्दी</strong></option>
+        <select class="language-select" id="languageSelect">
+          <option value="en">English</option>
+          <option value="hi">हिन्दी</option>
         </select>
-        
         <button class="theme-toggle" id="themeToggle" title="Toggle Theme">
           <i class="fas fa-moon"></i>
         </button>
@@ -575,24 +574,23 @@
     </nav>
   </header>
 
-  <!-- Image Diagnosis Main Content -->
   <main class="image-diagnosis">
     <div class="container">
       <div class="diagnosis-header">
-        <h1><i class="fas fa-camera"></i> Image Diagnosis</h1>
-        <p>Upload clear images of affected areas for AI-powered analysis. Our system will examine your images and provide potential diagnoses.</p>
+        <h1><i class="fas fa-camera"></i> <span data-i18n="diagnosis.title">Image Diagnosis</span></h1>
+        <p data-i18n="diagnosis.subtitle">Upload clear images of affected areas for AI-powered analysis. Our system will examine your images and provide potential diagnoses.</p>
       </div>
       
       <div class="diagnosis-container">
         <div class="upload-section">
-          <p class="upload-instructions">Please upload a clear, close-up image of the affected area for better analysis.</p>
+          <p class="upload-instructions" data-i18n="diagnosis.instructions">Please upload a clear, close-up image of the affected area for better analysis.</p>
           
           <div class="upload-box" id="uploadBox">
             <div class="upload-icon">
               <i class="fas fa-cloud-upload-alt"></i>
             </div>
-            <p class="upload-text">Choose an image</p>
-            <p class="upload-subtext">JPG, PNG, or WEBP (Max 5MB)</p>
+            <p class="upload-text" data-i18n="diagnosis.uploadText">Choose an image</p>
+            <p class="upload-subtext" data-i18n="diagnosis.uploadSubtext">JPG, PNG, or WEBP (Max 5MB)</p>
             <input type="file" id="fileInput" accept="image/*">
           </div>
           
@@ -601,42 +599,43 @@
             <p class="selected-file" id="selectedFileName"></p>
           </div>
           
-          <button class="analyze-btn" id="analyzeBtn">Analyze Image</button>
+          <button class="analyze-btn" id="analyzeBtn">
+            <span data-i18n="diagnosis.analyzeButton">Analyze Image</span>
+          </button>
         </div>
         
         <div class="loading" id="loadingIndicator">
           <div class="loading-spinner"></div>
-          <p>Analyzing your image...</p>
+          <p data-i18n="diagnosis.loadingText">Analyzing your image...</p>
         </div>
         
         <div class="results-section" id="resultsSection" style="display: none;">
-            <div class="results-header">
-              <h2>Analysis Results</h2>
-              <p>Possible Diagnoses</p>
-            </div>
-            <div class="diagnosis-results" id="diagnosisResults">
-              <!-- Dynamic content will be inserted here -->
-            </div>
-            <div class="actions">
-              <a href="consult-specialist.html" class="action-btn doctor-btn">
-                <i class="fas fa-user-md"></i> Consult a Specialist
-              </a>
-              <a href="nearby-hospitals.html" class="action-btn hospital-btn">
-                <i class="fas fa-hospital"></i> Find Nearby Hospitals
-              </a>
-            </div>
+          <div class="results-header">
+            <h2 data-i18n="results.title">Analysis Results</h2>
+            <p data-i18n="results.subtitle">Possible Diagnoses</p>
           </div>
+          <div class="diagnosis-results" id="diagnosisResults"></div>
+          <div class="actions">
+            <button class="action-btn doctor-btn">
+              <i class="fas fa-user-md"></i>
+              <span data-i18n="results.consultButton">Consult a Specialist</span>
+            </button>
+            <button class="action-btn hospital-btn">
+              <i class="fas fa-hospital"></i>
+              <span data-i18n="results.hospitalButton">Find Nearby Hospitals</span>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </main>
 
-  <!-- Footer - Same as main page -->
   <footer class="footer">
     <div class="container">
       <div class="footer-grid">
         <div class="footer-about">
-          <a href="#" class="footer-logo"><i class="fas fa-heartbeat"></i> HealthVision</a>
-          <p>Empowering individuals with AI-driven healthcare insights and connections to medical professionals worldwide.</p>
+          <a href="#" class="footer-logo"><i class="fas fa-heartbeat"></i> <span data-i18n="footer.logo">HealthVision</span></a>
+          <p data-i18n="footer.description">Empowering individuals with AI-driven healthcare insights and connections to medical professionals worldwide.</p>
           <div class="social-links">
             <a href="#"><i class="fab fa-facebook-f"></i></a>
             <a href="#"><i class="fab fa-twitter"></i></a>
@@ -644,33 +643,105 @@
             <a href="#"><i class="fab fa-linkedin-in"></i></a>
           </div>
         </div>
-        
         <div class="footer-links">
-          <h3>Quick Links</h3>
+          <h3 data-i18n="footer.quickLinks">Quick Links</h3>
           <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="index.html#features">Features</a></li>
-            <li><a href="index.html#how-it-works">How It Works</a></li>
-            <li><a href="index.html#about">About Us</a></li>
-          </ul>
-        </div>
-        
-        <div class="footer-links">
-          <h3>Features</h3>
-          <ul>
-            <li><a href="symptom-checker.html">Symptom Checker</a></li>
-            <li><a href="image-diagnosis.html">Image Diagnosis</a></li>
-            <li><a href="nearby-hospitals.html">Hospital Finder</a></li>
-            <li><a href="report-summarizing.html">Report Summarizer</a></li>
-            <li><a href="consultancy.html">Doctor Consultations</a></li>
+            <li><a href="index.html"><span data-i18n="nav.home">Home</span></a></li>
+            <li><a href="index.html#features"><span data-i18n="nav.features">Features</span></a></li>
+            <li><a href="index.html#how-it-works"><span data-i18n="nav.howItWorks">How It Works</span></a></li>
+            <li><a href="index.html#about"><span data-i18n="nav.about">About Us</span></a></li>
           </ul>
         </div>
       </div>
     </div>
   </footer>
-
   <script>
+    
     document.addEventListener('DOMContentLoaded', function() {
+      // Language Configuration
+      const translations = {
+        en: {
+          title: "Image Diagnosis | HealthVision",
+          'nav.logo': 'HealthVision',
+          'nav.home': 'Home',
+          'nav.about': 'About Us',
+          'nav.features': 'Features',
+          'nav.howItWorks': 'How It Works',
+          'diagnosis.title': 'Image Diagnosis',
+          'diagnosis.subtitle': 'Upload clear images of affected areas for AI-powered analysis. Our system will examine your images and provide potential diagnoses.',
+          'diagnosis.instructions': 'Please upload a clear, close-up image of the affected area for better analysis.',
+          'diagnosis.uploadText': 'Choose an image',
+          'diagnosis.uploadSubtext': 'JPG, PNG, or WEBP (Max 5MB)',
+          'diagnosis.analyzeButton': 'Analyze Image',
+          'diagnosis.loadingText': 'Analyzing your image...',
+          'results.title': 'Analysis Results',
+          'results.subtitle': 'Possible Diagnoses',
+          'results.consultButton': 'Consult a Specialist',
+          'results.hospitalButton': 'Find Nearby Hospitals',
+          'footer.logo': 'HealthVision',
+          'footer.description': 'Empowering individuals with AI-driven healthcare insights and connections to medical professionals worldwide.',
+          'footer.quickLinks': 'Quick Links'
+        },
+        hi:{
+  "title": "फोटो से इलाज | हेल्थविजन",
+  "nav.logo": "हेल्थविजन",
+  "nav.home": "घर",
+  "nav.about": "हमारे बारे में",
+  "nav.features": "सुविधाएँ",
+  "nav.howItWorks": "कैसे काम करता है",
+  "diagnosis.title": "फोटो से बीमारी पहचानो",
+  "diagnosis.subtitle": "बीमारी वाली जगह की साफ फोटो डालो। हमारी मशीन फोटो देखकर बीमारी का अंदाज़ा लगाएगी।",
+  "diagnosis.instructions": "बीमारी वाली जगह की साफ और पास से ली गई फोटो डालें।",
+  "diagnosis.uploadText": "फोटो चुनें",
+  "diagnosis.uploadSubtext": "JPG, PNG या WEBP (5MB तक)",
+  "diagnosis.analyzeButton": "फोटो देखो और बताओ",
+  "diagnosis.loadingText": "आपकी फोटो देखी जा रही है...",
+  "results.title": "जांच का नतीजा",
+  "results.subtitle": "संभावित बीमारी",
+  "results.consultButton": "डॉक्टर से बात करें",
+  "results.hospitalButton": "पास का अस्पताल देखें",
+  "footer.logo": "हेल्थविजन",
+  "footer.description": "हम एआई तकनीक से इलाज की जानकारी देते हैं और लोगों को डॉक्टरों से जोड़ते हैं।",
+  "footer.quickLinks": "जरूरी लिंक"
+}
+
+      };
+
+      // Language Management
+      let currentLang = localStorage.getItem('lang') || 'en';
+      const languageSelect = document.getElementById('languageSelect');
+
+      function updateContent(lang) {
+        document.title = translations[lang].title;
+        document.documentElement.lang = lang;
+        
+        document.querySelectorAll('[data-i18n]').forEach(element => {
+          const key = element.getAttribute('data-i18n');
+          if (translations[lang][key]) {
+            if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+              element.placeholder = translations[lang][key];
+            } else {
+              element.textContent = translations[lang][key];
+            }
+          }
+        });
+      }
+
+      // Initialize language
+      function initLanguage() {
+        languageSelect.value = currentLang;
+        updateContent(currentLang);
+      }
+
+      languageSelect.addEventListener('change', (e) => {
+        currentLang = e.target.value;
+        localStorage.setItem('lang', currentLang);
+        updateContent(currentLang);
+      });
+
+      initLanguage();
+
+      
       // Theme Toggle
       const themeToggle = document.getElementById('themeToggle');
       const currentTheme = localStorage.getItem('theme') || 'light';
