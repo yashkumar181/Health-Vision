@@ -470,22 +470,20 @@
   <header class="nav-container">
     <nav class="navbar container">
       <div class="logo">
-        <a href="index.html"><i class="fas fa-heartbeat"></i> HealthVision</a>
+        <a href="index.html"><i class="fas fa-heartbeat"></i> <span data-en="HealthVision" data-hi="हेल्थविजन">HealthVision</span></a>
       </div>
       
       <ul class="nav-links" id="navLinks">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="index.html#about">About Us</a></li>
-        <li><a href="index.html#features">Features</a></li>
-        <li><a href="index.html#how-it-works">How It Works</a></li>
+        <li><a href="index.html" data-en="Home" data-hi="होम">Home</a></li>
+        <li><a href="index.html#about" data-en="About Us" data-hi="हमारे बारे में">About Us</a></li>
+        <li><a href="index.html#features" data-en="Features" data-hi="विशेषताएं">Features</a></li>
+        <li><a href="index.html#how-it-works" data-en="How It Works" data-hi="यह कैसे काम करता है">How It Works</a></li>
       </ul>
       
       <div class="nav-actions">
-        <select class="language-select">
+        <select class="language-select" id="languageSelect">
           <option value="en">English</option>
           <option value="hi">हिन्दी</option>
-          <option value="es">Español</option>
-          <option value="fr">Français</option>
         </select>
         
         <button class="theme-toggle" id="themeToggle" title="Toggle Theme">
@@ -503,95 +501,114 @@
   <main class="symptom-checker">
     <div class="container">
       <div class="checker-header">
-        <h1><i class="fas fa-stethoscope"></i> Symptom Checker</h1>
-        <p>Describe your symptoms in detail to receive AI-powered health insights. Our system will analyze your input and provide potential condition matches with probability scores.</p>
+        <h1><i class="fas fa-stethoscope"></i> <span data-en="Symptom Checker" data-hi="तकलीफ बताएं">Symptom Checker</span></h1>
+        <p data-en="Describe your symptoms in detail to receive AI-powered health insights. Our system will analyze your input and provide potential condition matches with probability scores." 
+           data-hi="अपनी परेशानी लिखें, हम बताएंगे क्या हो सकता है। जैसे: 'मुझे 2 दिन से बुखार है">
+          Describe your symptoms in detail to receive AI-powered health insights. Our system will analyze your input and provide potential condition matches with probability scores.
+        </p>
       </div>
       
       <div class="checker-container">
         <div class="input-section">
-          <textarea class="symptom-input" placeholder="Describe your symptoms here... "></textarea>
-          <button class="analyze-btn" id="analyzeBtn">Analyze Symptoms</button>
+          <textarea class="symptom-input" 
+                    placeholder-en="Describe your symptoms here... Be as detailed as possible. Example: 'I've had a persistent headache for 3 days, accompanied by nausea and sensitivity to light. The pain is throbbing and concentrated on the right side of my head.'"
+                    placeholder-hi="अपनी तकलीफ लिखें, जैसे: बुखार, सिर दर्द, उल्टी'"
+                    placeholder="Describe your symptoms here... Be as detailed as possible."></textarea>
+          <button class="analyze-btn" id="analyzeBtn" data-en="Analyze Symptoms" data-hi="लक्षणों का विश्लेषण करें">Analyze Symptoms</button>
         </div>
         
         <div class="loading" id="loadingIndicator">
           <div class="loading-spinner"></div>
-          <p>Analyzing your symptoms...</p>
+          <p data-en="Analyzing your symptoms..." data-hi="आपके लक्षणों का विश्लेषण किया जा रहा है...">Analyzing your symptoms...</p>
         </div>
         
         <div class="results-section" id="resultsSection">
           <div class="results-header">
-            <h2>Analysis Results</h2>
-            <span class="probability">Accuracy: 92%</span>
+            <h2 data-en="Analysis Results" data-hi="विश्लेषण परिणाम">Analysis Results</h2>
+            <span class="probability" data-en="Accuracy: 92%" data-hi="सटीकता: 92%">Accuracy: 92%</span>
           </div>
           
           <div class="result-item">
-            <h3>Migraine</h3>
-            <p>A neurological condition that can cause severe throbbing pain, usually on one side of the head. Often accompanied by nausea, vomiting, and extreme sensitivity to light and sound.</p>
-            <span class="probability">85% match</span>
+            <h3 data-en="Migraine" data-hi="माइग्रेन">Migraine</h3>
+            <p data-en="A neurological condition that can cause severe throbbing pain, usually on one side of the head. Often accompanied by nausea, vomiting, and extreme sensitivity to light and sound." 
+               data-hi="एक न्यूरोलॉजिकल स्थिति जो आमतौर पर सिर के एक तरफ गंभीर धड़कते दर्द का कारण बन सकती है। अक्सर मतली, उल्टी और प्रकाश एवं ध्वनि के प्रति अत्यधिक संवेदनशीलता के साथ होती है।">
+              A neurological condition that can cause severe throbbing pain, usually on one side of the head.
+            </p>
+            <span class="probability" data-en="85% match" data-hi="85% मिलान">85% match</span>
           </div>
           
           <div class="result-item">
-            <h3>Tension Headache</h3>
-            <p>Mild to moderate pain that's often described as feeling like a tight band around the head. Can be caused by stress, poor posture, or eye strain.</p>
-            <span class="probability">72% match</span>
+            <h3 data-en="Tension Headache" data-hi="तनाव सिरदर्द">Tension Headache</h3>
+            <p data-en="Mild to moderate pain that's often described as feeling like a tight band around the head. Can be caused by stress, poor posture, or eye strain." 
+               data-hi="हल्के से मध्यम दर्द जिसे अक्सर सिर के चारों ओर तंग बैंड जैसा महसूस होने के रूप में वर्णित किया जाता है। तनाव, खराब मुद्रा या आंखों के तनाव के कारण हो सकता है।">
+              Mild to moderate pain that's often described as feeling like a tight band around the head.
+            </p>
+            <span class="probability" data-en="72% match" data-hi="72% मिलान">72% match</span>
           </div>
           
           <div class="result-item">
-            <h3>Sinus Headache</h3>
-            <p>Deep, constant pain in the cheekbones, forehead, or bridge of the nose that usually intensifies with sudden head movement.</p>
-            <span class="probability">65% match</span>
+            <h3 data-en="Sinus Headache" data-hi="साइनस सिरदर्द">Sinus Headache</h3>
+            <p data-en="Deep, constant pain in the cheekbones, forehead, or bridge of the nose that usually intensifies with sudden head movement." 
+               data-hi="गाल की हड्डियों, माथे या नाक के पुल में गहरा, निरंतर दर्द जो आमतौर पर अचानक सिर हिलाने से तीव्र हो जाता है।">
+              Deep, constant pain in the cheekbones, forehead, or bridge of the nose.
+            </p>
+            <span class="probability" data-en="65% match" data-hi="65% मिलान">65% match</span>
           </div>
           
           <div class="actions">
             <button class="action-btn doctor-btn">
-              <i class="fas fa-user-md"></i> Talk to a Doctor
+              <i class="fas fa-user-md"></i> <span data-en="Talk to a Doctor" data-hi="डॉक्टर से बात करें">Talk to a Doctor</span>
             </button>
             <button class="action-btn hospital-btn">
-              <i class="fas fa-hospital"></i> Find Nearby Hospitals
+              <i class="fas fa-hospital"></i> <span data-en="Find Nearby Hospitals" data-hi="नजदीकी अस्पताल खोजें">Find Nearby Hospitals</span>
             </button>
           </div>
         </div>
       </div>
     </div>
   </main>
-    <!-- Footer - Same as main page -->
-    <footer class="footer">
-        <div class="container">
-          <div class="footer-grid">
-            <div class="footer-about">
-              <a href="#" class="footer-logo"><i class="fas fa-heartbeat"></i> HealthVision</a>
-              <p>Empowering individuals with AI-driven healthcare insights and connections to medical professionals worldwide.</p>
-              <div class="social-links">
-                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-linkedin-in"></i></a>
-              </div>
-            </div>
-            
-            <div class="footer-links">
-              <h3>Quick Links</h3>
-              <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="index.html#features">Features</a></li>
-                <li><a href="index.html#how-it-works">How It Works</a></li>
-                <li><a href="index.html#about">About Us</a></li>
-              </ul>
-            </div>
-            
-            <div class="footer-links">
-              <h3>Features</h3>
-              <ul>
-                <li><a href="symptom-checker.html">Symptom Checker</a></li>
-                <li><a href="image-diagnosis.html">Image Diagnosis</a></li>
-                <li><a href="nearby-hospitals.html">Hospital Finder</a></li>
-                <li><a href="report-summarizing.html">Report Summarizer</a></li>
-                <li><a href="consultancy.html">Doctor Consultations</a></li>
-              </ul>
-            </div>
+  
+  <!-- Footer - Same as main page -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-about">
+          <a href="#" class="footer-logo"><i class="fas fa-heartbeat"></i> <span data-en="HealthVision" data-hi="हेल्थविजन">HealthVision</span></a>
+          <p data-en="Empowering individuals with AI-driven healthcare insights and connections to medical professionals worldwide." 
+             data-hi="आपकी सेहत की देखभाल में मदद करना">
+            Empowering individuals with AI-driven healthcare insights.
+          </p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
           </div>
         </div>
-      </footer>
+        
+        <div class="footer-links">
+          <h3 data-en="Quick Links" data-hi="त्वरित लिंक">Quick Links</h3>
+          <ul>
+            <li><a href="index.html" data-en="Home" data-hi="होम">Home</a></li>
+            <li><a href="index.html#features" data-en="Features" data-hi="विशेषताएं">Features</a></li>
+            <li><a href="index.html#how-it-works" data-en="How It Works" data-hi="यह कैसे काम करता है">How It Works</a></li>
+            <li><a href="index.html#about" data-en="About Us" data-hi="हमारे बारे में">About Us</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-links">
+          <h3 data-en="Features" data-hi="विशेषताएं">Features</h3>
+          <ul>
+            <li><a href="symptom-checker.html" data-en="Symptom Checker" data-hi="लक्षण जांचकर्ता">Symptom Checker</a></li>
+            <li><a href="image-diagnosis.html" data-en="Image Diagnosis" data-hi="छवि निदान">Image Diagnosis</a></li>
+            <li><a href="nearby-hospitals.html" data-en="Hospital Finder" data-hi="अस्पताल खोजक">Hospital Finder</a></li>
+            <li><a href="report-summarizing.html" data-en="Report Summarizer" data-hi="रिपोर्ट सारांशक">Report Summarizer</a></li>
+            <li><a href="consultancy.html" data-en="Doctor Consultations" data-hi="डॉक्टर परामर्श">Doctor Consultations</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -624,6 +641,39 @@
         hamburger.classList.toggle('active');
       });
       
+      // Language Switching Functionality
+      const languageSelect = document.getElementById('languageSelect');
+      const currentLanguage = localStorage.getItem('language') || 'en';
+      
+      // Set initial language
+      languageSelect.value = currentLanguage;
+      changeLanguage(currentLanguage);
+      
+      // Handle language change
+      languageSelect.addEventListener('change', function() {
+        const selectedLanguage = this.value;
+        localStorage.setItem('language', selectedLanguage);
+        changeLanguage(selectedLanguage);
+      });
+      
+      function changeLanguage(lang) {
+        // Update all elements with data attributes
+        const elements = document.querySelectorAll('[data-en], [data-hi]');
+        
+        elements.forEach(el => {
+          if (el.hasAttribute(`data-${lang}`)) {
+            if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+              const placeholder = el.getAttribute(`placeholder-${lang}`);
+              if (placeholder) {
+                el.setAttribute('placeholder', placeholder);
+              }
+            } else {
+              el.textContent = el.getAttribute(`data-${lang}`);
+            }
+          }
+        });
+      }
+      
       // Symptom Checker Functionality
       const analyzeBtn = document.getElementById('analyzeBtn');
       const loadingIndicator = document.getElementById('loadingIndicator');
@@ -634,7 +684,11 @@
         const symptoms = symptomInput.value.trim();
         
         if (symptoms.length < 10) {
-          alert('Please describe your symptoms in more detail (at least 10 characters)');
+          const currentLanguage = localStorage.getItem('language') || 'en';
+          const alertMessage = currentLanguage === 'hi' ? 
+            'कृपया अपने लक्षणों को अधिक विस्तार से वर्णित करें (कम से कम 10 अक्षर)' : 
+            'Please describe your symptoms in more detail (at least 10 characters)';
+          alert(alertMessage);
           return;
         }
         
@@ -646,9 +700,6 @@
         setTimeout(function() {
           loadingIndicator.style.display = 'none';
           resultsSection.style.display = 'block';
-          
-          // Here you would normally process the API response
-          // For now we're showing sample data
           
           // Scroll to results
           resultsSection.scrollIntoView({ behavior: 'smooth' });
