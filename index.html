@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>HealthVision - AI-Powered Healthcare Companion</title>
+  <title data-translate="HealthVision - AI-Powered Healthcare Companion">HealthVision - AI-Powered Healthcare Companion</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
@@ -286,8 +286,8 @@ body:not(.light-mode) .icon-wrapper {
   position: absolute;
   top: 110%;
   right: 0;
-  background-color: #2cdb75;
-  border: 1px solid #22e473;
+  background-color: black;
+  border: 1px solid white;
   border-radius: 8px;
   list-style: none;
   padding: 8px 0;
@@ -298,13 +298,9 @@ body:not(.light-mode) .icon-wrapper {
 }
 
 .language-dropdown li {
-  color: #0d1117;
+  color: white;
   padding: 8px 16px;
   cursor: pointer;
-}
-
-.language-dropdown li:hover {
-  background-color: #f0f0f0;
 }
 
 .hidden {
@@ -445,6 +441,7 @@ body:not(.light-mode) .icon-wrapper {
     .feature-card:hover {
       transform: translateY(-10px);
       box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      border: 2px solid #dcdcdc;
     }
 
     .feature-icon {
@@ -543,6 +540,32 @@ body:not(.light-mode) .icon-wrapper {
       margin-bottom: 2rem;
       color: rgba(255, 255, 255, 0.9);
     }
+    /* Hindi UI specific styles */
+.hindi-ui {
+  font-family: 'Arial Unicode MS', 'Nirmala UI', sans-serif;
+}
+
+.hindi-ui .feature-icon {
+  font-size: 3.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.hindi-ui .step-number {
+  width: 100px;
+  height: 100px;
+  font-size: 2.5rem;
+}
+
+/* Make buttons slightly larger for Hindi */
+.hindi-ui .btn {
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+}
+
+/* Visual indicators for important text */
+.visual-text {
+  border-bottom: 2px dashed var(--primary-color);
+}
 
     /* Footer */
     .footer {
@@ -756,7 +779,6 @@ body:not(.light-mode) .icon-wrapper {
         text-align: center;
       }
     }
-    
   </style>
 </head>
 <body>
@@ -764,39 +786,28 @@ body:not(.light-mode) .icon-wrapper {
   <header class="nav-container">
     <nav class="navbar container">
       <div class="logo">
-        <a href="#"><i class="fas fa-heartbeat"></i> HealthVision</a>
+        <a href="#"><i class="fas fa-heartbeat"></i> <span data-translate="HealthVision">HealthVision</span></a>
       </div>
       
       <ul class="nav-links" id="navLinks">
-        <li><a href="#home">Home</a></li>
-        <li><a href="#about">About Us</a></li>
-        <li><a href="#features">Features</a></li>
-        <li><a href="#how-it-works">How It Works</a></li>
-
+        <li><a href="#home" data-translate="Home">Home</a></li>
+        <li><a href="#about" data-translate="About Us">About Us</a></li>
+        <li><a href="#features" data-translate="Features">Features</a></li>
+        <li><a href="#how-it-works" data-translate="How It Works">How It Works</a></li>
       </ul>
       
       <div class="nav-actions">
-        
-        <div class="nav-actions">
-          <div class="language-wrapper">
-            <button id="languageToggle" class="language-toggle-btn" title="Change Language">🌐</button>
-            <ul id="languageDropdown" class="language-dropdown hidden">
-              <li data-lang="en">English</li>
-              <li data-lang="hi">हिन्दी</li>
-              <li data-lang="es">Español</li>
-              <li data-lang="fr">Français</li>
-            </ul>
-          </div>
+        <div class="language-wrapper">
+          <button id="languageToggle" class="language-toggle-btn" title="Change Language">🌐</button>
+          <ul id="languageDropdown" class="language-dropdown hidden">
+            <li data-lang="en" data-translate="English">English</li>
+            <li data-lang="hi" data-translate="हिन्दी">हिन्दी</li>
+          </ul>
         </div>
         
-        <button class="theme-toggle-circle" id="themeToggle" title="Toggle Theme">
-          <div class="icon-wrapper">
-            <span class="emoji-icon" id="sunEmoji">🌞</span>
-            <span class="emoji-icon" id="moonEmoji">🌙</span>
-          </div>
+        <button class="theme-toggle" id="themeToggle" title="Toggle Theme">
+          <i class="fas fa-moon"></i>
         </button>
-        
-        
         <div class="hamburger" id="hamburger">
           <i class="fas fa-bars"></i>
         </div>
@@ -808,11 +819,11 @@ body:not(.light-mode) .icon-wrapper {
   <section class="hero" id="home">
     <div class="container">
       <div class="hero-content">
-        <h1>Healthcare Assistant on Your Fingertips</h1>
-        <p>HealthVision combines advanced artificial intelligence with medical expertise to provide personalized health insights and connect you with the right care.</p>
+        <h1 data-translate="Healthcare Assistant on Your Fingertips">Healthcare Assistant on Your Fingertips</h1>
+        <p data-translate="HealthVision combines advanced artificial intelligence with medical expertise to provide personalized health insights and connect you with the right care.">HealthVision combines advanced artificial intelligence with medical expertise to provide personalized health insights and connect you with the right care.</p>
         <div class="hero-buttons">
-          <a href="#features" class="btn btn-primary">Explore Features</a>
-          <a href="consultancy.html" class="btn btn-secondary">Talk to a Doctor</a>
+          <a href="#features" class="btn btn-primary" data-translate="Explore Features">Explore Features</a>
+          <a href="consultancy.html" class="btn btn-secondary" data-translate="Talk to a Doctor">Talk to a Doctor</a>
         </div>
       </div>
     </div>
@@ -823,14 +834,14 @@ body:not(.light-mode) .icon-wrapper {
     <div class="container">
       <div class="about-content">
         <div class="about-text">
-          <h2>About HealthVision</h2>
-          <p>HealthVision is a revolutionary healthcare platform that leverages cutting-edge AI technology to make medical diagnosis and healthcare access easier than ever before.</p>
-          <p>Our mission is to democratize healthcare by providing accurate, accessible, and affordable health insights to everyone, regardless of location or economic status.</p>
-          <p>With a team of medical professionals and AI experts, we've created a platform that helps you understand your symptoms, analyze medical images, and connect with healthcare providers when needed.</p>
-          <a href="#features" class="btn btn-primary">Discover Our Features</a>
+          <h2 data-translate="About HealthVision">About HealthVision</h2>
+          <p data-translate="HealthVision is a revolutionary healthcare platform that leverages cutting-edge AI technology to make medical diagnosis and healthcare access easier than ever before.">HealthVision is a revolutionary healthcare platform that leverages cutting-edge AI technology to make medical diagnosis and healthcare access easier than ever before.</p>
+          <p data-translate="Our mission is to democratize healthcare by providing accurate, accessible, and affordable health insights to everyone, regardless of location or economic status.">Our mission is to democratize healthcare by providing accurate, accessible, and affordable health insights to everyone, regardless of location or economic status.</p>
+          <p data-translate="With a team of medical professionals and AI experts, we've created a platform that helps you understand your symptoms, analyze medical images, and connect with healthcare providers when needed.">With a team of medical professionals and AI experts, we've created a platform that helps you understand your symptoms, analyze medical images, and connect with healthcare providers when needed.</p>
+          <a href="#features" class="btn btn-primary" data-translate="Discover Our Features">Discover Our Features</a>
         </div>
         <div class="about-image">
-          <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Doctor using digital tablet">
+          <img src="https://img.freepik.com/premium-photo/digital-healthcare-network-connection-hologram-modern-virtual-screen-interface-medical-technology-network-concept_1205-6951.jpg?w=996" alt="Doctor using digital tablet">
         </div>
       </div>
     </div>
@@ -840,8 +851,8 @@ body:not(.light-mode) .icon-wrapper {
   <section class="features" id="features">
     <div class="container">
       <div class="section-header">
-        <h2>Our Features</h2>
-        <p>Comprehensive healthcare solutions powered by artificial intelligence</p>
+        <h2 data-translate="Our Features">Our Features</h2>
+        <p data-translate="Comprehensive healthcare solutions powered by artificial intelligence">Comprehensive healthcare solutions powered by artificial intelligence</p>
       </div>
       
       <div class="feature-grid">
@@ -849,48 +860,48 @@ body:not(.light-mode) .icon-wrapper {
           <div class="feature-icon">
             <i class="fas fa-stethoscope"></i>
           </div>
-          <h3>Symptom Checker</h3>
-          <p>Describe what you're feeling and get AI-powered insights about potential conditions.</p>
+          <h3 data-translate="Symptom Checker">Symptom Checker</h3>
+          <p data-translate="Describe what you're feeling and get AI-powered insights about potential conditions.">Describe what you're feeling and get AI-powered insights about potential conditions.</p>
         </a>
         
         <a href="image-diagnosis.html" class="feature-card">
           <div class="feature-icon">
             <i class="fas fa-camera"></i>
           </div>
-          <h3>Image Diagnosis</h3>
-          <p>Upload photos of skin conditions, injuries, or medical scans for preliminary analysis.</p>
+          <h3 data-translate="Image Diagnosis">Image Diagnosis</h3>
+          <p data-translate="Upload photos of skin conditions, injuries, or medical scans for preliminary analysis.">Upload photos of skin conditions, injuries, or medical scans for preliminary analysis.</p>
         </a>
         
         <a href="nearby-hospitals.html" class="feature-card">
           <div class="feature-icon">
             <i class="fas fa-map-marker-alt"></i>
           </div>
-          <h3>Hospital Finder</h3>
-          <p>Locate nearby healthcare facilities based on your symptoms and current location.</p>
+          <h3 data-translate="Hospital Finder">Hospital Finder</h3>
+          <p data-translate="Locate nearby healthcare facilities based on your symptoms and current location.">Locate nearby healthcare facilities based on your symptoms and current location.</p>
         </a>
         
         <a href="appointment-booking.html" class="feature-card">
           <div class="feature-icon">
             <i class="fas fa-calendar-check"></i>
           </div>
-          <h3>Appointment Booking</h3>
-          <p>Schedule consultations with doctors and specialists directly through our platform.</p>
+          <h3 data-translate="Appointment Booking">Get Reminder for your Appointments</h3>
+          <p data-translate="Schedule consultations with doctors and specialists directly through our platform.">Schedule consultations with doctors and specialists directly through our platform.</p>
         </a>
         
         <a href="report-summarizing.html" class="feature-card">
           <div class="feature-icon">
             <i class="fas fa-notes-medical"></i>
           </div>
-          <h3>Report Summarizer</h3>
-          <p>Get simplified explanations of complex medical reports and lab results.</p>
+          <h3 data-translate="Report Summarizer">Report Summarizer</h3>
+          <p data-translate="Get simplified explanations of complex medical reports and lab results.">Get simplified explanations of complex medical reports and lab results.</p>
         </a>
         
         <a href="consultancy.html" class="feature-card">
           <div class="feature-icon">
             <i class="fas fa-comment-medical"></i>
           </div>
-          <h3>Doctor Consultations</h3>
-          <p>Connect with licensed physicians via chat, voice, or video call.</p>
+          <h3 data-translate="Doctor Consultations">Doctor Consultations</h3>
+          <p data-translate="Connect with licensed physicians via chat, voice, or video call.">Connect with licensed physicians via chat, voice, or video call.</p>
         </a>
       </div>
     </div>
@@ -900,32 +911,32 @@ body:not(.light-mode) .icon-wrapper {
   <section class="how-it-works" id="how-it-works">
     <div class="container">
       <div class="section-header">
-        <h2>How HealthVision Works</h2>
-        <p>Three simple steps to better health understanding</p>
+        <h2 data-translate="How HealthVision Works">How HealthVision Works</h2>
+        <p data-translate="Three simple steps to better health understanding">Three simple steps to better health understanding</p>
       </div>
       
       <div class="steps">
         <div class="step">
           <div class="step-number">1</div>
           <div class="step-content">
-            <h3>Describe Your Symptoms</h3>
-            <p>Enter your symptoms or upload images of medical concerns. Our AI will analyze the information.</p>
+            <h3 data-translate="Describe Your Symptoms">Describe Your Symptoms</h3>
+            <p data-translate="Enter your symptoms or upload images of medical concerns. Our AI will analyze the information.">Enter your symptoms or upload images of medical concerns. Our AI will analyze the information.</p>
           </div>
         </div>
         
         <div class="step">
           <div class="step-number">2</div>
           <div class="step-content">
-            <h3>Receive Insights</h3>
-            <p>Get potential condition matches with probability scores and recommended next steps.</p>
+            <h3 data-translate="Receive Insights">Receive Insights</h3>
+            <p data-translate="Get potential condition matches with probability scores and recommended next steps.">Get potential condition matches with probability scores and recommended next steps.</p>
           </div>
         </div>
         
         <div class="step">
           <div class="step-number">3</div>
           <div class="step-content">
-            <h3>Take Action</h3>
-            <p>Book appointments, connect with doctors, or access additional resources as needed.</p>
+            <h3 data-translate="Take Action">Take Action</h3>
+            <p data-translate="Book appointments, connect with doctors, or access additional resources as needed.">Book appointments, connect with doctors, or access additional resources as needed.</p>
           </div>
         </div>
       </div>
@@ -936,11 +947,11 @@ body:not(.light-mode) .icon-wrapper {
   <section class="cta-section">
     <div class="container">
       <div class="cta-content">
-        <h2>Ready to Take Control of Your Health?</h2>
-        <p>Join thousands of users who are making informed healthcare decisions with HealthVision.</p>
+        <h2 data-translate="Ready to Take Control of Your Health?">Ready to Take Control of Your Health?</h2>
+        <p data-translate="Join thousands of users who are making informed healthcare decisions with HealthVision.">Join thousands of users who are making informed healthcare decisions with HealthVision.</p>
         <div class="hero-buttons">
-          <a href="register.html" class="btn btn-primary">Sign Up for Free</a>
-          <a href="#features" class="btn btn-outline">Learn More</a>
+          <a href="register.html" class="btn btn-primary" data-translate="Sign Up for Free">Sign Up for Free</a>
+          <a href="#features" class="btn btn-outline" data-translate="Learn More">Learn More</a>
         </div>
       </div>
     </div>
@@ -951,8 +962,8 @@ body:not(.light-mode) .icon-wrapper {
     <div class="container">
       <div class="footer-grid">
         <div class="footer-about">
-          <a href="#" class="footer-logo"><i class="fas fa-heartbeat"></i> HealthVision</a>
-          <p>Empowering individuals with AI-driven healthcare insights and connections to medical professionals worldwide.</p>
+          <a href="#" class="footer-logo"><i class="fas fa-heartbeat"></i> <span data-translate="HealthVision">HealthVision</span></a>
+          <p data-translate="Empowering individuals with AI-driven healthcare insights and connections to medical professionals worldwide.">Empowering individuals with AI-driven healthcare insights and connections to medical professionals worldwide.</p>
           <div class="social-links">
             <a href="#"><i class="fab fa-facebook-f"></i></a>
             <a href="#"><i class="fab fa-twitter"></i></a>
@@ -962,30 +973,163 @@ body:not(.light-mode) .icon-wrapper {
         </div>
         
         <div class="footer-links">
-          <h3>Quick Links</h3>
+          <h3 data-translate="Quick Links">Quick Links</h3>
           <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#features">Features</a></li>
-            <li><a href="#how-it-works">How It Works</a></li>
-            <li><a href="#testimonials">Testimonials</a></li>
-            <li><a href="#about">About Us</a></li>
+            <li><a href="#home" data-translate="Home">Home</a></li>
+            <li><a href="#features" data-translate="Features">Features</a></li>
+            <li><a href="#how-it-works" data-translate="How It Works">How It Works</a></li>
+            <li><a href="#about" data-translate="About Us">About Us</a></li>
           </ul>
         </div>
         
         <div class="footer-links">
-          <h3>Features</h3>
+          <h3 data-translate="Features">Features</h3>
           <ul>
-            <li><a href="symptom-checker.html">Symptom Checker</a></li>
-            <li><a href="image-diagnosis.html">Image Diagnosis</a></li>
-            <li><a href="nearby-hospitals.html">Hospital Finder</a></li>
-            <li><a href="report-summarizing.html">Report Summarizer</a></li>
-            <li><a href="consultancy.html">Doctor Consultations</a></li>
+            <li><a href="symptom-checker.html" data-translate="Symptom Checker">Symptom Checker</a></li>
+            <li><a href="image-diagnosis.html" data-translate="Image Diagnosis">Image Diagnosis</a></li>
+            <li><a href="nearby-hospitals.html" data-translate="Hospital Finder">Hospital Finder</a></li>
+            <li><a href="report-summarizing.html" data-translate="Report Summarizer">Report Summarizer</a></li>
+            <li><a href="consultancy.html" data-translate="Doctor Consultations">Doctor Consultations</a></li>
           </ul>
         </div>
-    </div>
-  </footer>
-
   <script>
+    // translations.js
+    const translations = {
+      en: {
+        // English translations (original content)
+        "HealthVision - AI-Powered Healthcare Companion": "HealthVision - AI-Powered Healthcare Companion",
+        "Healthcare Assistant on Your Fingertips": "Healthcare Assistant on Your Fingertips",
+        "HealthVision combines advanced artificial intelligence with medical expertise to provide personalized health insights and connect you with the right care.": 
+          "HealthVision combines advanced artificial intelligence with medical expertise to provide personalized health insights and connect you with the right care.",
+        "Explore Features": "Explore Features",
+        "Talk to a Doctor": "Talk to a Doctor",
+        "About HealthVision": "About HealthVision",
+        "HealthVision is a revolutionary healthcare platform that leverages cutting-edge AI technology to make medical diagnosis and healthcare access easier than ever before.": 
+          "HealthVision is a revolutionary healthcare platform that leverages cutting-edge AI technology to make medical diagnosis and healthcare access easier than ever before.",
+        "Our mission is to democratize healthcare by providing accurate, accessible, and affordable health insights to everyone, regardless of location or economic status.": 
+          "Our mission is to democratize healthcare by providing accurate, accessible, and affordable health insights to everyone, regardless of location or economic status.",
+        "With a team of medical professionals and AI experts, we've created a platform that helps you understand your symptoms, analyze medical images, and connect with healthcare providers when needed.": 
+          "With a team of medical professionals and AI experts, we've created a platform that helps you understand your symptoms, analyze medical images, and connect with healthcare providers when needed.",
+        "Discover Our Features": "Discover Our Features",
+        "Our Features": "Our Features",
+        "Comprehensive healthcare solutions powered by artificial intelligence": "Comprehensive healthcare solutions.",
+        "Symptom Checker": "Symptom Checker",
+        "Describe what you're feeling and get AI-powered insights about potential conditions.": 
+          "Describe what you're feeling and get insights about your potential conditions.",
+        "Image Diagnosis": "Image Diagnosis",
+        "Upload photos of skin conditions, injuries, or medical scans for preliminary analysis.": 
+          "Upload photos of skin conditions for preliminary analysis.",
+        "Hospital Finder": "Hospital Finder",
+        "Locate nearby healthcare facilities based on your symptoms and current location.": 
+          "Locate nearby healthcare facilities based on your current location.",
+        "Appointment Booking": "Get Reminder for your Appointments",
+        "Schedule consultations with doctors and specialists directly through our platform.": 
+          "Get Scheduled Reminder for your Appointment through our platform.",
+        "Report Summarizer": "Report Summarizer",
+        "Get simplified explanations of complex medical reports and lab results.": 
+          "Get simplified explanations of complex medical reports and lab results.",
+        "Doctor Consultations": "Doctor Consultations",
+        "Connect with licensed physicians via chat, voice, or video call.": 
+          "Connect with licensed physicians via chat, voice, or video call.",
+        "How HealthVision Works": "How HealthVision Works",
+        "Three simple steps to better health understanding": "Three simple steps to better health understanding",
+        "Describe Your Symptoms": "Describe Your Symptoms",
+        "Enter your symptoms or upload images of medical concerns. Our AI will analyze the information.": 
+          "Enter your symptoms or upload images of medical concerns. We will analyze the information.",
+        "Receive Insights": "Receive Insights",
+        "Get potential condition matches with probability scores and recommended next steps.": 
+          "Get potential condition matches and recommendations for further Analysis.",
+        "Take Action": "Take Action",
+        "Book appointments, connect with doctors, or access additional resources as needed.": 
+          "Connect with Concerned doctors and Specialist.",
+        "Ready to Take Control of Your Health?": "Ready to Take Control of Your Health?",
+        "Join thousands of users who are making informed healthcare decisions with HealthVision.": 
+          "Join thousands of users who are making informed healthcare decisions with HealthVision.",
+        "Sign Up for Free": "Sign Up for Free",
+        "Learn More": "Learn More",
+        "HealthVision": "HealthVision",
+        "Empowering individuals with AI-driven healthcare insights and connections to medical professionals worldwide.": 
+          "Empowering individuals with healthcare insights and connections to medical professionals worldwide.",
+        "Quick Links": "Quick Links",
+        "Home": "Home",
+        "Features": "Features",
+        "How It Works": "How It Works",
+        "About Us": "About Us",
+        "Contact Us": "Contact Us",
+        "contact@healthvision.com": "contact@healthvision.com",
+        "+1 (800) 123-4567": "+1 (800) 123-4567",
+        "123 Healthcare St, MedCity, USA": "123 Healthcare St, MedCity, USA",
+        "&copy; 2023 HealthVision. All rights reserved.": "&copy; 2023 HealthVision. All rights reserved.",
+        "English": "English",
+        "हिन्दी": "हिन्दी",
+        "Español": "Español",
+        "Français": "Français"
+      },
+      hi: {
+        // Hindi translations with visual indicators
+        "HealthVision - AI-Powered Healthcare Companion": " हेल्थविजन - आपका स्वास्थ्य सहायक",
+        "Healthcare Assistant on Your Fingertips": "स्वास्थ्य सेवा सहायता आपकी उंगलियों पर",
+        "HealthVision combines advanced artificial intelligence with medical expertise to provide personalized health insights and connect you with the right care.": 
+          "हमारा ऐप आपकी बीमारी को समझेगा और डॉक्टर से बात कराएगा ",
+        "Explore Features": " वेबसाइट के काम देखें",
+        "Talk to a Doctor": "डॉक्टर बुलाएं",
+        "About HealthVision": "हमारे बारे में",
+        "HealthVision is a revolutionary healthcare platform that leverages cutting-edge AI technology to make medical diagnosis and healthcare access easier than ever before.": 
+          "यह ऐप आपके फोन पर डॉक्टर की तरह काम करता है ",
+        "Our mission is to democratize healthcare by providing accurate, accessible, and affordable health insights to everyone, regardless of location or economic status.": 
+          " हम चाहते हैं कि हर किसी को अच्छी दवा मिले ",
+        "With a team of medical professionals and AI experts, we've created a platform that helps you understand your symptoms, analyze medical images, and connect with healthcare providers when needed.": 
+          "डॉक्टर और कंप्यूटर ने मिलकर यह ऐप बनाया है जो आपकी मदद करेगा",
+        "Discover Our Features": "हमारी विशेषताएं",
+        "Our Features": "हमारी खास बातें",
+        "Comprehensive healthcare solutions powered by artificial intelligence": "आपके फोन में सभी सेवाएं ",
+        "Symptom Checker": "लक्षण पहचानें",
+        "Describe what you're feeling and get AI-powered insights about potential conditions.": 
+          "बताएं आपको क्या हुआ है, हमारे वेबसाइट के माध्यम से अपनी बीमारी जानें",
+        "Image Diagnosis": "तस्वीर से इलाज",
+        "Upload photos of skin conditions, injuries, or medical scans for preliminary analysis.": 
+          "इनफ़ेक्शन की फोटो भेजें, जानें क्या हुआ है",
+        "Hospital Finder": "पास के डॉक्टर ढूंढें",
+        "Locate nearby healthcare facilities based on your symptoms and current location.": 
+          "आपके पास के अच्छे डॉक्टर एवं अस्पताल देखें",
+        "Appointment Booking": "डॉक्टर से मिलने के लिए रिमाइंडर प्राप्त करें",
+        "Schedule consultations with doctors and specialists directly through our platform.": 
+          "डॉक्टर से समय पर मिलें",
+        "Report Summarizer": "टेस्ट रिपोर्ट समझें",
+        "Get simplified explanations of complex medical reports and lab results.": 
+          " कठिन रिपोर्ट को आसान भाषा में समझें",
+        "Doctor Consultations": "डॉक्टर से बात करें",
+        "Connect with licensed physicians via chat, voice, or video call.": 
+          "फोन, वीडियो या मैसेज से डॉक्टर से जुड़ें",
+        "How HealthVision Works": " वेबसाइट कैसे इस्तेमाल करे",
+        "Three simple steps to better health understanding": "स्वास्थ्य की बेहतर समझ के लिए तीन सरल कदम",
+        "Describe Your Symptoms": "बताएं आपको क्या हुआ",
+        "Enter your symptoms or upload images of medical concerns. Our AI will analyze the information.": 
+          "लिखें या फोटो भेजें कि क्या दिक्कत है",
+        "Receive Insights": "जानकारी मिलेगी",
+        "Get potential condition matches with probability scores and recommended next steps.": 
+          "ऐप बताएगा क्या हो सकता है और क्या करें",
+        "Take Action": "डॉक्टर से बात करें",
+        "Book appointments, connect with doctors, or access additional resources as needed.": 
+          " डॉक्टर को दिखाएं ",
+        "Ready to Take Control of Your Health?": "अपनी सेहत का ध्यान रखने के लिए तैयार?",
+        "Join thousands of users who are making informed healthcare decisions with HealthVision.": 
+          "हजारों लोग इस ऐप से अपना इलाज करवा रहे हैं",
+        "Sign Up for Free": "मुफ्त में जुड़ें",
+        "Learn More": "और जानें",
+        "HealthVision": "हेल्थविजन",
+        "Empowering individuals with AI-driven healthcare insights and connections to medical professionals worldwide.": 
+          "दुनिया भर में लोगों को बेहतर इलाज देने का ऐप",
+        "Quick Links": "त्वरित लिंक",
+        "Home": "मुख पृष्ठ",
+        "Features": "विशेषताएं",
+        "How It Works": "कार्य प्रणाली",
+        "About Us": "हमारे बारे में",
+        "English": "अंग्रेज़ी",
+        "हिन्दी": "हिन्दी",
+      }
+    };
+
     document.addEventListener('DOMContentLoaded', function() {
       // Theme Toggle
       const themeToggle = document.getElementById('themeToggle');
@@ -994,7 +1138,7 @@ body:not(.light-mode) .icon-wrapper {
       document.body.setAttribute('data-theme', currentTheme);
       
       if (currentTheme === 'dark') {
-        themeToggle.innerHTML = '<i class="emoji-icon">🌞</i>';
+        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
       }
       
       themeToggle.addEventListener('click', function() {
@@ -1004,32 +1148,64 @@ body:not(.light-mode) .icon-wrapper {
         document.body.setAttribute('data-theme', newTheme);
         localStorage.setItem('theme', newTheme);
         
-        themeToggle.innerHTML = newTheme === 'dark' ? '<i class="emoji-icon">🌞</i>' : '<i class="emoji-icon">🌙</i>';
+        themeToggle.innerHTML = newTheme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
       });
-      const toggleBtn = document.getElementById("languageToggle");
-  const dropdown = document.getElementById("languageDropdown");
 
-  toggleBtn.addEventListener("click", () => {
-    dropdown.classList.toggle("hidden");
-  });
-
-  document.addEventListener("click", (e) => {
-    if (!toggleBtn.contains(e.target) && !dropdown.contains(e.target)) {
-      dropdown.classList.add("hidden");
-    }
-  });
-
-  // Optional: Handle selection
-  dropdown.addEventListener("click", (e) => {
-    if (e.target.tagName === "LI") {
-      const selectedLang = e.target.getAttribute("data-lang");
-      console.log("Selected language:", selectedLang);
-      // You can now use selectedLang as needed
-      dropdown.classList.add("hidden");
-    }
-  });
+      // Language Switching Functionality
+      const languageToggle = document.getElementById('languageToggle');
+      const languageDropdown = document.getElementById('languageDropdown');
       
+      // Set default language
+      let currentLanguage = localStorage.getItem('language') || 'en';
       
+      // Apply translations
+      function applyTranslations(lang) {
+        // Get all elements with data-translate attribute
+        const elementsToTranslate = document.querySelectorAll('[data-translate]');
+        
+        elementsToTranslate.forEach(element => {
+          const key = element.getAttribute('data-translate');
+          if (translations[lang] && translations[lang][key]) {
+            element.textContent = translations[lang][key];
+          }
+        });
+        
+        // Update HTML lang attribute
+        document.documentElement.lang = lang;
+        
+        // Add Hindi-specific UI adjustments
+        if (lang === 'hi') {
+          document.body.classList.add('hindi-ui');
+        } else {
+          document.body.classList.remove('hindi-ui');
+        }
+      }
+      
+      // Initialize translations
+      applyTranslations(currentLanguage);
+      
+      // Toggle dropdown
+      languageToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        languageDropdown.classList.toggle('hidden');
+      });
+      
+      // Close dropdown when clicking outside
+      document.addEventListener('click', () => {
+        languageDropdown.classList.add('hidden');
+      });
+      
+      // Handle language selection
+      languageDropdown.addEventListener('click', (e) => {
+        if (e.target.tagName === 'LI') {
+          const lang = e.target.getAttribute('data-lang');
+          currentLanguage = lang;
+          localStorage.setItem('language', lang);
+          applyTranslations(lang);
+          languageDropdown.classList.add('hidden');
+        }
+      });
+
       // Mobile Navigation
       const hamburger = document.getElementById('hamburger');
       const navLinks = document.getElementById('navLinks');
