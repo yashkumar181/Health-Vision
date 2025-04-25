@@ -508,7 +508,7 @@
   </style>
 </head>
 <body>
-  <!-- Navigation - Same as main page -->
+  <!-- Navigation using second version's structure -->
   <header class="nav-container">
     <nav class="navbar container">
       <div class="logo">
@@ -523,7 +523,6 @@
       </ul>
       
       <div class="nav-actions">
-      <div class="nav-actions">
         <div class="language-wrapper">
           <button id="languageToggle" class="language-toggle-btn" title="Change Language">🌐</button>
           <ul id="languageDropdown" class="language-dropdown hidden">
@@ -531,12 +530,9 @@
             <li data-lang="hi">हिन्दी</li>
           </ul>
         </div>
-      </div>
-        
         <button class="theme-toggle" id="themeToggle" title="Toggle Theme">
           <i class="fas fa-moon"></i>
         </button>
-        </div>
         <div class="hamburger" id="hamburger">
           <i class="fas fa-bars"></i>
         </div>
@@ -544,14 +540,14 @@
     </nav>
   </header>
 
-  <!-- Symptom Checker Main Content -->
+  <!-- Symptom Checker Content with first version's functionality -->
   <main class="symptom-checker">
     <div class="container">
       <div class="checker-header">
         <h1><i class="fas fa-stethoscope"></i> <span data-en="Symptom Checker" data-hi="तकलीफ बताएं">Symptom Checker</span></h1>
         <p data-en="Describe your symptoms in detail to receive AI-powered health insights. Our system will analyze your input and provide potential condition matches with probability scores." 
            data-hi="अपनी परेशानी लिखें, हम बताएंगे क्या हो सकता है। जैसे: 'मुझे 2 दिन से बुखार है">
-          Describe your symptoms in detail to receive AI-powered health insights. Our system will analyze your input and provide potential condition matches with probability scores.
+          Describe your symptoms in detail to receive AI-powered health insights.
         </p>
       </div>
       
@@ -559,8 +555,7 @@
         <div class="input-section">
           <textarea class="symptom-input" 
                     placeholder-en="Describe your symptoms here... Be as detailed as possible. Example: 'I've had a persistent headache for 3 days, accompanied by nausea and sensitivity to light. The pain is throbbing and concentrated on the right side of my head.'"
-                    placeholder-hi="अपनी तकलीफ लिखें, जैसे: बुखार, सिर दर्द, उल्टी'"
-                    placeholder="Describe your symptoms here... Be as detailed as possible."></textarea>
+                    placeholder-hi="अपनी तकलीफ लिखें, जैसे: बुखार, सिर दर्द, उल्टी'"></textarea>
           <button class="analyze-btn" id="analyzeBtn" data-en="Analyze Symptoms" data-hi="लक्षणों का विश्लेषण करें">Analyze Symptoms</button>
         </div>
         
@@ -572,36 +567,8 @@
         <div class="results-section" id="resultsSection">
           <div class="results-header">
             <h2 data-en="Analysis Results" data-hi="विश्लेषण परिणाम">Analysis Results</h2>
-            <span class="probability" data-en="Accuracy: 92%" data-hi="सटीकता: 92%">Accuracy: 92%</span>
           </div>
-          
-          <div class="result-item">
-            <h3 data-en="Migraine" data-hi="माइग्रेन">Migraine</h3>
-            <p data-en="A neurological condition that can cause severe throbbing pain, usually on one side of the head. Often accompanied by nausea, vomiting, and extreme sensitivity to light and sound." 
-               data-hi="एक न्यूरोलॉजिकल स्थिति जो आमतौर पर सिर के एक तरफ गंभीर धड़कते दर्द का कारण बन सकती है। अक्सर मतली, उल्टी और प्रकाश एवं ध्वनि के प्रति अत्यधिक संवेदनशीलता के साथ होती है।">
-              A neurological condition that can cause severe throbbing pain, usually on one side of the head.
-            </p>
-            <span class="probability" data-en="85% match" data-hi="85% मिलान">85% match</span>
-          </div>
-          
-          <div class="result-item">
-            <h3 data-en="Tension Headache" data-hi="तनाव सिरदर्द">Tension Headache</h3>
-            <p data-en="Mild to moderate pain that's often described as feeling like a tight band around the head. Can be caused by stress, poor posture, or eye strain." 
-               data-hi="हल्के से मध्यम दर्द जिसे अक्सर सिर के चारों ओर तंग बैंड जैसा महसूस होने के रूप में वर्णित किया जाता है। तनाव, खराब मुद्रा या आंखों के तनाव के कारण हो सकता है।">
-              Mild to moderate pain that's often described as feeling like a tight band around the head.
-            </p>
-            <span class="probability" data-en="72% match" data-hi="72% मिलान">72% match</span>
-          </div>
-          
-          <div class="result-item">
-            <h3 data-en="Sinus Headache" data-hi="साइनस सिरदर्द">Sinus Headache</h3>
-            <p data-en="Deep, constant pain in the cheekbones, forehead, or bridge of the nose that usually intensifies with sudden head movement." 
-               data-hi="गाल की हड्डियों, माथे या नाक के पुल में गहरा, निरंतर दर्द जो आमतौर पर अचानक सिर हिलाने से तीव्र हो जाता है।">
-              Deep, constant pain in the cheekbones, forehead, or bridge of the nose.
-            </p>
-            <span class="probability" data-en="65% match" data-hi="65% मिलान">65% match</span>
-          </div>
-          
+          <div id="resultsContainer"></div>
           <div class="actions">
             <button class="action-btn doctor-btn">
               <i class="fas fa-user-md"></i> <span data-en="Talk to a Doctor" data-hi="डॉक्टर से बात करें">Talk to a Doctor</span>
@@ -614,8 +581,8 @@
       </div>
     </div>
   </main>
-  
-  <!-- Footer - Same as main page -->
+
+  <!-- Footer -->
   <footer class="footer">
     <div class="container">
       <div class="footer-grid">
@@ -656,39 +623,34 @@
       </div>
     </div>
   </footer>
-
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Theme Toggle (Same as main page)
+    // Gemini API Configuration
+    const API_KEY = 'AIzaSyBi3OzLzeyXFTqxlnobA8za5HIgymDa29A'; // Replace with your actual API key
+  
+    document.addEventListener('DOMContentLoaded', function () {
       const themeToggle = document.getElementById('themeToggle');
       const currentTheme = localStorage.getItem('theme') || 'light';
-      
       document.body.setAttribute('data-theme', currentTheme);
-      
-      if (currentTheme === 'dark') {
-        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-      }
-      
-      themeToggle.addEventListener('click', function() {
-        const currentTheme = document.body.getAttribute('data-theme');
-        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-        
+      themeToggle.innerHTML = currentTheme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+  
+      themeToggle.addEventListener('click', () => {
+        const newTheme = document.body.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
         document.body.setAttribute('data-theme', newTheme);
         localStorage.setItem('theme', newTheme);
-        
         themeToggle.innerHTML = newTheme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
       });
-      // Mobile Navigation (Same as main page)
+  
       const hamburger = document.getElementById('hamburger');
       const navLinks = document.getElementById('navLinks');
-      
-      hamburger.addEventListener('click', function() {
-        navLinks.classList.toggle('active');
-        hamburger.classList.toggle('active');
-      });
-      
+      hamburger.addEventListener('click', () => navLinks.classList.toggle('active'));
+  
+      const analyzeBtn = document.getElementById('analyzeBtn');
+      const loadingIndicator = document.getElementById('loadingIndicator');
+      const resultsSection = document.getElementById('resultsSection');
+      const symptomInput = document.querySelector('.symptom-input');
+
       // Language Toggle Dropdown Logic
-const languageToggle = document.getElementById('languageToggle');
+      const languageToggle = document.getElementById('languageToggle');
 const languageDropdown = document.getElementById('languageDropdown');
 const languageItems = languageDropdown.querySelectorAll('li');
 
@@ -735,58 +697,128 @@ document.addEventListener('click', function (e) {
   }
 });
 
-      
-      // Symptom Checker Functionality
-      const analyzeBtn = document.getElementById('analyzeBtn');
-      const loadingIndicator = document.getElementById('loadingIndicator');
-      const resultsSection = document.getElementById('resultsSection');
+    function changeLanguage(lang) {
+      // Update placeholder of the textarea based on selected language
       const symptomInput = document.querySelector('.symptom-input');
+      if (lang === 'hi') {
+        symptomInput.setAttribute('placeholder', symptomInput.getAttribute('placeholder-hi'));
+      } else {
+        symptomInput.setAttribute('placeholder', symptomInput.getAttribute('placeholder-en'));
+      }
+
+      // Update text for other elements with data attributes
+      const elements = document.querySelectorAll('[data-en], [data-hi]');
       
-      analyzeBtn.addEventListener('click', function() {
+      elements.forEach(el => {
+        if (el.hasAttribute(`data-${lang}`)) {
+          if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+            const placeholder = el.getAttribute(`placeholder-${lang}`);
+            if (placeholder) {
+              el.setAttribute('placeholder', placeholder);
+            }
+          } else {
+            el.textContent = el.getAttribute(`data-${lang}`);
+          }
+        }
+      });
+      }
+  
+      analyzeBtn.addEventListener('click', async () => {
         const symptoms = symptomInput.value.trim();
-        
-        if (symptoms.length < 10) {
-          const currentLanguage = localStorage.getItem('language') || 'en';
-          const alertMessage = currentLanguage === 'hi' ? 
-            'कृपया अपने लक्षणों को अधिक विस्तार से वर्णित करें (कम से कम 10 अक्षर)' : 
-            'Please describe your symptoms in more detail (at least 10 characters)';
-          alert(alertMessage);
+  
+        if (symptoms.length < 20) {
+          alert('Please provide more detailed symptoms (at least 20 characters)');
           return;
         }
-        
-        // Show loading indicator
+  
         loadingIndicator.style.display = 'block';
         resultsSection.style.display = 'none';
-        
-        // Simulate API call with timeout
-        setTimeout(function() {
+  
+        const prompt = `Analyze these symptoms: "${symptoms}". 
+  List top 3 possible medical conditions in this exact format:
+  Name||Description||Probability||WikipediaPageName
+  Example:
+  Migraine||Neurological condition causing severe headaches||High||Migraine
+  Use only medical terms and ensure Wikipedia links exist.`;
+  
+        try {
+          const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              contents: [
+                {
+                  parts: [{ text: prompt }]
+                }
+              ]
+            })
+          });
+  
+          const data = await response.json();
+          const reply = data.candidates?.[0]?.content?.parts?.map(part => part.text).join('') || 'No results found.';
+  
+          const conditions = reply.split('\n')
+            .filter(line => line.includes('||'))
+            .slice(0, 3)
+            .map(line => {
+              const [name, description, probability, wikiPage] = line.split('||');
+              return {
+                name: name.trim(),
+                description: description.trim(),
+                probability: probability.trim(),
+                wikiLink: `https://en.wikipedia.org/wiki/${wikiPage.trim().replace(/ /g, '_')}`
+              };
+            });
+  
+          displayResults(conditions);
+        } catch (error) {
+          console.error('API Error:', error);
+          alert('Error analyzing symptoms. Please try again.');
+        } finally {
           loadingIndicator.style.display = 'none';
-          resultsSection.style.display = 'block';
-          
-          // Scroll to results
-          resultsSection.scrollIntoView({ behavior: 'smooth' });
-        }, 2000);
+        }
       });
-      
-      // This function would be called when you get your API response
-      function displayResults(data) {
-        // You would process the API response here and update the DOM
-        // Example:
-        /*
-        const resultsContainer = document.querySelector('.results-section');
-        resultsContainer.innerHTML = '';
-        
-        data.conditions.forEach(condition => {
-          const item = document.createElement('div');
-          item.className = 'result-item';
-          item.innerHTML = `
+  
+      function displayResults(conditions) {
+        resultsSection.innerHTML = `
+          <div class="results-header">
+            <h2>Analysis Results</h2>
+            <span class="probability">${conditions.length} conditions found</span>
+          </div>
+        `;
+  
+        const container = document.createElement('div');
+        conditions.forEach(condition => {
+          const card = document.createElement('div');
+          card.className = 'result-item';
+          card.innerHTML = `
             <h3>${condition.name}</h3>
             <p>${condition.description}</p>
-            <span class="probability">${condition.probability}% match</span>
+            <span class="probability">${condition.probability}</span>
           `;
-          resultsContainer.appendChild(item);
+  
+          card.addEventListener('click', () => {
+            window.open(condition.wikiLink, '_blank');
+          });
+  
+          container.appendChild(card);
         });
-        */
+  
+        const actions = document.createElement('div');
+        actions.className = 'actions';
+        actions.innerHTML = `
+          <button class="action-btn doctor-btn">
+            <i class="fas fa-user-md"></i> Consult a Doctor
+          </button>
+          <button class="action-btn hospital-btn">
+            <i class="fas fa-hospital"></i> Find Hospitals
+          </button>
+        `;
+  
+        resultsSection.appendChild(container);
+        resultsSection.appendChild(actions);
+        resultsSection.style.display = 'block';
+        resultsSection.scrollIntoView({ behavior: 'smooth' });
       }
     });
   </script>
