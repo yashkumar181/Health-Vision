@@ -9,7 +9,6 @@
   
   <style>
     
-    
     /* Reuse the same CSS variables and base styles from your main page */
     :root {
       --primary-color: #4caf50;
@@ -18,7 +17,7 @@
       --secondary-color: #2196f3;
       --accent-color: #ff9800;
       --text-primary: rgb(0, 0, 0);
-      --text-secondary: rgb(0, 0, 0);
+      --text-secondary: rgb(11, 11, 11);
       --bg-light: #f5f7fa;
       --bg-dark: #1a202c;
       --card-bg: #ffffff;
@@ -471,6 +470,7 @@
     }
 
     .footer-about p {
+      color: white;
       margin-bottom: 1.5rem;
     }
 
@@ -483,9 +483,9 @@
       width: 40px;
       height: 40px;
       border-radius: 50%;
-      background-color: rgba(255, 255, 255, 0.1);
-      display: flex;
       color: black;
+      background-color: rgba(255, 252, 252, 0.1);
+      display: flex;
       align-items: center;
       justify-content: center;
       transition: var(--transition);
@@ -497,6 +497,7 @@
     }
 
     .footer-links h3 {
+      color: white;
       margin-bottom: 1.5rem;
       font-size: 1.2rem;
       position: relative;
@@ -522,7 +523,7 @@
     }
 
     .footer-links a {
-      color: var(--text-secondary);
+      color: rgb(255, 255, 255);
       transition: var(--transition);
     }
 
@@ -546,6 +547,7 @@
       color: var(--text-secondary);
       font-size: 0.9rem;
     }
+
 
     /* Responsive Design */
     @media (max-width: 768px) {
@@ -661,12 +663,13 @@
             <p data-i18n="results.subtitle">Possible Diagnoses</p>
           </div>
           <div class="diagnosis-results" id="diagnosisResults"></div>
+         
           <div class="actions">
-            <button class="action-btn doctor-btn">
+            <button class="action-btn doctor-btn" onclick="window.location.href='consult-specialist.html'">
               <i class="fas fa-user-md"></i>
               <span data-i18n="results.consultButton">Consult a Specialist</span>
             </button>
-            <button class="action-btn hospital-btn">
+            <button class="action-btn hospital-btn" onclick="window.location.href='nearby-hospitals.html'">
               <i class="fas fa-hospital"></i>
               <span data-i18n="results.hospitalButton">Find Nearby Hospitals</span>
             </button>
