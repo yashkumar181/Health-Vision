@@ -227,7 +227,7 @@
             border: none;
             font-size: 1.2rem;
             cursor: pointer;
-            color: var(--text-primary);
+            color: white;
         }
 
         .hamburger {
@@ -252,8 +252,8 @@
             position: absolute;
             top: 110%;
             right: 0;
-            background-color: #2cdb75;
-            border: 1px solid #22e473;
+            background-color: black;
+            border: 1px solid white;
             border-radius: 8px;
             list-style: none;
             padding: 8px 0;
@@ -264,7 +264,7 @@
         }
 
         .language-dropdown li {
-            color: #0d1117;
+            color: white;
             padding: 8px 16px;
             cursor: pointer;
         }
@@ -621,10 +621,9 @@
                         <li data-lang="hi">हिन्दी</li>
                     </ul>
                 </div>
-
                 <button class="theme-toggle" id="themeToggle" title="Toggle Theme">
                     <i class="fas fa-moon"></i>
-                </button>
+                  </button>
 
                 <div class="hamburger" id="hamburger">
                     <i class="fas fa-bars"></i>
@@ -736,24 +735,23 @@
         document.addEventListener('DOMContentLoaded', function () {
             // Theme Toggle
             const themeToggle = document.getElementById('themeToggle');
-            const currentTheme = localStorage.getItem('theme') || 'light';
-
-            document.body.setAttribute('data-theme', currentTheme);
-
-            if (currentTheme === 'dark') {
-                themeToggle.innerHTML = '<i class="emoji-icon">fas fa-sun</i>';
-            }
-
-            themeToggle.addEventListener('click', function () {
-                const currentTheme = document.body.getAttribute('data-theme');
-                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-
-                document.body.setAttribute('data-theme', newTheme);
-                localStorage.setItem('theme', newTheme);
-
-                themeToggle.innerHTML = newTheme === 'dark' ? '<i class="emoji-icon">"fas fa-sun"</i>' : '<i class="emoji-icon">"fas fa-moon"</i>';
-            });
-
+      const currentTheme = localStorage.getItem('theme') || 'light';
+      
+      document.body.setAttribute('data-theme', currentTheme);
+      
+      if (currentTheme === 'dark') {
+        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+      }
+      
+      themeToggle.addEventListener('click', function() {
+        const currentTheme = document.body.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        
+        document.body.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        
+        themeToggle.innerHTML = newTheme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+      });
             // Language Toggle
             const toggleBtn = document.getElementById("languageToggle");
             const dropdown = document.getElementById("languageDropdown");
