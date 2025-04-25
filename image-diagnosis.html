@@ -21,7 +21,7 @@
       --bg-light: #f5f7fa;
       --bg-dark: #1a202c;
       --card-bg: #ffffff;
-      --nav-bg: rgba(214, 255, 216, 0.9);
+      --nav-bg: rgba(26, 32, 44, 0.9);
       --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       --transition: all 0.3s ease;
     }
@@ -109,7 +109,7 @@
     }
 
     .nav-links a {
-      color: var(--text-primary);
+      color: white;
       font-weight: 500;
       position: relative;
       padding: 0.5rem 0;
@@ -136,13 +136,51 @@
       gap: 1rem;
     }
 
-    .language-select {
-      padding: 0.5rem;
-      border-radius: 6px;
-      border: 1px solid var(--text-secondary);
-      background-color: var(--card-bg);
-      color: var(--text-primary);
-    }
+   .language-toggle-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.25rem; /* Makes the globe bigger */
+  color: inherit; /* Uses current text color (for dark/light theme) */
+  padding: 0.5rem;
+  display: flex;
+  align-items:end;
+  justify-content: center;
+}
+.language-toggle-btn:focus {
+  outline: none;
+}
+
+.language-dropdown {
+  position: absolute;
+  right: 0;
+  background: rgb(246, 245, 245);
+  border: 1px solid #f5f5f5;
+  border-radius: 10%;
+  list-style: none;
+  padding: 5px 0;
+  margin: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+.language-dropdown li {
+  color: black;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+.language-dropdown li:hover {
+  background-color: #0e0c0cb7;
+}
+.language-wrapper {
+  position: relative;
+}
+.hidden {
+  display: none;
+}
+
+.language-dropdown li:hover {
+  background-color: #b0acacb7;
+}
 
     .theme-toggle {
       background: none;
@@ -446,6 +484,7 @@
       border-radius: 50%;
       background-color: rgba(255, 255, 255, 0.1);
       display: flex;
+      color: black;
       align-items: center;
       justify-content: center;
       transition: var(--transition);
@@ -560,15 +599,21 @@
       </ul>
       
       <div class="nav-actions">
-        <select class="language-select" id="languageSelect">
-          <option value="en">English</option>
-          <option value="hi">हिन्दी</option>
-        </select>
+      <div class="language-wrapper">
+        <button id="languageToggle" class="language-toggle-btn" title="Change Language">🌐</button>
+        <ul id="languageDropdown" class="language-dropdown hidden">
+          <li data-lang="en">English</li>
+          <li data-lang="hi">हिन्दी</li>
+        </ul>
+      </div>
         <button class="theme-toggle" id="themeToggle" title="Toggle Theme">
           <i class="fas fa-moon"></i>
         </button>
+     
+
         <div class="hamburger" id="hamburger">
           <i class="fas fa-bars"></i>
+        </div>
         </div>
       </div>
     </nav>
@@ -731,45 +776,53 @@
 
       };
 
-      // Language Management
       let currentLang = localStorage.getItem('lang') || 'en';
-      const languageSelect = document.getElementById('languageSelect');
+const languageToggle = document.getElementById('languageToggle');
+const languageDropdown = document.getElementById('languageDropdown');
 
-      function updateContent(lang) {
-        document.title = translations[lang].title;
-        document.documentElement.lang = lang;
-        
-        document.querySelectorAll('[data-i18n]').forEach(element => {
-          const key = element.getAttribute('data-i18n');
-          if (translations[lang][key]) {
-            if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
-              element.placeholder = translations[lang][key];
-            } else {
-              element.textContent = translations[lang][key];
-            }
-          }
-        });
+function updateContent(lang) {
+  document.title = translations[lang].title;
+  document.documentElement.lang = lang;
+
+  document.querySelectorAll('[data-i18n]').forEach(element => {
+    const key = element.getAttribute('data-i18n');
+    if (translations[lang][key]) {
+      if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+        element.placeholder = translations[lang][key];
+      } else {
+        element.textContent = translations[lang][key];
       }
+    }
+  });
+}
 
-      // Initialize language
-      function initLanguage() {
-        languageSelect.value = currentLang;
-        updateContent(currentLang);
-      }
+// Initialize Language on Load
+updateContent(currentLang);
 
-      languageSelect.addEventListener('change', (e) => {
-        currentLang = e.target.value;
-        localStorage.setItem('lang', currentLang);
-        updateContent(currentLang);
-      });
+// Toggle dropdown on 🌐 button click
+languageToggle.addEventListener('click', () => {
+  languageDropdown.classList.toggle('hidden');
+});
 
-      initLanguage();
+// Language switching on dropdown click
+languageDropdown.querySelectorAll('li').forEach(item => {
+  item.addEventListener('click', () => {
+    const lang = item.getAttribute('data-lang');
+    currentLang = lang;
+    localStorage.setItem('lang', lang);
+    updateContent(lang);
+    languageDropdown.classList.add('hidden');
+  });
+});
+
 
       
       // Theme Toggle
       const themeToggle = document.getElementById('themeToggle');
       const currentTheme = localStorage.getItem('theme') || 'light';
       
+
+
       document.body.setAttribute('data-theme', currentTheme);
       
       if (currentTheme === 'dark') {
