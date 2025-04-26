@@ -570,9 +570,6 @@
           </div>
           <div id="resultsContainer"></div>
           <div class="actions">
-            <button class="action-btn doctor-btn" id="talkToDoctorBtn">
-              <i class="fas fa-user-md"></i> <span data-en="Talk to a Doctor" data-hi="डॉक्टर से बात करें">Talk to a Doctor</span>
-            </button>
             <button class="action-btn hospital-btn" id="findHospitalsBtn">
               <i class="fas fa-hospital"></i> <span data-en="Find Nearby Hospitals" data-hi="नजदीकी अस्पताल खोजें">Find Nearby Hospitals</span>
             </button>
@@ -763,9 +760,6 @@ Name||Description||Probability||WikipediaPageName`;
         const actions = document.createElement('div');
         actions.className = 'actions';
         actions.innerHTML = `
-          <button class="action-btn doctor-btn" id="talkToDoctorBtn">
-            <i class="fas fa-user-md"></i> Talk to a Doctor
-          </button>
           <button class="action-btn hospital-btn" id="findHospitalsBtn">
             <i class="fas fa-hospital"></i> Find Hospitals
           </button>
@@ -777,9 +771,6 @@ Name||Description||Probability||WikipediaPageName`;
         resultsSection.scrollIntoView({ behavior: 'smooth' });
 
         // Reattach button event listeners
-        document.getElementById('talkToDoctorBtn').addEventListener('click', () => {
-          window.location.href = 'consultancy.html';
-        });
 
         document.getElementById('findHospitalsBtn').addEventListener('click', () => {
           window.location.href = 'nearby-hospitals.html';
@@ -787,10 +778,6 @@ Name||Description||Probability||WikipediaPageName`;
       }
 
       // Static button redirects (for first load)
-      document.getElementById('talkToDoctorBtn').addEventListener('click', () => {
-        window.location.href = 'consultancy.html';
-      });
-
       document.getElementById('findHospitalsBtn').addEventListener('click', () => {
         window.location.href = 'nearby-hospitals.html';
       });
