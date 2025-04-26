@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Find Nearby Hospitals | HealthVision</title>
+    <title>पास के अस्पताल खोजें | HealthVision</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-
     <style>
         :root {
             --primary-color: #4caf50;
@@ -36,7 +34,7 @@
             --h1: darkgray;
             --text-secondary: #b0bec5;
             --bg-light: #121212;
-            --bg-dark: black;
+            --bg-dark: #0d1117;
             --card-bg: #1e1e1e;
             --nav-bg: rgba(13, 17, 23, 0.9);
             --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
@@ -596,7 +594,6 @@
         }
     </style>
 </head>
-
 <body>
     <!-- Navbar -->
     <header class="nav-container">
@@ -606,10 +603,10 @@
             </div>
 
             <ul class="nav-links" id="navLinks">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="index.html#about">About Us</a></li>
-                <li><a href="index.html#features">Features</a></li>
-                <li><a href="index.html#how-it-works">How It Works</a></li>
+                <li><a href="index.html" data-en="Home" data-hi="होम">Home</a></li>
+                <li><a href="index.html#about" data-en="About Us" data-hi="हमारे बारे में">About Us</a></li>
+                <li><a href="index.html#features" data-en="Features" data-hi="विशेषताएं">Features</a></li>
+                <li><a href="index.html#how-it-works" data-en="How It Works" data-hi="यह कैसे काम करता है">How It Works</a></li>
             </ul>
 
             <div class="nav-actions">
@@ -622,7 +619,7 @@
                 </div>
                 <button class="theme-toggle" id="themeToggle" title="Toggle Theme">
                     <i class="fas fa-moon"></i>
-                  </button>
+                </button>
 
                 <div class="hamburger" id="hamburger">
                     <i class="fas fa-bars"></i>
@@ -633,20 +630,20 @@
 
     <!-- Hospital Finder Section -->
     <section class="hospital-finder container">
-
         <div class="finder-header">
-            <h1><i class="fas fa-map-marker-alt"></i> Find Hospitals Nearby</h1>
-            <p>Locate healthcare facilities in your area or search by location</p>
+            <h1><i class="fas fa-map-marker-alt"></i> <span data-en="Find Nearby Hospitals" data-hi="पास के अस्पताल खोजें">Find Nearby Hospitals</span></h1>
+            <p data-en="Locate healthcare facilities in your area or search by location" data-hi="अपने क्षेत्र में स्वास्थ्य सुविधाओं का पता लगाएं या स्थान के अनुसार खोजें">Locate healthcare facilities in your area or search by location</p>
         </div>
+        
         <div class="search-options">
             <div class="search-option">
-                <h3><i class="fas fa-map-marker-alt"></i> Enter Location Manually</h3>
+                <h3><i class="fas fa-map-marker-alt"></i> <span data-en="Enter Location Manually" data-hi="मैन्युअल रूप से स्थान दर्ज करें">Enter Location Manually</span></h3>
                 <div class="form-group">
-                    <label for="pincode">Pincode/Zip Code</label>
+                    <label for="pincode" data-en="Pincode/Zip Code" data-hi="पिनकोड/ज़िप कोड">Pincode/Zip Code</label>
                     <input type="text" id="pincode" class="form-control" placeholder="Enter your pincode or zip code">
                 </div>
                 <div class="form-group">
-                    <label for="country">Country</label>
+                    <label for="country" data-en="Country" data-hi="देश">Country</label>
                     <select id="country" class="form-control">
                         <option value="">Select Country</option>
                         <option value="US">United States</option>
@@ -656,21 +653,21 @@
                         <option value="AU">Australia</option>
                     </select>
                 </div>
-                <button id="searchByPincode" class="btn btn-primary">Search Hospitals</button>
+                <button id="searchByPincode" class="btn btn-primary" data-en="Search Hospitals" data-hi="अस्पताल खोजें">Search Hospitals</button>
             </div>
 
             <div class="search-option">
-                <h3><i class="fas fa-location-arrow"></i> Detect My Location</h3>
-                <p>Allow HealthVision to access your location to find the nearest hospitals automatically.</p>
+                <h3><i class="fas fa-location-arrow"></i> <span data-en="Detect My Location" data-hi="मेरा स्थान पता करें">Detect My Location</span></h3>
+                <p data-en="Allow HealthVision to access your location to find the nearest hospitals automatically." data-hi="निकटतम अस्पतालों को स्वचालित रूप से खोजने के लिए HealthVision को अपना स्थान एक्सेस करने की अनुमति दें।">Allow HealthVision to access your location to find the nearest hospitals automatically.</p>
                 <button id="detectLocation" class="btn btn-secondary">
-                    <i class="fas fa-location-arrow"></i> Detect My Location
+                    <i class="fas fa-location-arrow"></i> <span data-en="Detect My Location" data-hi="मेरा स्थान पता करें">Detect My Location</span>
                 </button>
             </div>
         </div>
 
         <div class="loading" id="loadingIndicator">
             <i class="fas fa-spinner"></i>
-            <p>Searching for hospitals in your area...</p>
+            <p data-en="Searching for hospitals in your area..." data-hi="आपके क्षेत्र में अस्पतालों की खोज की जा रही है...">Searching for hospitals in your area...</p>
         </div>
 
         <div class="map-container">
@@ -679,8 +676,8 @@
 
         <div class="results-container" id="resultsContainer" style="display: none;">
             <div class="results-header">
-                <h2>Nearby Hospitals</h2>
-                <p id="resultCount">Showing <span id="hospitalCount">0</span> hospitals within 100km</p>
+                <h2 data-en="Nearby Hospitals" data-hi="आस-पास के अस्पताल">Nearby Hospitals</h2>
+                <p id="resultCount" data-en="Showing" data-hi="दिखा रहा है"><span data-en="hospitals within" data-hi="अस्पतालों के भीतर">Showing <span id="hospitalCount">0</span> hospitals within 100km</span></p>
             </div>
 
             <div class="hospital-list" id="hospitalList">
@@ -695,8 +692,7 @@
             <div class="footer-grid">
                 <div class="footer-about">
                     <a href="index.html" class="footer-logo"><i class="fas fa-heartbeat"></i> HealthVision</a>
-                    <p>Empowering individuals with healthcare insights and connections to medical
-                        professionals worldwide.</p>
+                    <p data-en="Empowering individuals with healthcare insights and connections to medical professionals worldwide." data-hi="दुनिया भर में स्वास्थ्य सेवा अंतर्दृष्टि और चिकित्सा पेशेवरों के साथ संबंधों के साथ व्यक्तियों को सशक्त बनाना।">Empowering individuals with healthcare insights and connections to medical professionals worldwide.</p>
                     <div class="social-links">
                         <a href="#"><i class="fab fa-facebook-f"></i></a>
                         <a href="#"><i class="fab fa-twitter"></i></a>
@@ -706,71 +702,113 @@
                 </div>
 
                 <div class="footer-links">
-                    <h3>Quick Links</h3>
+                    <h3 data-en="Quick Links" data-hi="त्वरित लिंक">Quick Links</h3>
                     <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="index.html#features">Features</a></li>
-                        <li><a href="index.html#how-it-works">How It Works</a></li>
-                        <li><a href="index.html#about">About Us</a></li>
+                        <li><a href="index.html" data-en="Home" data-hi="होम">Home</a></li>
+                        <li><a href="index.html#features" data-en="Features" data-hi="विशेषताएं">Features</a></li>
+                        <li><a href="index.html#how-it-works" data-en="How It Works" data-hi="यह कैसे काम करता है">How It Works</a></li>
+                        <li><a href="index.html#about" data-en="About Us" data-hi="हमारे बारे में">About Us</a></li>
                     </ul>
                 </div>
 
                 <div class="footer-links">
-                    <h3>Features</h3>
+                    <h3 data-en="Features" data-hi="विशेषताएं">Features</h3>
                     <ul>
-                        <li><a href="symptom-checker.html">Symptom Checker</a></li>
-                        <li><a href="image-diagnosis.html">Image Diagnosis</a></li>
-                        <li><a href="nearby-hospitals.html">Hospital Finder</a></li>
-                        <li><a href="report-summarizing.html">Report Summarizer</a></li>
-                        <li><a href="consultancy.html">Doctor Consultations</a></li>
+                        <li><a href="symptom-checker.html" data-en="Symptom Checker" data-hi="लक्षण जांच">Symptom Checker</a></li>
+                        <li><a href="image-diagnosis.html" data-en="Image Diagnosis" data-hi="छवि निदान">Image Diagnosis</a></li>
+                        <li><a href="nearby-hospitals.html" data-en="Hospital Finder" data-hi="अस्पताल खोजक">Hospital Finder</a></li>
+                        <li><a href="report-summarizing.html" data-en="Report Summarizer" data-hi="रिपोर्ट सारांशकर्ता">Report Summarizer</a></li>
+                        <li><a href="consultancy.html" data-en="Doctor Consultations" data-hi="डॉक्टर परामर्श">Doctor Consultations</a></li>
                     </ul>
                 </div>
             </div>
         </div>
     </footer>
-
+    
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // Language toggle functionality
+            const languageToggle = document.getElementById('languageToggle');
+            const languageDropdown = document.getElementById('languageDropdown');
+            let currentLanguage = 'en'; // Default language
+            
+            // Function to update UI language
+            function updateLanguage(lang) {
+                currentLanguage = lang;
+                document.querySelectorAll('[data-en], [data-hi]').forEach(element => {
+                    if (element.tagName === 'INPUT' || element.tagName === 'SELECT') {
+                        // Skip input and select elements
+                        return;
+                    }
+                    const text = element.getAttribute(`data-${lang}`);
+                    if (text) {
+                        if (element.hasAttribute('placeholder')) {
+                            element.setAttribute('placeholder', text);
+                        } else {
+                            element.textContent = text;
+                        }
+                    }
+                });
+                
+                // Update the title tag
+                if (lang === 'hi') {
+                    document.title = "पास के अस्पताल खोजें | HealthVision";
+                } else {
+                    document.title = "Find Nearby Hospitals | HealthVision";
+                }
+                
+                // Update result count text
+                updateResultCountText();
+            }
+            
+            function updateResultCountText() {
+                const resultCount = document.getElementById('resultCount');
+                const count = document.getElementById('hospitalCount').textContent;
+                if (currentLanguage === 'hi') {
+                    resultCount.innerHTML = `दिखा रहा है <span id="hospitalCount">${count}</span> अस्पतालों के भीतर 100km`;
+                } else {
+                    resultCount.innerHTML = `Showing <span id="hospitalCount">${count}</span> hospitals within 100km`;
+                }
+            }
+            
+            // Language toggle event listeners
+            languageToggle.addEventListener('click', () => {
+                languageDropdown.classList.toggle('hidden');
+            });
+            
+            document.addEventListener('click', (e) => {
+                if (!languageToggle.contains(e.target) && !languageDropdown.contains(e.target)) {
+                    languageDropdown.classList.add('hidden');
+                }
+            });
+            
+            languageDropdown.addEventListener('click', (e) => {
+                if (e.target.tagName === 'LI') {
+                    const selectedLang = e.target.getAttribute('data-lang');
+                    updateLanguage(selectedLang);
+                    languageDropdown.classList.add('hidden');
+                }
+            });
+            
             // Theme Toggle
             const themeToggle = document.getElementById('themeToggle');
-      const currentTheme = localStorage.getItem('theme') || 'light';
-      
-      document.body.setAttribute('data-theme', currentTheme);
-      
-      if (currentTheme === 'dark') {
-        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-      }
-      
-      themeToggle.addEventListener('click', function() {
-        const currentTheme = document.body.getAttribute('data-theme');
-        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-        
-        document.body.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
-        
-        themeToggle.innerHTML = newTheme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-      });
-            // Language Toggle
-            const toggleBtn = document.getElementById("languageToggle");
-            const dropdown = document.getElementById("languageDropdown");
-
-            toggleBtn.addEventListener("click", () => {
-                dropdown.classList.toggle("hidden");
-            });
-
-            document.addEventListener("click", (e) => {
-                if (!toggleBtn.contains(e.target) && !dropdown.contains(e.target)) {
-                    dropdown.classList.add("hidden");
-                }
-            });
-
-            dropdown.addEventListener("click", (e) => {
-                if (e.target.tagName === "LI") {
-                    const selectedLang = e.target.getAttribute("data-lang");
-                    console.log("Selected language:", selectedLang);
-                    dropdown.classList.add("hidden");
-                }
+            const currentTheme = localStorage.getItem('theme') || 'light';
+            
+            document.body.setAttribute('data-theme', currentTheme);
+            
+            if (currentTheme === 'dark') {
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            }
+            
+            themeToggle.addEventListener('click', function() {
+                const currentTheme = document.body.getAttribute('data-theme');
+                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                
+                document.body.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                
+                themeToggle.innerHTML = newTheme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
             });
 
             // Mobile Navigation
@@ -804,10 +842,10 @@
                     const marker = L.marker([hospital.latitude, hospital.longitude])
                         .addTo(map)
                         .bindPopup(`
-              <b>${hospital.name}</b><br>
-              ${hospital.address}<br>
-              Distance: ${hospital.distance.toFixed(1)} km
-            `);
+                            <b>${hospital.name}</b><br>
+                            ${hospital.address}<br>
+                            ${currentLanguage === 'hi' ? 'दूरी:' : 'Distance:'} ${hospital.distance.toFixed(1)} km
+                        `);
 
                     markers.push(marker);
                 });
@@ -827,26 +865,33 @@
                 hospitals.forEach(hospital => {
                     const card = document.createElement('div');
                     card.className = 'hospital-card';
-                    card.innerHTML = `
-            <h4>${hospital.name}</h4>
-            <span class="hospital-distance">${hospital.distance.toFixed(1)} km away</span>
-            <div class="hospital-info">
-              <i class="fas fa-map-marker-alt"></i>
-              <span>${hospital.address}</span>
-            </div>
-            <div class="hospital-info">
-              <i class="fas fa-phone"></i>
-              <span>${hospital.phone || 'Phone not available'}</span>
-            </div>
-            <div class="hospital-info">
-              <i class="fas fa-star"></i>
-              <span>Rating: ${hospital.rating || 'Not rated'}</span>
-            </div>
-          `;
+                    
+                    // Create proper HTML structure for the card
+                    const cardHTML = `
+                        <div class="hospital-card-content">
+                            <h4>${hospital.name}</h4>
+                            <span class="hospital-distance">${hospital.distance.toFixed(1)} km ${currentLanguage === 'hi' ? 'दूर' : 'away'}</span>
+                            <div class="hospital-info">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>${hospital.address}</span>
+                            </div>
+                            <div class="hospital-info">
+                                <i class="fas fa-phone"></i>
+                                <span>${hospital.phone || (currentLanguage === 'hi' ? 'फोन उपलब्ध नहीं' : 'Phone not available')}</span>
+                            </div>
+                            <div class="hospital-info">
+                                <i class="fas fa-star"></i>
+                                <span>${currentLanguage === 'hi' ? 'रेटिंग:' : 'Rating:'} ${hospital.rating || (currentLanguage === 'hi' ? 'रेटेड नहीं' : 'Not rated')}</span>
+                            </div>
+                        </div>
+                    `;
+                    
+                    card.innerHTML = cardHTML;
                     hospitalList.appendChild(card);
                 });
 
                 document.getElementById('hospitalCount').textContent = hospitals.length;
+                updateResultCountText();
                 document.getElementById('resultsContainer').style.display = 'block';
             }
 
@@ -868,17 +913,17 @@
                     const data = await response.json();
                     const hospitals = data.elements.map((hospital, index) => ({
                         id: index,
-                        name: hospital.tags?.name || "Unnamed Hospital",
-                        address: hospital.tags?.["addr:full"] || "Address not available",
+                        name: hospital.tags?.name || (currentLanguage === 'hi' ? "अनाम अस्पताल" : "Unnamed Hospital"),
+                        address: hospital.tags?.["addr:full"] || (currentLanguage === 'hi' ? "पता उपलब्ध नहीं" : "Address not available"),
                         latitude: hospital.lat,
                         longitude: hospital.lon,
                         distance: calculateDistance(lat, lng, hospital.lat, hospital.lon),
-                        phone: hospital.tags?.phone || "Phone not listed",
-                        rating: "N/A" // Not available in OSM
+                        phone: hospital.tags?.phone || (currentLanguage === 'hi' ? "फोन सूचीबद्ध नहीं" : "Phone not listed"),
+                        rating: currentLanguage === 'hi' ? "उपलब्ध नहीं" : "N/A"
                     }));
 
                     if (hospitals.length === 0) {
-                        alert("No hospitals found in this area. Try a larger radius.");
+                        alert(currentLanguage === 'hi' ? "इस क्षेत्र में कोई अस्पताल नहीं मिला। बड़े क्षेत्र में खोजें।" : "No hospitals found in this area. Try a larger radius.");
                         return;
                     }
 
@@ -886,7 +931,6 @@
                     displayHospitals(hospitals);
                 } catch (error) {
                     console.error("Error fetching hospitals:", error);
-                    alert("Failed to fetch hospitals. Please try again.");
                 } finally {
                     showLoading(false);
                 }
@@ -906,8 +950,6 @@
                 return R * c; // Distance in km
             }
 
-
-
             // Function to get coordinates from pincode using Nominatim (OpenStreetMap)
             async function getCoordsFromPincode(pincode, country) {
                 showLoading(true);
@@ -926,7 +968,7 @@
                     }
                 } catch (error) {
                     console.error('Error fetching coordinates:', error);
-                    alert('Could not find location. Please check the pincode and country.');
+                    alert(currentLanguage === 'hi' ? 'स्थान नहीं मिला। कृपया पिनकोड और देश जांचें।' : 'Could not find location. Please check the pincode and country.');
                     throw error;
                 } finally {
                     showLoading(false);
@@ -939,12 +981,12 @@
                 const country = document.getElementById('country').value;
 
                 if (!pincode) {
-                    alert('Please enter a pincode/zip code');
+                    alert(currentLanguage === 'hi' ? 'कृपया पिनकोड/ज़िप कोड दर्ज करें' : 'Please enter a pincode/zip code');
                     return;
                 }
 
                 if (!country) {
-                    alert('Please select a country');
+                    alert(currentLanguage === 'hi' ? 'कृपया एक देश चुनें' : 'Please select a country');
                     return;
                 }
 
@@ -972,15 +1014,14 @@
                         function (error) {
                             showLoading(false);
                             console.error('Geolocation error:', error);
-                            alert('Could not detect your location. Please try again or enter manually.');
+                            alert(currentLanguage === 'hi' ? 'आपका स्थान पता नहीं चल सका। कृपया पुनः प्रयास करें या मैन्युअल रूप से दर्ज करें।' : 'Could not detect your location. Please try again or enter manually.');
                         }
                     );
                 } else {
-                    alert('Geolocation is not supported by your browser. Please enter your location manually.');
+                    alert(currentLanguage === 'hi' ? 'आपका ब्राउज़र स्थान का पता लगाने का समर्थन नहीं करता। कृपया मैन्युअल रूप से अपना स्थान दर्ज करें।' : 'Geolocation is not supported by your browser. Please enter your location manually.');
                 }
             });
         });
     </script>
 </body>
-
 </html>
