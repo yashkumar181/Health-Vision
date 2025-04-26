@@ -447,6 +447,60 @@
             }
         }
 
+        /* Email Modal Styles */
+        .email-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .email-modal-content {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: var(--shadow);
+        }
+
+        .email-modal h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .email-modal p {
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .email-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-primary);
+        }
+
+        body[data-theme="dark"] .email-input {
+            background-color: var(--bg-dark);
+            border-color: #444;
+        }
+
+        .email-modal-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             .nav-links {
@@ -473,6 +527,14 @@
 
             .search-options {
                 flex-direction: column;
+            }
+
+            .email-modal-buttons {
+                flex-direction: column;
+            }
+
+            .email-modal-buttons .btn {
+                width: 100%;
             }
         }
 
@@ -689,6 +751,21 @@
         </div>
     </section>
 
+    <!-- Email Modal -->
+    <div class="email-modal" id="emailModal">
+        <div class="email-modal-content">
+            <h3><i class="fas fa-envelope"></i> Get Top 5 Hospitals via Email</h3>
+            <p>Enter your email to receive the nearest hospitals list:</p>
+            <input type="email" id="userEmail" class="email-input" placeholder="your-email@gmail.com">
+            <div class="email-modal-buttons">
+                <button id="sendEmailBtn" class="btn btn-primary">
+                    <i class="fas fa-paper-plane"></i> Send to My Email
+                </button>
+                <button id="closeModalBtn" class="btn btn-outline">Close</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
@@ -697,12 +774,6 @@
                     <a href="index.html" class="footer-logo"><i class="fas fa-heartbeat"></i> HealthVision</a>
                     <p>Empowering individuals with AI-driven healthcare insights and connections to medical
                         professionals worldwide.</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
                 </div>
 
                 <div class="footer-links">
@@ -730,27 +801,35 @@
     </footer>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- Add EmailJS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script>
+        // Initialize EmailJS with your Public Key
+        (function() {
+            emailjs.init("uGk-AyTq4jC_2kDRM");
+        })();
+
         document.addEventListener('DOMContentLoaded', function () {
             // Theme Toggle
             const themeToggle = document.getElementById('themeToggle');
-      const currentTheme = localStorage.getItem('theme') || 'light';
-      
-      document.body.setAttribute('data-theme', currentTheme);
-      
-      if (currentTheme === 'dark') {
-        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-      }
-      
-      themeToggle.addEventListener('click', function() {
-        const currentTheme = document.body.getAttribute('data-theme');
-        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-        
-        document.body.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
-        
-        themeToggle.innerHTML = newTheme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-      });
+            const currentTheme = localStorage.getItem('theme') || 'light';
+            
+            document.body.setAttribute('data-theme', currentTheme);
+            
+            if (currentTheme === 'dark') {
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            }
+            
+            themeToggle.addEventListener('click', function() {
+                const currentTheme = document.body.getAttribute('data-theme');
+                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                
+                document.body.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                
+                themeToggle.innerHTML = newTheme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+            });
+
             // Language Toggle
             const toggleBtn = document.getElementById("languageToggle");
             const dropdown = document.getElementById("languageDropdown");
@@ -789,6 +868,7 @@
             }).addTo(map);
 
             let markers = [];
+            let currentHospitals = []; // Store hospitals for email sending
 
             // Function to clear all markers
             function clearMarkers() {
@@ -804,10 +884,10 @@
                     const marker = L.marker([hospital.latitude, hospital.longitude])
                         .addTo(map)
                         .bindPopup(`
-              <b>${hospital.name}</b><br>
-              ${hospital.address}<br>
-              Distance: ${hospital.distance.toFixed(1)} km
-            `);
+                            <b>${hospital.name}</b><br>
+                            ${hospital.address}<br>
+                            Distance: ${hospital.distance.toFixed(1)} km
+                        `);
 
                     markers.push(marker);
                 });
@@ -821,33 +901,43 @@
 
             // Function to display hospitals in list
             function displayHospitals(hospitals) {
+                currentHospitals = hospitals; // Store for email
+                
                 const hospitalList = document.getElementById('hospitalList');
                 hospitalList.innerHTML = '';
+
+                // Sort by distance (closest first)
+                hospitals.sort((a, b) => a.distance - b.distance);
 
                 hospitals.forEach(hospital => {
                     const card = document.createElement('div');
                     card.className = 'hospital-card';
                     card.innerHTML = `
-            <h4>${hospital.name}</h4>
-            <span class="hospital-distance">${hospital.distance.toFixed(1)} km away</span>
-            <div class="hospital-info">
-              <i class="fas fa-map-marker-alt"></i>
-              <span>${hospital.address}</span>
-            </div>
-            <div class="hospital-info">
-              <i class="fas fa-phone"></i>
-              <span>${hospital.phone || 'Phone not available'}</span>
-            </div>
-            <div class="hospital-info">
-              <i class="fas fa-star"></i>
-              <span>Rating: ${hospital.rating || 'Not rated'}</span>
-            </div>
-          `;
+                        <h4>${hospital.name}</h4>
+                        <span class="hospital-distance">${hospital.distance.toFixed(1)} km away</span>
+                        <div class="hospital-info">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>${hospital.address}</span>
+                        </div>
+                        <div class="hospital-info">
+                            <i class="fas fa-phone"></i>
+                            <span>${hospital.phone || 'Phone not available'}</span>
+                        </div>
+                        <div class="hospital-info">
+                            <i class="fas fa-star"></i>
+                            <span>Rating: ${hospital.rating || 'Not rated'}</span>
+                        </div>
+                    `;
                     hospitalList.appendChild(card);
                 });
 
                 document.getElementById('hospitalCount').textContent = hospitals.length;
                 document.getElementById('resultsContainer').style.display = 'block';
+
+                // Show email modal if we have results
+                if (hospitals.length > 0) {
+                    document.getElementById('emailModal').style.display = 'flex';
+                }
             }
 
             // Function to show loading indicator
@@ -906,8 +996,6 @@
                 return R * c; // Distance in km
             }
 
-
-
             // Function to get coordinates from pincode using Nominatim (OpenStreetMap)
             async function getCoordsFromPincode(pincode, country) {
                 showLoading(true);
@@ -932,6 +1020,48 @@
                     showLoading(false);
                 }
             }
+
+            // Email functionality
+            document.getElementById('sendEmailBtn').addEventListener('click', function() {
+                const userEmail = document.getElementById('userEmail').value.trim();
+                
+                if (!userEmail || !userEmail.includes('@')) {
+                    alert('Please enter a valid email address');
+                    return;
+                }
+
+                // Get top 5 closest hospitals
+                const top5Hospitals = [...currentHospitals]
+                    .sort((a, b) => a.distance - b.distance)
+                    .slice(0, 5);
+
+                // Format email content
+                const emailContent = top5Hospitals.map(hospital => 
+                    `🏥 ${hospital.name}\n📍 ${hospital.address}\n📏 ${hospital.distance.toFixed(1)} km away\n📞 ${hospital.phone || 'Phone not available'}\n\n`
+                ).join('');
+
+                const emailParams = {
+                    to_email: userEmail,
+                    hospitals_list: emailContent,
+                    search_location: document.getElementById('pincode').value || 'Your Current Location'
+                };
+
+                // Replace with your actual EmailJS service and template IDs
+                emailjs.send('service_9najibj', 'template_q976x3g', emailParams)
+                    .then(() => {
+                        alert('Email sent successfully! Check your inbox.');
+                        document.getElementById('emailModal').style.display = 'none';
+                    })
+                    .catch((error) => {
+                        console.error('Email sending failed:', error);
+                        alert('Failed to send email. Please try again later.');
+                    });
+            });
+
+            // Close modal button
+            document.getElementById('closeModalBtn').addEventListener('click', function() {
+                document.getElementById('emailModal').style.display = 'none';
+            });
 
             // Event listeners
             document.getElementById('searchByPincode').addEventListener('click', async function () {
