@@ -519,28 +519,174 @@ body:not(.light-mode) .icon-wrapper {
       padding: 0 1rem;
     }
 
-    /* CTA Section */
-    .cta-section {
-      padding: 5rem 0;
-      background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-      color: white;
-      text-align: center;
-    }
+    .team-vision {
+  padding: 5rem 0;
+  background-color: var(--bg-light);
+}
 
-    .cta-content {
-      max-width: 800px;
-      margin: 0 auto;
-    }
+body[data-theme="dark"] .team-vision {
+  background-color: var(--bg-dark);
+}
 
-    .cta-section h2 {
-      margin-bottom: 1.5rem;
-      color: white;
-    }
+.vision-cards {
+  display: flex;
+  gap: 2rem;
+  overflow-x: hidden;
+  position: relative;
+  padding: 1rem 0;
+  margin-bottom: 1.5rem;
+}
 
-    .cta-section p {
-      margin-bottom: 2rem;
-      color: rgba(255, 255, 255, 0.9);
-    }
+.vision-card {
+  min-width: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 15px;
+  padding: 2rem;
+  transition: all 0.5s ease;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  transition: all 0.8s ease;
+  opacity: 0;
+  transform: translateX(100%);
+  position: absolute;
+}
+
+.vision-card.active {
+  opacity: 1;
+  transform: translateX(0);
+  position: relative;
+}
+.card-grid {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  gap: 2rem;
+  height: 100%;
+}
+
+.photo-frame {
+  width: 100%;
+  height: 250px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  align-self: center;
+}
+
+.photo-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.vision-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  gap: 1.5rem;
+  height: 100%;
+}
+
+.vision-content h3 {
+  color: var(--primary-color);
+  margin: 0;
+  font-size: 1.8rem;
+  line-height: 1.2;
+}
+
+.role {
+  color: var(--accent-color);
+  font-weight: 500;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.vision-text p {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.vision-stats {
+  display: flex;
+  gap: 2rem;
+  margin-top: 1.5rem;
+}
+
+.stat {
+  text-align: center;
+}
+
+.stat-number {
+  display: block;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  line-height: 1;
+}
+
+.stat-label {
+  display: block;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: 0.3rem;
+}
+
+.vision-dots {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+.vision-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.nav-btn {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.nav-btn:hover {
+  background: var(--primary-dark);
+  transform: scale(1.1);
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dot.active {
+  background: var(--primary-color);
+  transform: scale(1.2);
+}
     /* Hindi UI specific styles */
 .hindi-ui {
   font-family: 'Arial Unicode MS', 'Nirmala UI', sans-serif;
@@ -780,6 +926,35 @@ body:not(.light-mode) .icon-wrapper {
         text-align: center;
       }
     }
+    @media (max-width: 992px) {
+  .card-grid {
+    grid-template-columns: 200px 1fr;
+  }
+  
+  .photo-frame {
+    height: 200px;
+  }
+}
+
+@media (max-width: 768px) {
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .photo-frame {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 1.5rem;
+  }
+  
+  .content-grid {
+    text-align: center;
+  }
+  
+  .vision-stats {
+    justify-content: center;
+  }
+}
   </style>
 </head>
 <body>
@@ -943,20 +1118,108 @@ body:not(.light-mode) .icon-wrapper {
       </div>
     </div>
   </section>
+<!-- Team Vision Section -->
+<section class="team-vision">
+  <div class="container">
+    <div class="section-header">
+      <h2 data-translate="Our Vision & Team">Our Vision & Team</h2>
+      <p data-translate="The minds behind HealthVision's innovation">The minds behind HealthVision's innovation</p>
+    </div>
 
-  <!-- CTA Section -->
-  <section class="cta-section">
-    <div class="container">
-      <div class="cta-content">
-        <h2 data-translate="Ready to Take Control of Your Health?">Ready to Take Control of Your Health?</h2>
-        <p data-translate="Join thousands of users who are making informed healthcare decisions with HealthVision.">Join thousands of users who are making informed healthcare decisions with HealthVision.</p>
-        <div class="hero-buttons">
-          <a href="register.html" class="btn btn-primary" data-translate="Sign Up for Free">Sign Up for Free</a>
-          <a href="#features" class="btn btn-outline" data-translate="Learn More">Learn More</a>
+    <div class="vision-cards">
+      <!-- Vision Card 1 -->
+      <div class="vision-card active">
+        <div class="card-grid">
+          <div class="photo-frame">
+            <img src="yash.jpg" alt="Yash Kumar">
+          </div>
+          <div class="vision-content">
+            <div class="content-grid">
+              <h3 data-translate="Yash Kumar">Yash Kumar</h3>
+              <p class="role" data-translate="Team Member">Team Member</p>
+              <div class="vision-text">
+                <p data-translate="Good Healthcare Better now than never.">
+                  Good Healthcare Better now than never.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+
+      <!-- Vision Card 2 -->
+      <div class="vision-card">
+        <div class="card-grid">
+          <div class="photo-frame">
+            <img src="ubaid.jpg" alt="Mohammad Ubaid">
+          </div>
+          <div class="vision-content">
+            <div class="content-grid">
+              <h3 data-translate="Mohammad Ubaid ">Mohammad Ubaid</h3>
+              <p class="role" data-translate="Team Member">Team Member</p>
+              <div class="vision-text">
+                <p data-translate="From Uncertainty to Understanding — Instantly.">
+                  From Uncertainty to Understanding — Instantly.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Vision Card 3 -->
+      <div class="vision-card">
+        <div class="card-grid">
+          <div class="photo-frame">
+            <img src="utkarsh.jpg" alt="Utkarsh Raj">
+          </div>
+          <div class="vision-content">
+            <div class="content-grid">
+              <h3 data-translate="Utkarsh Raj">Utkarsh Raj</h3>
+              <p class="role" data-translate="Team Member">Team Member</p>
+              <div class="vision-text">
+                <p data-translate="Healthcare Should Reach Everyone, No matter where they live.">
+                  Healthcare Should Reach Everyone, No matter where they live.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Vision Card 4 -->
+      <div class="vision-card">
+        <div class="card-grid">
+          <div class="photo-frame">
+            <img src="yashasvi.jpg" alt="Yashavi Tripathi">
+          </div>
+          <div class="vision-content">
+            <div class="content-grid">
+              <h3 data-translate="Yashavi Tripathi">Yashavi Tripathi</h3>
+              <p class="role" data-translate="Team Member">Team Member</p>
+              <div class="vision-text">
+                <p data-translate="Science and technology must be used to solve humanity's greatest challenges, including disease and suffering.">
+                Science and technology must be used to solve humanity's greatest challenges, including disease and suffering.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> 
+
+    <div class="vision-nav">
+      <button class="nav-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
+      <div class="vision-dots">
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+      <button class="nav-btn next-btn"><i class="fas fa-chevron-right"></i></button>
     </div>
-  </section>
+  </div>
+</section>
 
   <!-- Footer -->
   <footer class="footer">
@@ -965,12 +1228,6 @@ body:not(.light-mode) .icon-wrapper {
         <div class="footer-about">
           <a href="#" class="footer-logo"><i class="fas fa-heartbeat"></i> <span data-translate="HealthVision">HealthVision</span></a>
           <p data-translate="Empowering individuals with AI-driven healthcare insights and connections to medical professionals worldwide.">Empowering individuals with AI-driven healthcare insights and connections to medical professionals worldwide.</p>
-          <div class="social-links">
-            <a href="#"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-linkedin-in"></i></a>
-          </div>
         </div>
         
         <div class="footer-links">
@@ -1029,9 +1286,9 @@ body:not(.light-mode) .icon-wrapper {
         "Report Summarizer": "Report Summarizer",
         "Get simplified explanations of complex medical reports and lab results.": 
           "Get simplified explanations of complex medical reports and lab results.",
-        "Doctor Consultations": "Doctor Consultations",
+        "Doctor Consultations": "Medicine Reminder",
         "Connect with licensed physicians via chat, voice, or video call.": 
-          "Connect with licensed physicians via chat, voice, or video call.",
+          "Get Scheduled Reminders To Take Your Medicine.",
         "How HealthVision Works": "How HealthVision Works",
         "Three simple steps to better health understanding": "Three simple steps to better health understanding",
         "Describe Your Symptoms": "Describe Your Symptoms",
@@ -1099,9 +1356,9 @@ body:not(.light-mode) .icon-wrapper {
         "Report Summarizer": "टेस्ट रिपोर्ट समझें",
         "Get simplified explanations of complex medical reports and lab results.": 
           " कठिन रिपोर्ट को आसान भाषा में समझें",
-        "Doctor Consultations": "डॉक्टर से बात करें",
+        "Doctor Consultations": "दवा लेने के लिए रिमाइंडर प्राप्त करें",
         "Connect with licensed physicians via chat, voice, or video call.": 
-          "फोन, वीडियो या मैसेज से डॉक्टर से जुड़ें",
+          "दवा समय पर ले",
         "How HealthVision Works": " वेबसाइट कैसे इस्तेमाल करे",
         "Three simple steps to better health understanding": "स्वास्थ्य की बेहतर समझ के लिए तीन सरल कदम",
         "Describe Your Symptoms": "बताएं आपको क्या हुआ",
@@ -1284,6 +1541,47 @@ body:not(.light-mode) .icon-wrapper {
         if (stepPosition < screenPosition) {
           step.classList.add('animated');
         }
+// Vision Cards Slider with Auto-Slide and Navigation
+// Add this to your existing script
+const visionCards = document.querySelectorAll('.vision-card');
+const dots = document.querySelectorAll('.vision-dots .dot');
+const prevBtn = document.querySelector('.prev-btn');
+const nextBtn = document.querySelector('.next-btn');
+let currentCard = 0;
+
+function showCard(index) {
+  visionCards.forEach((card, i) => {
+    card.classList.toggle('active', i === index);
+  });
+  
+  dots.forEach((dot, i) => {
+    dot.classList.toggle('active', i === index);
+  });
+  
+  currentCard = index;
+}
+
+function nextCard() {
+  const nextIndex = (currentCard + 1) % visionCards.length;
+  showCard(nextIndex);
+}
+
+function prevCard() {
+  const prevIndex = (currentCard - 1 + visionCards.length) % visionCards.length;
+  showCard(prevIndex);
+}
+
+// Navigation buttons
+nextBtn.addEventListener('click', nextCard);
+prevBtn.addEventListener('click', prevCard);
+
+// Dot navigation
+dots.forEach((dot, index) => {
+  dot.addEventListener('click', () => showCard(index));
+});
+
+// Auto-rotate every 5 seconds
+setInterval(nextCard, 3000);
       });
     });
   </script>
