@@ -1,2 +1,900 @@
-poiuytgl
-somming soon...............
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Medication Reminder | HealthVision</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  
+  <style>
+    /* All original CSS remains exactly the same */
+    :root {
+      --primary-color: #4caf50;
+      --primary-dark: #388e3c;
+      --primary-light: #81c784;
+      --secondary-color: #2196f3;
+      --accent-color: #ff9800;
+      --text-primary: white;
+      --text-secondary: white;
+      --bg-light: #e7eef9;
+      --bg-dark: #1a202c;
+      --card-bg: #ffffff;
+      --nav-bg: rgba(26, 32, 44, 0.9);
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+
+    [data-theme="dark"] {
+      --primary-color: #81c784;
+      --primary-dark: #4caf50;
+      --primary-light: #388e3c;
+      --secondary-color: #64b5f6;
+      --accent-color: #ffb74d;
+      --text-primary: #f5f5f5;
+      --text-secondary: #b0bec5;
+      --bg-light: #121212;
+      --bg-dark: black;
+      --card-bg: #1e1e1e;
+      --nav-bg: rgba(13, 17, 23, 0.9);
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    a {
+      text-decoration: none;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-primary);
+      line-height: 1.6;
+      transition: var(--transition);
+    }
+
+    body[data-theme="dark"] {
+      background-color: var(--bg-dark);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .nav-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background-color: var(--nav-bg);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      padding: 1rem 0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      transition: var(--transition);
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo a {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .logo i {
+      font-size: 1.8rem;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 1.5rem;
+      color:white;
+    }
+
+    .nav-links a {
+      color: var(--text-primary);
+      font-weight: 500;
+      position: relative;
+      padding: 0.5rem 0;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: var(--primary-color);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .language-select {
+      padding: 0.5rem;
+      border-radius: 6px;
+      border: 2px solid white;
+      background-color: black;
+      color: var(--text-primary);
+    }
+
+    .theme-toggle {
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: var(--text-primary);
+    }
+
+    .hamburger {
+      display: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--text-primary);
+    }
+    .language-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+
+    .language-toggle-btn {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--text-primary);
+      padding: 0.5rem;
+    }
+
+    .language-dropdown {
+      position: absolute;
+      right: 0;
+      top: 100%;
+      background-color: black;
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      list-style: none;
+      padding: 0.5rem 0;
+      margin: 0;
+      min-width: 120px;
+      z-index: 1000;
+      display: none;
+    }
+
+    .language-dropdown li {
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      color: var(--text-primary);
+      transition: background-color 0.2s;
+    }
+
+    .language-dropdown li:hover {
+      background-color: rgba(76, 175, 80, 0.1);
+    }
+
+    .language-dropdown.show {
+      display: block;
+    }
+
+    .reminder {
+      padding: 6rem 0 3rem;
+      min-height: calc(100vh - 80px);
+    }
+
+    .reminder-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .reminder-header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--primary-color);
+    }
+
+    .reminder-header p {
+        color:darkgrey;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .reminder-container {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: darkgrey;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.75rem;
+      border-radius: 8px;
+      border: 1px solid var(--primary-light);
+      background-color: var(--card-bg);
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      transition: var(--transition);
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.3);
+    }
+
+    .form-row {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .form-row .form-group {
+      flex: 1;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 1rem;
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .submit-btn:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+
+    .loading {
+      display: none;
+      text-align: center;
+      padding: 1rem;
+    }
+
+    .loading-spinner {
+      border: 4px solid rgba(76, 175, 80, 0.3);
+      border-top: 4px solid var(--primary-color);
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 1rem;
+    }
+
+    .success-message {
+      display: none;
+      text-align: center;
+      padding: 1.5rem;
+      background-color: rgba(76, 175, 80, 0.1);
+      border-radius: 8px;
+      border-left: 4px solid var(--primary-color);
+      margin-top: 2rem;
+    }
+
+    .success-message h3 {
+      color: var(--primary-color);
+      margin-bottom: 0.5rem;
+    }
+
+    .success-message p {
+      color: var(--text-secondary);
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .footer {
+      background-color: var(--nav-bg);
+      color: var(--text-primary);
+      padding: 3rem 0 1.5rem;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+      display: inline-block;
+    }
+
+    .footer-about p {
+      margin-bottom: 1.5rem;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1rem;
+      color: black;
+    }
+
+    .social-links a {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .social-links a:hover {
+      background-color: var(--primary-color);
+      transform: translateY(-3px);
+    }
+
+    .footer-links h3 {
+      margin-bottom: 1.5rem;
+      font-size: 1.2rem;
+      position: relative;
+      padding-bottom: 0.5rem;
+    }
+
+    .footer-links h3::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 40px;
+      height: 2px;
+      background-color: var(--primary-color);
+    }
+
+    .footer-links ul {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-links a {
+      color: var(--text-secondary);
+      transition: var(--transition);
+    }
+
+    .footer-links a:hover {
+      color: var(--primary-color);
+      padding-left: 5px;
+    }
+
+    .footer-contact p {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      color: var(--text-secondary);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        position: fixed;
+        top: 80px;
+        left: 0;
+        right: 0;
+        background-color: var(--nav-bg);
+        flex-direction: column;
+        align-items: center;
+        padding: 2rem 0;
+        gap: 1.5rem;
+        clip-path: circle(0px at 90% -10%);
+        transition: clip-path 0.5s ease;
+      }
+      
+      .nav-links.active {
+        clip-path: circle(150% at 90% -10%);
+      }
+      
+      .hamburger {
+        display: block;
+      }
+      
+      .reminder-header h1 {
+        font-size: 2rem;
+      }
+      
+      .form-row {
+        flex-direction: column;
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <header class="nav-container">
+    <nav class="navbar container">
+      <div class="logo">
+        <a href="index.html"><i class="fas fa-heartbeat"></i> HealthVision</a>
+      </div>
+      
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html" data-translate="Home">Home</a></li>
+        <li><a href="index.html#about" data-translate="About Us">About Us</a></li>
+        <li><a href="index.html#features" data-translate="Features">Features</a></li>
+        <li><a href="index.html#how-it-works" data-translate="How It Works">How It Works</a></li>
+      </ul>
+      <div class="nav-actions">
+      <div class="language-wrapper">
+        <button id="languageToggle" class="language-toggle-btn" title="Change Language">🌐</button>
+        <ul id="languageDropdown" class="language-dropdown">
+          <li data-lang="en">English</li>
+          <li data-lang="hi">हिन्दी</li>
+        </ul>
+      </div>
+        
+        <button class="theme-toggle" id="themeToggle" title="Toggle Theme">
+          <i class="fas fa-moon"></i>
+        </button>
+        
+        <div class="hamburger" id="hamburger">
+          <i class="fas fa-bars"></i>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Medication Reminder Main Content -->
+  <main class="reminder">
+    <div class="container">
+      <div class="reminder-header">
+        <h1><i class="fas fa-pills"></i> <span data-translate="Medication Reminder">Medication Reminder</span></h1>
+        <p data-translate="Schedule your medication reminders and receive notifications via call and SMS">
+          Schedule your medication reminders and receive notifications via call and SMS
+        </p>
+      </div>
+      
+      <div class="reminder-container">
+        <form id="medicationForm">
+          <div class="form-group">
+            <label for="patientName" data-translate="Patient Name">Patient Name</label>
+            <input type="text" id="patientName" class="form-control" data-translate-placeholder="Patient Name" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="medicine" data-translate="Medicine">Medicine</label>
+            <input type="text" id="medicine" class="form-control" data-translate-placeholder="Medicine name and dosage" required>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="time" data-translate="Time">Time</label>
+              <input type="text" id="time" class="form-control" data-translate-placeholder="HH:MM" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="repeatType" data-translate="Repeat">Repeat</label>
+              <select id="repeatType" class="form-control">
+                <option value="none" data-translate="None">None</option>
+                <option value="daily" data-translate="Daily">Daily</option>
+                <option value="weekly" data-translate="Weekly">Weekly</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="form-group" id="repeatCountGroup" style="display: none;">
+            <label for="repeatCount" data-translate="Number of Occurrences">Number of Occurrences</label>
+            <input type="number" id="repeatCount" class="form-control" min="1" value="1">
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="phoneNumber" data-translate="Phone Number">Phone Number</label>
+              <input type="tel" id="phoneNumber" class="form-control" data-translate-placeholder="Patient's phone number" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="familyContact" data-translate="Family Contact">Family Contact</label>
+              <input type="tel" id="familyContact" class="form-control" data-translate-placeholder="Family member's phone number" required>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="email" data-translate="Email Address">Email Address</label>
+            <input type="email" id="email" class="form-control" data-translate-placeholder="Email for notifications">
+          </div>
+          
+          <button type="submit" class="submit-btn" data-translate="Schedule Reminder">Schedule Reminder</button>
+        </form>
+        
+        <div class="loading" id="loadingIndicator">
+          <div class="loading-spinner"></div>
+          <p data-translate="Scheduling your reminder...">Scheduling your reminder...</p>
+        </div>
+        
+        <div class="success-message" id="successMessage">
+          <h3><i class="fas fa-check-circle"></i> <span data-translate="Reminder Scheduled Successfully!">Reminder Scheduled Successfully!</span></h3>
+          <p data-translate="You will receive notifications for your medication.">You will receive notifications for your medication.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-about">
+          <a href="#" class="footer-logo"><i class="fas fa-heartbeat"></i> HealthVision</a>
+          <p data-translate="Empowering individuals with healthcare insights and connections to medical professionals worldwide.">
+            Empowering individuals with healthcare insights and connections to medical professionals worldwide.
+          </p>
+        </div>
+        
+        <div class="footer-links">
+          <h3 data-translate="Quick Links">Quick Links</h3>
+          <ul>
+            <li><a href="index.html" data-translate="Home">Home</a></li>
+            <li><a href="index.html#features" data-translate="Features">Features</a></li>
+            <li><a href="index.html#how-it-works" data-translate="How It Works">How It Works</a></li>
+            <li><a href="index.html#about" data-translate="About Us">About Us</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-links">
+          <h3 data-translate="Features">Features</h3>
+          <ul>
+            <li><a href="symptom-checker.html" data-translate="Symptom Checker">Symptom Checker</a></li>
+            <li><a href="image-diagnosis.html" data-translate="Image Diagnosis">Image Diagnosis</a></li>
+            <li><a href="nearby-hospitals.html" data-translate="Hospital Finder">Hospital Finder</a></li>
+            <li><a href="appointment-booking.html" data-translate="Appointment Reminder">Appointment Reminder</a></li>
+            <li><a href="report-summarizing.html" data-translate="Report Summarizer">Report Summarizer</a></li>
+            <li><a href="consultancy.html" data-translate="Medicine Reminder">Medicine Reminder</a></li>
+          </ul>
+        </div>
+      
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; <span id="year"></span> HealthVision. <span data-translate="All rights reserved">All rights reserved</span>.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Date and Time Picker -->
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+  <script>
+    // Configuration
+    const CONFIG = {
+      GOOGLE_SCRIPT_URL: "https://script.google.com/macros/s/AKfycbxATOgoyvliKTzTIlk6oFl6FWf5ORYlBJGu5JhLiArhNCR_61IHZ1J2Jg8ot3WPV4fD_g/exec", // Replace with your deployed web app URL
+      CHECK_INTERVAL_MINUTES: 1
+    };
+  
+    // Helper functions
+    function formatPhoneNumber(phone) {
+      return phone.startsWith('+') ? phone : `+${phone}`;
+    }
+  
+    function isValidPhone(phone) {
+      return /^\+?[1-9]\d{9,14}$/.test(phone);
+    }
+  
+    function parseISTTime(timeString) {
+      const now = new Date();
+      const [hours, minutes] = timeString.split(':').map(Number);
+      const scheduledTime = new Date(now);
+      
+      scheduledTime.setHours(hours, minutes, 0, 0);
+      if (scheduledTime < now) scheduledTime.setDate(scheduledTime.getDate() + 1);
+      
+      return scheduledTime;
+    }
+  
+    document.addEventListener('DOMContentLoaded', function() {
+      // Set current year in footer
+      document.getElementById('year').textContent = new Date().getFullYear();
+  
+      // Theme Toggle
+      const themeToggle = document.getElementById('themeToggle');
+      const currentTheme = localStorage.getItem('theme') || 'light';
+      
+      document.body.setAttribute('data-theme', currentTheme);
+      
+      if (currentTheme === 'dark') {
+        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+      }
+      
+      themeToggle.addEventListener('click', function() {
+        const currentTheme = document.body.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        
+        document.body.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        
+        themeToggle.innerHTML = newTheme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+      });
+  
+      // Mobile Navigation
+      const hamburger = document.getElementById('hamburger');
+      const navLinks = document.getElementById('navLinks');
+      
+      hamburger.addEventListener('click', function() {
+        navLinks.classList.toggle('active');
+      });
+      
+      // Language Toggle
+      const languageToggle = document.getElementById('languageToggle');
+      const languageDropdown = document.getElementById('languageDropdown');
+      const languageItems = document.querySelectorAll('#languageDropdown li');
+      
+      languageToggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        languageDropdown.classList.toggle('show');
+      });
+      
+      document.addEventListener('click', function(e) {
+        if (!languageToggle.contains(e.target)) {
+          languageDropdown.classList.remove('show');
+        }
+      });
+      
+      languageItems.forEach(item => {
+        item.addEventListener('click', function() {
+          const lang = this.getAttribute('data-lang');
+          changeLanguage(lang);
+          languageDropdown.classList.remove('show');
+        });
+      });
+  
+      // Time Picker
+      flatpickr("#time", {
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true,
+        theme: currentTheme === 'dark' ? "dark" : "default"
+      });
+      
+      // Show/hide repeat count based on repeat type
+      const repeatType = document.getElementById('repeatType');
+      const repeatCountGroup = document.getElementById('repeatCountGroup');
+      
+      repeatType.addEventListener('change', function() {
+        if (this.value === 'none') {
+          repeatCountGroup.style.display = 'none';
+        } else {
+          repeatCountGroup.style.display = 'block';
+        }
+      });
+      
+      // Form Handling
+      const medicationForm = document.getElementById('medicationForm');
+      const loadingIndicator = document.getElementById('loadingIndicator');
+      const successMessage = document.getElementById('successMessage');
+      
+      medicationForm.addEventListener('submit', async function(e) {
+  e.preventDefault();
+
+  loadingIndicator.style.display = 'block';
+  successMessage.style.display = 'none';
+
+  const formData = {
+    patientName: document.getElementById('patientName').value.trim(),
+    medicine: document.getElementById('medicine').value.trim(),
+    time: document.getElementById('time').value.trim(),
+    phoneNumber: formatPhoneNumber(document.getElementById('phoneNumber').value.trim()),
+    familyContact: formatPhoneNumber(document.getElementById('familyContact').value.trim()),
+    email: document.getElementById('email').value.trim(),
+    repeatType: document.getElementById('repeatType').value,
+    repeatCount: document.getElementById('repeatCount').value || 1
+  };
+
+  // Validate phone numbers
+  if (!isValidPhone(formData.phoneNumber)) {
+    alert('Please enter a valid patient phone number');
+    loadingIndicator.style.display = 'none';
+    return;
+  }
+  if (!isValidPhone(formData.familyContact)) {
+    alert('Please enter a valid family contact number');
+    loadingIndicator.style.display = 'none';
+    return;
+  }
+
+  try {
+    await fetch(CONFIG.GOOGLE_SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors', // keep no-cors
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    });
+
+    // Do NOT try to read response.json() or response.text() here because no-cors blocks it
+
+    // Assume success if no network error
+    loadingIndicator.style.display = 'none';
+    successMessage.style.display = 'block';
+    medicationForm.reset();
+    successMessage.scrollIntoView({ behavior: 'smooth' });
+
+  } catch (error) {
+    console.error('Fetch Error:', error);
+    loadingIndicator.style.display = 'none';
+    alert('Failed to schedule reminder. Please try again.');
+  }
+});
+
+      
+      // Load saved language preference
+      const savedLanguage = localStorage.getItem('language') || 'en';
+      changeLanguage(savedLanguage);
+    });
+  
+    // Language dictionary
+    const translations = {
+      'en': {
+        'Home': 'Home',
+        'About Us': 'About Us',
+        'Features': 'Features',
+        'How It Works': 'How It Works',
+        'Medication Reminder': 'Medication Reminder',
+        'Schedule your medication reminders and receive notifications via call and SMS': 
+          'Schedule your medication reminders and receive notifications via call and SMS',
+        "Patient Name": "Patient Name",
+        'Medicine': 'Medicine',
+        'Time': 'Time',
+        'Repeat': 'Repeat',
+        'None': 'None',
+        'Daily': 'Daily',
+        'Weekly': 'Weekly',
+        'Number of Occurrences': 'Number of Occurrences',
+        'Phone Number': 'Phone Number',
+        'Family Contact': 'Family Contact',
+        'Email Address': 'Email Address',
+        'Schedule Reminder': 'Schedule Reminder',
+        'Scheduling your reminder...': 'Scheduling your reminder...',
+        'Reminder Scheduled Successfully!': 'Reminder Scheduled Successfully!',
+        'You will receive notifications for your medication.': 'You will receive notifications for your medication.',
+        'Please enter a valid patient phone number': 'Please enter a valid patient phone number',
+        'Please enter a valid family contact number': 'Please enter a valid family contact number',
+        'Failed to schedule reminder. Please try again.': 'Failed to schedule reminder. Please try again.',
+        'Quick Links': 'Quick Links',
+        'Symptom Checker': 'Symptom Checker',
+        'Image Diagnosis': 'Image Diagnosis', 
+        'Hospital Finder': 'Hospital Finder',
+        'Report Summarizer': 'Report Summarizer',
+        'Doctor Consultations': 'Doctor Consultations',
+        'Appointment Reminder':'Appointment Reminder',
+        'Medicine Reminder':'Medicine Reminder',
+        'Contact Us': 'Contact Us',
+        'Empowering individuals with healthcare insights and connections to medical professionals worldwide.':
+        'Empowering individuals with healthcare insights and irrespective of location or financial bias.',
+        'All rights reserved': 'All rights reserved'
+      },
+      'hi': {
+        'Home': 'होम',
+        'About Us': 'हमारे बारे में',
+        'Features': "विशेषताएं",
+        'How It Works': "कार्य प्रणाली",
+        'Medication Reminder': 'दवा अनुस्मारक',
+        'Schedule your medication reminders and receive notifications via call and SMS': 
+          'अपने दवा अनुस्मारक शेड्यूल करें और कॉल और एसएमएस के माध्यम से सूचनाएं प्राप्त करें',
+        "Patient Name": "रोगी का नाम",
+        'Medicine': 'दवाई',
+        'Time': 'समय',
+        'Repeat': 'दोहराएँ',
+        'None': 'कोई नहीं',
+        'Daily': 'दैनिक',
+        'Weekly': 'साप्ताहिक',
+        'Number of Occurrences': 'घटनाओं की संख्या',
+        'Phone Number': 'फोन नंबर',
+        'Family Contact': 'परिवार का संपर्क',
+        'Email Address': 'ईमेल पता',
+        'Schedule Reminder': 'अनुस्मारक शेड्यूल करें',
+        'Scheduling your reminder...': 'आपका अनुस्मारक शेड्यूल किया जा रहा है...',
+        'Reminder Scheduled Successfully!': 'अनुस्मारक सफलतापूर्वक शेड्यूल किया गया!',
+        'You will receive notifications for your medication.': 'आपको अपनी दवा के लिए सूचनाएं प्राप्त होंगी।',
+        'Please enter a valid patient phone number': 'कृपया एक वैध रोगी फोन नंबर दर्ज करें',
+        'Please enter a valid family contact number': 'कृपया एक वैध परिवार संपर्क नंबर दर्ज करें',
+        'Failed to schedule reminder. Please try again.': 'अनुस्मारक शेड्यूल करने में विफल। कृपया पुनः प्रयास करें।',
+        'Quick Links': 'त्वरित लिंक',
+        'Symptom Checker': 'लक्षण जांचकर्ता',
+        'Image Diagnosis': 'छवि निदान',
+        'Hospital Finder': 'अस्पताल खोजक',
+        'Report Summarizer': 'रिपोर्ट सारांशकर्ता',
+        'Doctor Consultations': 'डॉक्टर परामर्श',
+        'Appointment Reminder':'अपॉइंटमेंट रिमाइंडर',
+        'Medicine Reminder':' दवा रिमाइंडर',
+        'Contact Us': 'संपर्क करें',
+        'Empowering individuals with healthcare insights and connections to medical professionals worldwide.':
+          'हर व्यक्ति को स्वास्थ्य से जुड़ी जानकारी देना, चाहे उनकी जगह या आर्थिक स्थिति कुछ भी हो।',
+        'All rights reserved': 'सर्वाधिकार सुरक्षित'
+      }
+    };
+  
+    // Function to change language
+    function changeLanguage(lang) {
+      // Update elements with data-translate attribute
+      document.querySelectorAll('[data-translate]').forEach(element => {
+        const key = element.getAttribute('data-translate');
+        if (translations[lang] && translations[lang][key]) {
+          element.textContent = translations[lang][key];
+        }
+      });
+      
+      // Update input placeholders with data-translate-placeholder attribute
+      document.querySelectorAll('[data-translate-placeholder]').forEach(element => {
+        const key = element.getAttribute('data-translate-placeholder');
+        if (translations[lang] && translations[lang][key]) {
+          element.placeholder = translations[lang][key];
+        }
+      });
+      
+      // Update labels (special handling as they don't have data attributes)
+      document.querySelectorAll('label').forEach(label => {
+        const key = label.textContent.trim();
+        if (translations[lang] && translations[lang][key]) {
+          label.textContent = translations[lang][key];
+        }
+      });
+      
+      // Store selected language
+      localStorage.setItem('language', lang);
+    }
+  </script>
+</body>
+</html>
