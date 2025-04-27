@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -772,8 +771,7 @@
             <div class="footer-grid">
                 <div class="footer-about">
                     <a href="index.html" class="footer-logo"><i class="fas fa-heartbeat"></i> HealthVision</a>
-                    <p>Empowering individuals with AI-driven healthcare insights and connections to medical
-                        professionals worldwide.</p>
+                    <p>Empowering individuals with healthcare insights and irrespective of location or financial bias.</p>
                 </div>
 
                 <div class="footer-links">
@@ -792,8 +790,9 @@
                         <li><a href="symptom-checker.html">Symptom Checker</a></li>
                         <li><a href="image-diagnosis.html">Image Diagnosis</a></li>
                         <li><a href="nearby-hospitals.html">Hospital Finder</a></li>
+                        <li><a href="appointment-booking.html">Appointment Reminder</a></li>
                         <li><a href="report-summarizing.html">Report Summarizer</a></li>
-                        <li><a href="consultancy.html">Doctor Consultations</a></li>
+                        <li><a href="consultancy.html">Medicine Reminder</a></li>
                     </ul>
                 </div>
             </div>
@@ -806,7 +805,7 @@
     <script>
         // Initialize EmailJS with your Public Key
         (function() {
-            emailjs.init("uGk-AyTq4jC_2kDRM");
+            emailjs.init("lezpYR13Ftl9-kMr3");
         })();
 
         document.addEventListener('DOMContentLoaded', function () {
@@ -1047,7 +1046,7 @@
                 };
 
                 // Replace with your actual EmailJS service and template IDs
-                emailjs.send('service_9najibj', 'template_q976x3g', emailParams)
+                emailjs.send('service_k1nwn6d', 'template_hrvt2n7', emailParams)
                     .then(() => {
                         alert('Email sent successfully! Check your inbox.');
                         document.getElementById('emailModal').style.display = 'none';
