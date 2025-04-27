@@ -652,8 +652,9 @@
             <li><a href="symptom-checker.html" data-translate="Symptom Checker">Symptom Checker</a></li>
             <li><a href="image-diagnosis.html" data-translate="Image Diagnosis">Image Diagnosis</a></li>
             <li><a href="nearby-hospitals.html" data-translate="Hospital Finder">Hospital Finder</a></li>
+            <li><a href="appointment-booking.html" data-translate="Appointment Reminder">Appointment Reminder</a></li>
             <li><a href="report-summarizing.html" data-translate="Report Summarizer">Report Summarizer</a></li>
-            <li><a href="consultancy.html" data-translate="Doctor Consultations">Doctor Consultations</a></li>
+            <li><a href="consultancy.html" data-translate="Medicine Reminder">Medicine Reminder</a></li>
           </ul>
         </div>
       </div>
@@ -687,9 +688,11 @@
         'Image Diagnosis': 'Image Diagnosis',
         'Hospital Finder': 'Hospital Finder',
         'Report Summarizer': 'Report Summarizer',
-        'Doctor Consultations': 'Doctor Consultations',
+        'Medicine Reminder': 'Medicine Reminder',
+        'Appointment Reminder':'Appointment Reminder',
+
         'Empowering individuals with AI-driven healthcare insights and connections to medical professionals worldwide.':
-          'Empowering individuals with AI-driven healthcare insights and connections to medical professionals worldwide.'
+          'Empowering individuals with healthcare insights and irrespective of location or financial bias.'
       },
       'hi': {
         'Medical Report Summarizer': 'मेडिकल रिपोर्ट सारांशक',
@@ -716,9 +719,10 @@
         'Image Diagnosis': 'छवि निदान',
         'Hospital Finder': 'अस्पताल खोजक',
         'Report Summarizer': 'रिपोर्ट सारांशक',
-        'Doctor Consultations': 'डॉक्टर परामर्श',
+        'Medicine Reminder': 'दवा रिमाइंडर',
+        'Appointment Reminder':'अपॉइंटमेंट रिमाइंडर',
         'Empowering individuals with AI-driven healthcare insights and connections to medical professionals worldwide.':
-          'विश्व भर में एआई-संचालित स्वास्थ्य सेवा अंतर्दृष्टि और चिकित्सा पेशेवरों से कनेक्शन के साथ व्यक्तियों को सशक्त बनाना।'
+          'हर व्यक्ति को स्वास्थ्य से जुड़ी जानकारी देना, चाहे उनकी जगह या आर्थिक स्थिति कुछ भी हो।'
       }
     };
     // Single changeLanguage function
@@ -872,9 +876,17 @@
       
       async function summarizeMedicalReport(text) {
         const prompt = `
-You are a medical assistant. Summarize the following medical report in simple language for a non-medical person. 
-Explain any medical terms clearly. Also, have a seperate section at the bottom to highlight any abnormalities or values that are out of the normal range. also avoid using '*' in the output you provide
+You are a medical assistant. Summarize the following medical report in short, simple language for a non-medical person.
 
+Keep the summary crisp, under 100 words if possible.
+
+Explain important medical terms clearly but briefly.
+
+Highlight major concerns or abnormal values separately in a "Key Findings" section at the bottom.
+
+Avoid using '*' symbols or overly technical language.
+
+Focus on clarity, brevity, and readability. 
 Medical Report:
 ${text}
         `;
